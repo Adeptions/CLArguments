@@ -1,5 +1,7 @@
 package com.adeptions.arguments;
 
+import static com.adeptions.arguments.ArgsParsingExceptionReason.*;
+
 public class DoubleArgument extends AbstractArgument<Double> implements IArgument<Double> {
 	public DoubleArgument(IArgumentDefinition<Double> definition) {
 		super(definition);
@@ -11,7 +13,7 @@ public class DoubleArgument extends AbstractArgument<Double> implements IArgumen
 			values.add(definition.validate(Double.parseDouble(rawValue),this, specifiedArgName));
 			specified = true;
 		} catch (NumberFormatException numberFormatException) {
-			throw new ArgsParsingException("Value '" + rawValue + "' is not a valid number (for argument '" + specifiedArgName.displayName + "')", numberFormatException, this, specifiedArgName);
+			throw new ArgsParsingException(INVALID_VALUE, "Value '" + rawValue + "' is not a valid number (for argument '" + specifiedArgName.displayName + "')", numberFormatException, this, specifiedArgName);
 		}
 	}
 }

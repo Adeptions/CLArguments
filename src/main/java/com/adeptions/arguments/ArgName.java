@@ -1,5 +1,7 @@
 package com.adeptions.arguments;
 
+import static com.adeptions.arguments.ArgsParsingExceptionReason.*;
+
 class ArgName {
 	String raw;
 	String name;
@@ -36,14 +38,14 @@ class ArgName {
 				if (name.startsWith("" + argNamePrefix)) {
 					name = name.substring(1);
 				} else {
-					throw new ArgsParsingException("Argument names must begin with '" + argNamePrefix + "'", result);
+					throw new ArgsParsingException(INVALID_ARGUMENT_NAME, "Argument names must begin with '" + argNamePrefix + "'", result);
 				}
 			}
 			if (argNameSuffix != null) {
 				if (name.endsWith("" + argNameSuffix)) {
 					name = name.substring(0, name.length() - 1);
 				} else {
-					throw new ArgsParsingException("Argument names must end with '" + argNameSuffix + "'", result);
+					throw new ArgsParsingException(INVALID_ARGUMENT_NAME, "Argument names must end with '" + argNameSuffix + "'", result);
 				}
 			}
 			result.name = name;
@@ -56,7 +58,7 @@ class ArgName {
 			}
 			result.exception = argsParsingException;
 		} catch (Exception ex) {
-			ArgsParsingException argsParsingException = new ArgsParsingException("Unknown error parsing argument name", ex, result);
+			ArgsParsingException argsParsingException = new ArgsParsingException(UNEXPECTED_EXCEPTION, "Unknown error parsing argument name", ex, result);
 			if (argsParsingOptions.isThrowImmediateParsingExceptions()) {
 				throw argsParsingException;
 			}

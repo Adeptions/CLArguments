@@ -2,6 +2,8 @@ package com.adeptions.arguments;
 
 import java.util.*;
 
+import static com.adeptions.arguments.ArgsParsingExceptionReason.*;
+
 public final class Arguments {
 	private ArgumentDefinitions argumentDefinitions;
 	private ArgsParsingOptions argsParsingOptions;
@@ -66,7 +68,7 @@ public final class Arguments {
 
 	void foundUnknownArg(ArgName specifiedArgName) throws ArgsParsingException {
 		unknownArgs.put(specifiedArgName.name, specifiedArgName);
-		ArgsParsingException argsParsingException = new ArgsParsingException("Unknown argument '" + specifiedArgName.displayName + "'", specifiedArgName);
+		ArgsParsingException argsParsingException = new ArgsParsingException(UNKNOWN_ARGUMENT, "Unknown argument '" + specifiedArgName.displayName + "'", specifiedArgName);
 		if (argsParsingOptions.isThrowImmediateParsingExceptions()) {
 			throw argsParsingException;
 		}
@@ -79,7 +81,7 @@ public final class Arguments {
 		if (specifiedArgName.exception != null) {
 			argsParsingException = specifiedArgName.exception;
 		} else {
-			argsParsingException = new ArgsParsingException("Unknown argument '" + specifiedArgName.raw + "'", specifiedArgName);
+			argsParsingException = new ArgsParsingException(UNKNOWN_ARGUMENT_VALUE, "Unknown argument value '" + specifiedArgName.raw + "'", specifiedArgName);
 		}
 		if (argsParsingOptions.isThrowImmediateParsingExceptions()) {
 			throw argsParsingException;

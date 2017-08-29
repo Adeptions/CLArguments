@@ -2,6 +2,8 @@ package com.adeptions.arguments;
 
 import junit.framework.TestCase;
 
+import static com.adeptions.arguments.ArgsParsingExceptionReason.*;
+
 public class ArgumentDefinitionConstructionExtensibilityTests extends TestCase {
 	private static final String testName = "test";
 	private static final String testDescription = "This is an argument definition description";
@@ -103,7 +105,7 @@ public class ArgumentDefinitionConstructionExtensibilityTests extends TestCase {
 				values.add(setValue);
 				specified = true;
 			} else {
-				throw new ArgsParsingException("Value '" + rawValue + "' is not permissible (for argument '" + specifiedArgName.displayName + "')", this, specifiedArgName);
+				throw new ArgsParsingException(INVALID_VALUE, "Value '" + rawValue + "' is not permissible (for argument '" + specifiedArgName.displayName + "')", this, specifiedArgName);
 			}
 		}
 	}

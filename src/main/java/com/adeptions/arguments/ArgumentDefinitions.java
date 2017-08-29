@@ -4,6 +4,8 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.*;
 
+import static com.adeptions.arguments.ArgsParsingExceptionReason.*;
+
 public class ArgumentDefinitions implements List<IArgumentDefinition> {
 	protected List<IArgumentDefinition> definitions = new ArrayList<IArgumentDefinition>();
 	protected Map<String,IArgumentDefinition> definitionsNameMap = new HashMap<String, IArgumentDefinition>();
@@ -58,10 +60,10 @@ public class ArgumentDefinitions implements List<IArgumentDefinition> {
 					exceptionMessageBuilder.append(iterator.next().getDefinition().getDisplayName(useArgsParsingOptions))
 							.append(iterator.hasNext() ? ", " : "");
 				}
-				throw new ArgsParsingException(exceptionMessageBuilder.toString());
+				throw new ArgsParsingException(MISSING_MANDATORIES, exceptionMessageBuilder.toString());
 			} else {
 				for (IArgument argument: missingMandatories) {
-					result.addParsingException(new ArgsParsingException("Missing mandatory argument: " + argument.getDefinition().getDisplayName(useArgsParsingOptions), argument));
+					result.addParsingException(new ArgsParsingException(MISSING_MANDATORY, "Missing mandatory argument: " + argument.getDefinition().getDisplayName(useArgsParsingOptions), argument));
 				}
 			}
 		}
@@ -78,7 +80,7 @@ public class ArgumentDefinitions implements List<IArgumentDefinition> {
 				if (argument != null) {
 					if (argument.getDefinition().isValued()) {
 						if (!iterator.hasNext()) {
-							generateArgsParsingException("Missing value for argument '" + argName.displayName + "'", arguments, argsParsingOptions, argument, argName);
+							generateArgsParsingException(MISSING_VALUE, "Missing value for argument '" + argName.displayName + "'", arguments, argsParsingOptions, argument, argName);
 						} else {
 							String value = iterator.next();
 							if (checkValueIsNotArgName(value, arguments, argsParsingOptions)) {
@@ -87,7 +89,7 @@ public class ArgumentDefinitions implements List<IArgumentDefinition> {
 								// the value turned out to be an arg name
 								// step backwards so that loop gets the next arg...
 								iterator.previous();
-								generateArgsParsingException("Missing value for argument '" + argName.displayName + "'", arguments, argsParsingOptions, argument, argName);
+								generateArgsParsingException(MISSING_VALUE, "Missing value for argument '" + argName.displayName + "'", arguments, argsParsingOptions, argument, argName);
 							}
 						}
 					} else {
@@ -120,8 +122,8 @@ public class ArgumentDefinitions implements List<IArgumentDefinition> {
 		throw new NotImplementedException();
 	}
 
-	static void generateArgsParsingException(String message, Arguments arguments, ArgsParsingOptions argsParsingOptions, IArgument argument, ArgName specifiedArgName) throws ArgsParsingException {
-		ArgsParsingException argsParsingException = new ArgsParsingException(message, argument, specifiedArgName);
+	static void generateArgsParsingException(ArgsParsingExceptionReason reason, String message, Arguments arguments, ArgsParsingOptions argsParsingOptions, IArgument argument, ArgName specifiedArgName) throws ArgsParsingException {
+		ArgsParsingException argsParsingException = new ArgsParsingException(reason, message, argument, specifiedArgName);
 		if (argsParsingOptions.isThrowImmediateParsingExceptions()) {
 			throw argsParsingException;
 		} else {
