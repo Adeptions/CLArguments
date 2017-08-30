@@ -10,11 +10,24 @@ public class Application {
 	 */
 	public static void main(String[] args) {
 		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions(
-				new StringArgumentDefinition(new String[] {"say", "s"}, "What to say").makeMandatory(),
+				new StringArgumentDefinition(new String[] {"say", "s"}, "What to say").makeMandatory().addValidator((value, argument) -> {
+					System.out.println("Custom validator called with: " + value);
+					if (((String)value).contains(" ")) {
+						throw new ArgsParsingException(ArgsParsingExceptionReason.UNDEFINED, "Cannot contain spaces?");
+					}
+					return value;
+				}),
 				new InformationalArgumentDefinition(new String[] {"version", "v"}, "Show version"),
 				new InformationalArgumentDefinition(new String[] {"help", "h"}, "Show this help")
 		);
 		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
+		argsParsingOptions.setArgsParsingExceptionHandler(new IArgsParsingExceptionHandler() {
+			@Override
+			public ArgsParsingException handle(ArgsParsingException argsParsingException) throws ArgsParsingException {
+				System.err.println("Custom exception handler found:- " + argsParsingException);
+				return argsParsingException;
+			}
+		});
 		try {
 			Arguments arguments = argumentDefinitions.parseArgs(args, argsParsingOptions);
 			printVersionIfRequested(arguments);
