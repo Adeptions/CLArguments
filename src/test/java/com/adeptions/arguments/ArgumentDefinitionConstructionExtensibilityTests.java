@@ -105,7 +105,7 @@ public class ArgumentDefinitionConstructionExtensibilityTests extends TestCase {
 				values.add(setValue);
 				specified = true;
 			} else {
-				throw new ArgsParsingException(INVALID_VALUE, "Value '" + rawValue + "' is not permissible (for argument '" + specifiedArgName.displayName + "')", this, specifiedArgName);
+				throw new ArgsParsingException(INVALID_VALUE, "Value '" + rawValue + "' is not permissible (for argument '" + specifiedArgName.getDisplayName() + "')", this, specifiedArgName);
 			}
 		}
 	}

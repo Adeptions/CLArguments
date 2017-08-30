@@ -3,17 +3,12 @@ package com.adeptions.arguments;
 import static com.adeptions.arguments.ArgsParsingExceptionReason.*;
 
 class ArgName {
-	String raw;
-	String name;
-	String displayName;
-	ArgsParsingException exception;
+	private String raw;
+	private String name;
+	private String displayName;
 
-	private ArgName(String raw) {
+	public ArgName(String raw) {
 		this.raw = raw;
-	}
-
-	boolean isOk() {
-		return exception == null;
 	}
 
 	public String getRaw() {
@@ -29,23 +24,23 @@ class ArgName {
 	}
 
 	static ArgName parseSpacedArgNameFromArg(String arg, ArgsParsingOptions argsParsingOptions) throws ArgsParsingException {
-		ArgName result = new ArgName(arg);
-		String name = arg;
 		Character argNamePrefix = argsParsingOptions.getArgNamePrefix();
 		Character argNameSuffix = argsParsingOptions.getArgNameSuffix();
+		ArgName result = new ArgName(arg);
+		String name = arg;
 		try {
 			if (argNamePrefix != null) {
 				if (name.startsWith("" + argNamePrefix)) {
 					name = name.substring(1);
 				} else {
-					throw new ArgsParsingException(INVALID_ARGUMENT_NAME, "Argument names must begin with '" + argNamePrefix + "'", result);
+					throw new ArgsParsingException(INVALID_ARGUMENT_NAME_PREFIX, "Argument names must begin with '" + argNamePrefix + "'", result);
 				}
 			}
 			if (argNameSuffix != null) {
 				if (name.endsWith("" + argNameSuffix)) {
 					name = name.substring(0, name.length() - 1);
 				} else {
-					throw new ArgsParsingException(INVALID_ARGUMENT_NAME, "Argument names must end with '" + argNameSuffix + "'", result);
+					throw new ArgsParsingException(INVALID_ARGUMENT_NAME_SUFFIX, "Argument names must end with '" + argNameSuffix + "'", result);
 				}
 			}
 			result.name = name;
@@ -53,16 +48,9 @@ class ArgName {
 					name +
 					(argNameSuffix != null ? argNameSuffix : "");
 		} catch (ArgsParsingException argsParsingException) {
-			if (argsParsingOptions.isThrowImmediateParsingExceptions()) {
-				throw argsParsingException;
-			}
-			result.exception = argsParsingException;
+			throw argsParsingException;
 		} catch (Exception ex) {
-			ArgsParsingException argsParsingException = new ArgsParsingException(UNEXPECTED_EXCEPTION, "Unknown error parsing argument name", ex, result);
-			if (argsParsingOptions.isThrowImmediateParsingExceptions()) {
-				throw argsParsingException;
-			}
-			result.exception = argsParsingException;
+			throw new ArgsParsingException(UNEXPECTED_EXCEPTION, "Unknown error parsing argument name", ex, result);
 		}
 		return result;
 	}

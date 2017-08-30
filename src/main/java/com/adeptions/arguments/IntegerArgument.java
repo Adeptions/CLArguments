@@ -13,7 +13,7 @@ public class IntegerArgument extends AbstractArgument<Integer> implements IArgum
 			values.add(definition.validate(Integer.parseInt(rawValue), this, specifiedArgName));
 			specified = true;
 		} catch (NumberFormatException numberFormatException) {
-			throw new ArgsParsingException(INVALID_VALUE, "Value '" + rawValue + "' is not a valid integer (for argument '" + specifiedArgName.displayName + "')", numberFormatException, this, specifiedArgName);
+			throw new ArgsParsingException(INVALID_VALUE, "Value '" + rawValue + "' is not a valid integer (for argument '" + specifiedArgName.getDisplayName() + "')", numberFormatException, this, specifiedArgName);
 		}
 	}
 }

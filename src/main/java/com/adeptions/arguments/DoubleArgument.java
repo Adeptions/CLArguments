@@ -13,7 +13,7 @@ public class DoubleArgument extends AbstractArgument<Double> implements IArgumen
 			values.add(definition.validate(Double.parseDouble(rawValue),this, specifiedArgName));
 			specified = true;
 		} catch (NumberFormatException numberFormatException) {
-			throw new ArgsParsingException(INVALID_VALUE, "Value '" + rawValue + "' is not a valid number (for argument '" + specifiedArgName.displayName + "')", numberFormatException, this, specifiedArgName);
+			throw new ArgsParsingException(INVALID_VALUE, "Value '" + rawValue + "' is not a valid number (for argument '" + specifiedArgName.getDisplayName() + "')", numberFormatException, this, specifiedArgName);
 		}
 	}
 }

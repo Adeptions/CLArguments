@@ -53,18 +53,8 @@ public class ArgumentDefinitions implements List<IArgumentDefinition> {
 		}
 		if (!result.hasSpecifiedInformationals() && result.hasMissingMandatories()) {
 			Collection<IArgument> missingMandatories = result.getMissingMandatories();
-			if (useArgsParsingOptions.isThrowImmediateParsingExceptions()) {
-				StringBuilder exceptionMessageBuilder = new StringBuilder(missingMandatories.size() > 1 ? "The following mandatory arguments were missing:-\n    " : "The following mandatory argument was missing:-\n    ");
-				Iterator<IArgument> iterator = missingMandatories.iterator();
-				while (iterator.hasNext()) {
-					exceptionMessageBuilder.append(iterator.next().getDefinition().getDisplayName(useArgsParsingOptions))
-							.append(iterator.hasNext() ? ", " : "");
-				}
-				throw new ArgsParsingException(MISSING_MANDATORIES, exceptionMessageBuilder.toString());
-			} else {
-				for (IArgument argument: missingMandatories) {
-					result.addParsingException(new ArgsParsingException(MISSING_MANDATORY, "Missing mandatory argument: " + argument.getDefinition().getDisplayName(useArgsParsingOptions), argument));
-				}
+			for (IArgument argument: missingMandatories) {
+				result.addParsingException(new ArgsParsingException(MISSING_MANDATORY, "Missing mandatory argument: " + argument.getDefinition().getDisplayName(useArgsParsingOptions), argument));
 			}
 		}
 		return result;
@@ -72,15 +62,16 @@ public class ArgumentDefinitions implements List<IArgumentDefinition> {
 
 	private static void parseSpaceBetweenArgNameAndValue(String[] args, Arguments arguments, ArgsParsingOptions argsParsingOptions) throws ArgsParsingException {
 		ListIterator<String> iterator = Arrays.asList(args).listIterator();
+		;
 		while (iterator.hasNext()) {
 			String arg = iterator.next();
-			ArgName argName = ArgName.parseSpacedArgNameFromArg(arg, argsParsingOptions);
-			if (argName.isOk()) {
-				IArgument argument = arguments.get(argName.name);
+			ArgName argName = parseSpacedArgName(arg, arguments, argsParsingOptions);
+			if (argName != null) {
+				IArgument argument = arguments.get(argName.getName());
 				if (argument != null) {
 					if (argument.getDefinition().isValued()) {
 						if (!iterator.hasNext()) {
-							generateArgsParsingException(MISSING_VALUE, "Missing value for argument '" + argName.displayName + "'", arguments, argsParsingOptions, argument, argName);
+							generateArgsParsingException(MISSING_VALUE, "Missing value for argument '" + argName.getDisplayName() + "'", arguments, argsParsingOptions, argument, argName);
 						} else {
 							String value = iterator.next();
 							if (checkValueIsNotArgName(value, arguments, argsParsingOptions)) {
@@ -89,7 +80,7 @@ public class ArgumentDefinitions implements List<IArgumentDefinition> {
 								// the value turned out to be an arg name
 								// step backwards so that loop gets the next arg...
 								iterator.previous();
-								generateArgsParsingException(MISSING_VALUE, "Missing value for argument '" + argName.displayName + "'", arguments, argsParsingOptions, argument, argName);
+								generateArgsParsingException(MISSING_VALUE, "Missing value for argument '" + argName.getDisplayName() + "'", arguments, argsParsingOptions, argument, argName);
 							}
 						}
 					} else {
@@ -98,10 +89,18 @@ public class ArgumentDefinitions implements List<IArgumentDefinition> {
 				} else {
 					arguments.foundUnknownArg(argName);
 				}
-			} else {
-				arguments.foundUnknownValue(argName);
 			}
 		}
+	}
+
+	private static ArgName parseSpacedArgName(String arg, Arguments arguments, ArgsParsingOptions argsParsingOptions) throws ArgsParsingException {
+		ArgName result = null;
+		try {
+			result = ArgName.parseSpacedArgNameFromArg(arg, argsParsingOptions);
+		} catch (ArgsParsingException argsParsingException) {
+			arguments.foundUnknownValue(arg, argsParsingException);
+		}
+		return result;
 	}
 
 	private static boolean checkValueIsNotArgName(String value, Arguments arguments, ArgsParsingOptions argsParsingOptions) {
@@ -109,7 +108,7 @@ public class ArgumentDefinitions implements List<IArgumentDefinition> {
 		// trap any exceptions that ArgName may throw...
 		try {
 			ArgName argName = ArgName.parseSpacedArgNameFromArg(value, argsParsingOptions);
-			result = !(argName.isOk() && arguments.get(argName.name) != null);
+			result = arguments.get(argName.getName()) == null;
 		} catch (ArgsParsingException argsParsingException) {
 			// an exception means it's definitely not an arg name...
 			result = true;
@@ -124,11 +123,7 @@ public class ArgumentDefinitions implements List<IArgumentDefinition> {
 
 	static void generateArgsParsingException(ArgsParsingExceptionReason reason, String message, Arguments arguments, ArgsParsingOptions argsParsingOptions, IArgument argument, ArgName specifiedArgName) throws ArgsParsingException {
 		ArgsParsingException argsParsingException = new ArgsParsingException(reason, message, argument, specifiedArgName);
-		if (argsParsingOptions.isThrowImmediateParsingExceptions()) {
-			throw argsParsingException;
-		} else {
-			arguments.addParsingException(argsParsingException);
-		}
+		arguments.addParsingException(argsParsingException);
 	}
 
 	public int size() {

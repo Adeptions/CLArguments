@@ -14,8 +14,6 @@ public class ArgsParsingOptionsTests extends TestCase {
 		assertEquals(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX, argsParsingOptions.getArgNamePrefix());
 		assertNull(argsParsingOptions.getArgNameSuffix());
 		assertNull(argsParsingOptions.getCharacterBetweenArgNameAndValue());
-		assertFalse("Default .isThrowImmediateParsingExceptions() should be false",
-				argsParsingOptions.isThrowImmediateParsingExceptions());
 	}
 
 	public void testArgsParsingOptionsConstructor2() throws Exception {
@@ -105,14 +103,5 @@ public class ArgsParsingOptionsTests extends TestCase {
 		assertNull(argsParsingOptions.getArgNameSuffix());
 		argsParsingOptions.setArgNameSuffix(alternateArgNameSuffix);
 		assertEquals(alternateArgNameSuffix, argsParsingOptions.getArgNameSuffix());
-	}
-
-	public void testArgsParsingOptionsSetThrowImmediate() throws Exception {
-		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
-		assertFalse("Default .isThrowImmediateParsingExceptions() should be false",
-				argsParsingOptions.isThrowImmediateParsingExceptions());
-		argsParsingOptions.setThrowImmediateParsingExceptions(true);
-		assertTrue(".isThrowImmediateParsingExceptions() should now be true",
-				argsParsingOptions.isThrowImmediateParsingExceptions());
 	}
 }

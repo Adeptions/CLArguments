@@ -160,7 +160,12 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 				argumentDefinition5
 		);
 		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
-		argsParsingOptions.setThrowImmediateParsingExceptions(true);
+		argsParsingOptions.setArgsParsingExceptionHandler(new IArgsParsingExceptionHandler() {
+			@Override
+			public ArgsParsingException handle(ArgsParsingException argsParsingException) throws ArgsParsingException {
+				throw argsParsingException;
+			}
+		});
 		Arguments arguments;
 		boolean failed = false;
 		try {
@@ -269,7 +274,12 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 				argumentDefinition2
 		);
 		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
-		argsParsingOptions.setThrowImmediateParsingExceptions(true);
+		argsParsingOptions.setArgsParsingExceptionHandler(new IArgsParsingExceptionHandler() {
+			@Override
+			public ArgsParsingException handle(ArgsParsingException argsParsingException) throws ArgsParsingException {
+				throw argsParsingException;
+			}
+		});
 		boolean failed = false;
 		Arguments arguments;
 		try {
@@ -353,8 +363,8 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 				arguments.hasParsingExceptions());
 		assertEquals(1, arguments.getParsingExceptions().size());
 		assertTrue(".hasUnknownArgs() should be true",
-				arguments.hasUnknownArgs());
-		assertEquals(1, arguments.getUnknownArgs().size());
+				arguments.hasUnknownArgNames());
+		assertEquals(1, arguments.getUnknownArgNames().size());
 	}
 
 	public void testArgsParsingUnknownArgValue() throws Exception {
@@ -372,9 +382,9 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 		assertTrue(".hasParsingExceptions() should be true",
 				arguments.hasParsingExceptions());
 		assertEquals(1, arguments.getParsingExceptions().size());
-		assertTrue(".hasUnknownArgs() should be true",
-				arguments.hasUnknownArgs());
-		assertEquals(1, arguments.getUnknownArgs().size());
+		assertTrue(".hasUnknownArgValues() should be true",
+				arguments.hasUnknownArgValues());
+		assertEquals(1, arguments.getUnknownArgValues().size());
 	}
 
 	public void testArgsParsingUnknownArgValue2() throws Exception {
@@ -393,13 +403,18 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 				arguments.hasParsingExceptions());
 		assertEquals(1, arguments.getParsingExceptions().size());
 		assertTrue(".hasUnknownArgs() should be true",
-				arguments.hasUnknownArgs());
-		assertEquals(1, arguments.getUnknownArgs().size());
+				arguments.hasUnknownArgNames());
+		assertEquals(1, arguments.getUnknownArgNames().size());
 	}
 
 	public void testArgsParsingUnknownArgValue3() throws Exception {
 		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
-		argsParsingOptions.setThrowImmediateParsingExceptions(true);
+		argsParsingOptions.setArgsParsingExceptionHandler(new IArgsParsingExceptionHandler() {
+			@Override
+			public ArgsParsingException handle(ArgsParsingException argsParsingException) throws ArgsParsingException {
+				throw argsParsingException;
+			}
+		});
 		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions(
 				argumentDefinition2,
 				argumentDefinition3,
@@ -421,7 +436,12 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 
 	public void testArgsParsingUnknownArgValue4() throws Exception {
 		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
-		argsParsingOptions.setThrowImmediateParsingExceptions(true);
+		argsParsingOptions.setArgsParsingExceptionHandler(new IArgsParsingExceptionHandler() {
+			@Override
+			public ArgsParsingException handle(ArgsParsingException argsParsingException) throws ArgsParsingException {
+				throw argsParsingException;
+			}
+		});
 		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions(
 				argumentDefinition2,
 				argumentDefinition3,

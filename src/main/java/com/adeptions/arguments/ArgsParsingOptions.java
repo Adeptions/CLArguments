@@ -9,7 +9,12 @@ public class ArgsParsingOptions {
 	protected Character characterBetweenArgNameAndValue;
 	protected Character argNamePrefix;
 	protected Character argNameSuffix;
-	protected boolean throwImmediateParsingExceptions = false;
+	protected IArgsParsingExceptionHandler argsParsingExceptionHandler = new IArgsParsingExceptionHandler() {
+		@Override
+		public ArgsParsingException handle(ArgsParsingException argsParsingException) throws ArgsParsingException {
+			return argsParsingException;
+		}
+	};
 
 	public ArgsParsingOptions() {
 		spaceBetweenArgNameAndValue = true;
@@ -62,11 +67,11 @@ public class ArgsParsingOptions {
 		this.argNameSuffix = argNameSuffix;
 	}
 
-	public boolean isThrowImmediateParsingExceptions() {
-		return throwImmediateParsingExceptions;
+	public IArgsParsingExceptionHandler getArgsParsingExceptionHandler() {
+		return argsParsingExceptionHandler;
 	}
 
-	public void setThrowImmediateParsingExceptions(boolean throwImmediateParsingExceptions) {
-		this.throwImmediateParsingExceptions = throwImmediateParsingExceptions;
+	public void setArgsParsingExceptionHandler(IArgsParsingExceptionHandler argsParsingExceptionHandler) {
+		this.argsParsingExceptionHandler = argsParsingExceptionHandler;
 	}
 }
