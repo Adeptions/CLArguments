@@ -13,9 +13,10 @@ public abstract class AbstractArgumentDefinition<T> implements IArgumentDefiniti
 	protected final String description;
 	protected String format;
 	protected boolean mandatory;
-	protected boolean multiplesAllowed;
 	protected IArgumentValueValidator valueValidator;
 	private Set<String> alternativeNames = new HashSet<String>();
+	protected boolean hasDefaultValue;
+	protected T defaultValue;
 
 	AbstractArgumentDefinition(@NotNull ArgumentDefinitionType type, @NotNull String name, @NotNull String description) {
 		if (type == null) {
@@ -131,12 +132,12 @@ public abstract class AbstractArgumentDefinition<T> implements IArgumentDefiniti
 		this.mandatory = mandatory;
 	}
 
-	public boolean areMultiplesAllowed() {
-		return multiplesAllowed;
+	public IArgumentValueValidator getValidator() {
+		return valueValidator;
 	}
 
-	public void setMultiplesAllowed(boolean multiplesAllowed) {
-		this.multiplesAllowed = multiplesAllowed;
+	public void setValidator(IArgumentValueValidator valueValidator) {
+		this.valueValidator = valueValidator;
 	}
 
 	public Set<String> getAlternativeNames() {
@@ -145,7 +146,7 @@ public abstract class AbstractArgumentDefinition<T> implements IArgumentDefiniti
 	}
 
 	public IArgumentDefinition<T> addValidator(IArgumentValueValidator valueValidator) {
-		this.valueValidator = valueValidator;
+		setValidator(valueValidator);
 		return this;
 	}
 
@@ -154,8 +155,22 @@ public abstract class AbstractArgumentDefinition<T> implements IArgumentDefiniti
 		return this;
 	}
 
-	public IArgumentDefinition<T> makeMultiplesAllowed() {
-		multiplesAllowed = true;
+
+	public boolean hasDefaultValue() {
+		return hasDefaultValue;
+	}
+
+	public T getDefaultValue() {
+		return defaultValue;
+	}
+
+	public void setDefaultValue(T defaultValue) {
+		this.defaultValue = defaultValue;
+		this.hasDefaultValue = true;
+	}
+
+	public IArgumentDefinition<T> addDefaultValue(T defaultValue) {
+		setDefaultValue(defaultValue);
 		return this;
 	}
 }

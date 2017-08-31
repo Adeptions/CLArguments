@@ -15,13 +15,10 @@ public class ArgumentDefinitionConstructionTests extends TestCase {
 		assertEquals(testName, stringArgumentDefinition.getName());
 		assertEquals(testDescription, stringArgumentDefinition.getDescription());
 		assertEquals(ArgumentDefinitionType.VALUED, stringArgumentDefinition.getType());
-		assertEquals(false, stringArgumentDefinition.areMultiplesAllowed());
 		assertEquals(0, stringArgumentDefinition.getAlternativeNames().size());
 		assertFalse("Default .hasDefaultValue() should be false",
 				stringArgumentDefinition.hasDefaultValue());
 		assertEquals(null, stringArgumentDefinition.getDefaultValue());
-		assertFalse("Default .areMultiplesAllowed() should be false",
-				stringArgumentDefinition.areMultiplesAllowed());
 		assertTrue(".isValued() should be true",
 				stringArgumentDefinition.isValued());
 		assertFalse(".isFlag() should be false",
@@ -128,12 +125,10 @@ public class ArgumentDefinitionConstructionTests extends TestCase {
 	}
 
 	public void testIntegerArgumentDefinitionChainedConstruction() throws Exception {
-		IArgumentDefinition<Integer> integerArgumentDefinition = new IntegerArgumentDefinition(testName, testDescription).setDefaultValue(defaultIntegerValue).makeMultiplesAllowed().makeMandatory();
+		IArgumentDefinition<Integer> integerArgumentDefinition = new IntegerArgumentDefinition(testName, testDescription).addDefaultValue(defaultIntegerValue).makeMandatory();
 		assertTrue(".hasDefaultValue() should be true",
 				integerArgumentDefinition.hasDefaultValue());
 		assertEquals(defaultIntegerValue, integerArgumentDefinition.getDefaultValue());
-		assertTrue(".areMultiplesAllowed() should be true",
-				integerArgumentDefinition.areMultiplesAllowed());
 		assertTrue(".isMandatory() should be true",
 				integerArgumentDefinition.isMandatory());
 	}
@@ -154,12 +149,10 @@ public class ArgumentDefinitionConstructionTests extends TestCase {
 	}
 
 	public void testDoubleArgumentDefinitionChainedConstruction() throws Exception {
-		IArgumentDefinition<Double> doubleArgumentDefinition = new DoubleArgumentDefinition(testName, testDescription).setDefaultValue(defaultDoubleValue).makeMultiplesAllowed().makeMandatory();
+		IArgumentDefinition<Double> doubleArgumentDefinition = new DoubleArgumentDefinition(testName, testDescription).addDefaultValue(defaultDoubleValue).makeMandatory();
 		assertTrue(".hasDefaultValue() should be true",
 				doubleArgumentDefinition.hasDefaultValue());
 		assertEquals(defaultDoubleValue, doubleArgumentDefinition.getDefaultValue());
-		assertTrue(".areMultiplesAllowed() should be true",
-				doubleArgumentDefinition.areMultiplesAllowed());
 		assertTrue(".isMandatory() should be true",
 				doubleArgumentDefinition.isMandatory());
 	}
@@ -180,12 +173,10 @@ public class ArgumentDefinitionConstructionTests extends TestCase {
 	}
 
 	public void testBooleanArgumentDefinitionChainedConstruction() throws Exception {
-		IArgumentDefinition<Boolean> booleanIArgumentDefinition = new BooleanArgumentDefinition(testName, testDescription).setDefaultValue(Boolean.TRUE).makeMultiplesAllowed().makeMandatory();
+		IArgumentDefinition<Boolean> booleanIArgumentDefinition = new BooleanArgumentDefinition(testName, testDescription).addDefaultValue(Boolean.TRUE).makeMandatory();
 		assertTrue(".hasDefaultValue() should be true",
 				booleanIArgumentDefinition.hasDefaultValue());
 		assertEquals(Boolean.TRUE, booleanIArgumentDefinition.getDefaultValue());
-		assertTrue(".areMultiplesAllowed() should be true",
-				booleanIArgumentDefinition.areMultiplesAllowed());
 		assertTrue(".isMandatory() should be true",
 				booleanIArgumentDefinition.isMandatory());
 	}
@@ -210,12 +201,10 @@ public class ArgumentDefinitionConstructionTests extends TestCase {
 	}
 
 	public void testFlagArgumentDefinitionChainedConstruction() throws Exception {
-		IArgumentDefinition<Boolean> flagArgumentDefinition = new FlagArgumentDefinition(testName, testDescription).setDefaultValue(true).makeMultiplesAllowed().makeMandatory();
+		IArgumentDefinition<Boolean> flagArgumentDefinition = new FlagArgumentDefinition(testName, testDescription).addDefaultValue(true).makeMandatory();
 		assertTrue(".hasDefaultValue() should be true",
 				flagArgumentDefinition.hasDefaultValue());
 		assertEquals(Boolean.TRUE, flagArgumentDefinition.getDefaultValue());
-		assertTrue(".areMultiplesAllowed() should be true",
-				flagArgumentDefinition.areMultiplesAllowed());
 		assertTrue(".isMandatory() should be true",
 				flagArgumentDefinition.isMandatory());
 	}
@@ -240,12 +229,10 @@ public class ArgumentDefinitionConstructionTests extends TestCase {
 	}
 
 	public void testInformationalArgumentDefinitionChainedConstruction() throws Exception {
-		IArgumentDefinition<Boolean> informationalArgumentDefinition = new InformationalArgumentDefinition(testName, testDescription).setDefaultValue(true).makeMultiplesAllowed().makeMandatory();
-		assertFalse("Default .hasDefaultValue() should be false",
+		IArgumentDefinition<Boolean> informationalArgumentDefinition = new InformationalArgumentDefinition(testName, testDescription).addDefaultValue(true).makeMandatory();
+		assertTrue("Default .hasDefaultValue() should be true",
 				informationalArgumentDefinition.hasDefaultValue());
-		assertNull(informationalArgumentDefinition.getDefaultValue());
-		assertTrue(".areMultiplesAllowed() should be true",
-				informationalArgumentDefinition.areMultiplesAllowed());
+		assertNotNull(informationalArgumentDefinition.getDefaultValue());
 		assertTrue(".isMandatory() should be true",
 				informationalArgumentDefinition.isMandatory());
 	}
@@ -281,34 +268,24 @@ public class ArgumentDefinitionConstructionTests extends TestCase {
 	}
 
 	public void testStringArgumentDefinitionChainedConstruction() throws Exception {
-		IArgumentDefinition<String> stringArgumentDefinition = new StringArgumentDefinition(testName, testDescription).setDefaultValue(defaultStringValue);
+		IArgumentDefinition<String> stringArgumentDefinition = new StringArgumentDefinition(testName, testDescription).addDefaultValue(defaultStringValue);
 		assertTrue(".hasDefaultValue() should be true",
 				stringArgumentDefinition.hasDefaultValue());
 		assertEquals(defaultStringValue, stringArgumentDefinition.getDefaultValue());
 	}
 
 	public void testStringArgumentDefinitionChained2Construction() throws Exception {
-		IArgumentDefinition<String> stringArgumentDefinition = new StringArgumentDefinition(testName, testDescription).makeMultiplesAllowed();
-		assertTrue(".areMultiplesAllowed() should be true",
-				stringArgumentDefinition.areMultiplesAllowed());
+		IArgumentDefinition<String> stringArgumentDefinition = new StringArgumentDefinition(testName, testDescription).addDefaultValue(defaultStringValue);
+		assertTrue(".hasDefaultValue() should be true",
+				stringArgumentDefinition.hasDefaultValue());
+		assertEquals(defaultStringValue, stringArgumentDefinition.getDefaultValue());
 	}
 
 	public void testStringArgumentDefinitionChained3Construction() throws Exception {
-		IArgumentDefinition<String> stringArgumentDefinition = new StringArgumentDefinition(testName, testDescription).setDefaultValue(defaultStringValue).makeMultiplesAllowed();
+		IArgumentDefinition<String> stringArgumentDefinition = new StringArgumentDefinition(testName, testDescription).addDefaultValue(defaultStringValue).makeMandatory();
 		assertTrue(".hasDefaultValue() should be true",
 				stringArgumentDefinition.hasDefaultValue());
 		assertEquals(defaultStringValue, stringArgumentDefinition.getDefaultValue());
-		assertTrue(".areMultiplesAllowed() should be true",
-				stringArgumentDefinition.areMultiplesAllowed());
-	}
-
-	public void testStringArgumentDefinitionChained4Construction() throws Exception {
-		IArgumentDefinition<String> stringArgumentDefinition = new StringArgumentDefinition(testName, testDescription).setDefaultValue(defaultStringValue).makeMultiplesAllowed().makeMandatory();
-		assertTrue(".hasDefaultValue() should be true",
-				stringArgumentDefinition.hasDefaultValue());
-		assertEquals(defaultStringValue, stringArgumentDefinition.getDefaultValue());
-		assertTrue(".areMultiplesAllowed() should be true",
-				stringArgumentDefinition.areMultiplesAllowed());
 		assertTrue(".isMandatory() should be true",
 				stringArgumentDefinition.isMandatory());
 	}
@@ -333,7 +310,7 @@ public class ArgumentDefinitionConstructionTests extends TestCase {
 		}
 
 		@Override
-		public IArgumentDefinition<Boolean> setDefaultValue(Boolean value) {
+		public IArgumentDefinition<Boolean> addDefaultValue(Boolean value) {
 			return null;
 		}
 

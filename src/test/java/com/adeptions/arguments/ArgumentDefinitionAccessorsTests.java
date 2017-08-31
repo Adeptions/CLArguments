@@ -15,12 +15,17 @@ public class ArgumentDefinitionAccessorsTests extends TestCase {
 				stringArgumentDefinition.isMandatory());
 	}
 
-	public void testArgumentDefinitionSetMultiplesAllowed() throws Exception {
+	public void testArgumentDefinitionSetValidator() throws Exception {
 		StringArgumentDefinition stringArgumentDefinition = new StringArgumentDefinition(testName, testDescription);
-		assertFalse("Default .areMultiplesAllowed() should be false",
-				stringArgumentDefinition.areMultiplesAllowed());
-		stringArgumentDefinition.setMultiplesAllowed(true);
-		assertTrue(".areMultiplesAllowed() should now be true",
-				stringArgumentDefinition.areMultiplesAllowed());
+		assertNull("Default .getValidator() should be null",
+				stringArgumentDefinition.getValidator());
+		stringArgumentDefinition.setValidator(new IArgumentValueValidator() {
+			@Override
+			public Object validate(Object value, IArgument argument) throws ArgsParsingException {
+				return null;
+			}
+		});
+		assertNotNull(".getValidator() should now be set",
+				stringArgumentDefinition.getValidator());
 	}
 }

@@ -13,13 +13,10 @@ public class ArgumentDefinitionConstructionExtensibilityTests extends TestCase {
 		assertEquals(testName, fooEnumArgumentDefinition.getName());
 		assertEquals(testDescription, fooEnumArgumentDefinition.getDescription());
 		assertEquals(ArgumentDefinitionType.VALUED, fooEnumArgumentDefinition.getType());
-		assertEquals(false, fooEnumArgumentDefinition.areMultiplesAllowed());
 		assertEquals(0, fooEnumArgumentDefinition.getAlternativeNames().size());
 		assertFalse("Default .hasDefaultValue() should be false",
 				fooEnumArgumentDefinition.hasDefaultValue());
 		assertEquals(null, fooEnumArgumentDefinition.getDefaultValue());
-		assertFalse("Default .areMultiplesAllowed() should be false",
-				fooEnumArgumentDefinition.areMultiplesAllowed());
 		assertTrue(".isValued() should be true",
 				fooEnumArgumentDefinition.isValued());
 		assertFalse(".isFlag() should be false",
@@ -31,14 +28,14 @@ public class ArgumentDefinitionConstructionExtensibilityTests extends TestCase {
 	}
 
 	public void testFooEnumArgumentDefinitionConstructorWithDefault() throws Exception {
-		IArgumentDefinition<FooEnum> fooEnumArgumentDefinition = new FooEnumArgumentDefinition(testName, testDescription).setDefaultValue(FooEnum.FOO_2);
+		IArgumentDefinition<FooEnum> fooEnumArgumentDefinition = new FooEnumArgumentDefinition(testName, testDescription).addDefaultValue(FooEnum.FOO_2);
 		assertTrue(".hasDefaultValue() should be true",
 				fooEnumArgumentDefinition.hasDefaultValue());
 		assertEquals(FooEnum.FOO_2, fooEnumArgumentDefinition.getDefaultValue());
 	}
 
 	public void testFooEnumArgumentDefinitionArgumentCreate() throws Exception {
-		IArgumentDefinition<FooEnum> fooEnumArgumentDefinition = new FooEnumArgumentDefinition(testName, testDescription).setDefaultValue(FooEnum.FOO_2);
+		IArgumentDefinition<FooEnum> fooEnumArgumentDefinition = new FooEnumArgumentDefinition(testName, testDescription).addDefaultValue(FooEnum.FOO_2);
 		IArgument<FooEnum> fooEnumIArgument = fooEnumArgumentDefinition.createArgumentInstance();
 		assertFalse(".isSpecified() should be false",
 				fooEnumIArgument.isSpecified());
@@ -76,7 +73,7 @@ public class ArgumentDefinitionConstructionExtensibilityTests extends TestCase {
 		}
 
 		@Override
-		public IArgumentDefinition<FooEnum> setDefaultValue(FooEnum defaultValue) {
+		public IArgumentDefinition<FooEnum> addDefaultValue(FooEnum defaultValue) {
 			hasDefaultValue = true;
 			this.defaultValue = defaultValue;
 			return this;

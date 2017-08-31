@@ -9,18 +9,6 @@ public class InformationalArgumentDefinition extends AbstractArgumentDefinition<
 		super(ArgumentDefinitionType.INFORMATIONAL, names, description);
 	}
 
-	public boolean hasDefaultValue() {
-		return false;
-	}
-
-	public Boolean getDefaultValue() {
-		return null;
-	}
-
-	public IArgumentDefinition<Boolean> setDefaultValue(Boolean defaultValue) {
-		return this;
-	}
-
 	public InformationalArgument createArgumentInstance() {
 		return new InformationalArgument(this);
 	}

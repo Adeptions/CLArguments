@@ -14,20 +14,18 @@ public interface IArgumentDefinition<T> {
 	boolean isInformational();
 	boolean isMandatory();
 	void setMandatory(boolean mandatory);
-	boolean areMultiplesAllowed();
-	void setMultiplesAllowed(boolean multiplesAllowed);
 	boolean hasDefaultValue();
 	T getDefaultValue();
+	void setDefaultValue(T value);
+	IArgumentValueValidator getValidator();
+	void setValidator(IArgumentValueValidator valueValidator);
 	Set<String> getAlternativeNames();
 	T validate(T value, IArgument<T> argument, ArgName specifiedArgName) throws ArgsParsingException;
 
 	IArgumentDefinition<T> addFormat(String format);
 	IArgumentDefinition<T> addValidator(IArgumentValueValidator valueValidator);
-
 	IArgumentDefinition<T> makeMandatory();
-	IArgumentDefinition<T> makeMultiplesAllowed();
-
-	IArgumentDefinition<T> setDefaultValue(T value);
+	IArgumentDefinition<T> addDefaultValue(T value);
 
 	IArgument<T> createArgumentInstance();
 }
