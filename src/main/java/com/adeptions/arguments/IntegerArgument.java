@@ -8,7 +8,7 @@ public class IntegerArgument extends AbstractArgument<Integer> implements IArgum
 	}
 
 	@Override
-	public void setRawValue(ArgName specifiedArgName, String rawValue) throws ArgsParsingException {
+	public void setRawValue(String rawValue, ArgName specifiedArgName) throws ArgsParsingException {
 		try {
 			values.add(definition.validate(Integer.parseInt(rawValue), this, specifiedArgName));
 			specified = true;

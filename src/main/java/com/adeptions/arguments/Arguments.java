@@ -1,6 +1,7 @@
 package com.adeptions.arguments;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 import static com.adeptions.arguments.ArgsParsingExceptionReason.*;
 
@@ -8,10 +9,8 @@ public final class Arguments {
 	private ArgumentDefinitions argumentDefinitions;
 	private ArgsParsingOptions argsParsingOptions;
 	private List<IArgument> arguments = new ArrayList<IArgument>();
-	private Map<String,IArgument> specifiedArguments = new HashMap<String,IArgument>();
 	private Map<String,IArgument> argumentsMap = new HashMap<String,IArgument>();
 	private Map<String,IArgument> specifiedInformationals = new HashMap<String,IArgument>();
-	private Map<String,IArgument> missingMandatories = new HashMap<String,IArgument>();
 	private List<ArgsParsingException> exceptions = new ArrayList<ArgsParsingException>();
 	private Map<String,ArgName> unknownArgNames = new HashMap<String,ArgName>();
 	private List<String> unknownArgValues = new ArrayList<String>();
@@ -25,11 +24,9 @@ public final class Arguments {
 	private void initialize() {
 		for (IArgumentDefinition argumentDefinition: argumentDefinitions) {
 			IArgument argument = argumentDefinition.createArgumentInstance();
+			argument.setParentArguments(this);
 			arguments.add(argument);
 			argumentsMap.put(argumentDefinition.getName(), argument);
-			if (argumentDefinition.isMandatory()) {
-				missingMandatories.put(argumentDefinition.getName(), argument);
-			}
 			Iterator<String> alternativeNames = argumentDefinition.getAlternativeNames().iterator();
 			while (alternativeNames.hasNext()) {
 				argumentsMap.put(alternativeNames.next(), argument);
@@ -41,11 +38,7 @@ public final class Arguments {
 		IArgumentDefinition argumentDefinition = argument.getDefinition();
 		String argumentName = argumentDefinition.getName();
 		try {
-			argument.setRawValue(specifiedArgName, rawValue);
-			specifiedArguments.put(argumentName, argument);
-			if (argumentDefinition.isMandatory()) {
-				missingMandatories.remove(argumentName);
-			}
+			argument.setRawValue(rawValue, specifiedArgName);
 		} catch (ArgsParsingException argsParsingException) {
 			addParsingException(argsParsingException);
 		}
@@ -55,12 +48,8 @@ public final class Arguments {
 		IArgumentDefinition argumentDefinition = argument.getDefinition();
 		String argumentName = argumentDefinition.getName();
 		argument.setSpecified();
-		specifiedArguments.put(argumentName, argument);
 		if (argumentDefinition.isInformational()) {
 			specifiedInformationals.put(argumentName, argument);
-		}
-		if (argumentDefinition.isMandatory()) {
-			missingMandatories.remove(argumentName);
 		}
 	}
 
@@ -87,11 +76,20 @@ public final class Arguments {
 	}
 
 	public boolean hasMissingMandatories() {
-		return missingMandatories.size() != 0;
+		boolean result = false;
+		for (IArgument argument: arguments) {
+			if (!argument.isSpecified() && argument.getDefinition().isMandatory()) {
+				result = true;
+				break;
+			}
+		}
+		return result;
 	}
 
-	public Collection<IArgument> getMissingMandatories() {
-		return missingMandatories.values();
+	public List<IArgument> getMissingMandatories() {
+		List<IArgument> result = new ArrayList<IArgument>(arguments);
+		result.removeIf(argument -> argument.isSpecified() || !argument.getDefinition().isMandatory());
+		return result;
 	}
 
 	public boolean hasUnknownArgNames() {
@@ -114,8 +112,21 @@ public final class Arguments {
 		return arguments.size();
 	}
 
-	public int getSpecifiedCount() {
-		return specifiedArguments.size();
+	public boolean anySpecified() {
+		boolean result = false;
+		for (IArgument argument: arguments) {
+			if (argument.isSpecified()) {
+				result = true;
+				break;
+			}
+		}
+		return result;
+	}
+
+	public List<IArgument> getSpecifiedArguments() {
+		List<IArgument> result = new ArrayList<IArgument>(arguments);
+		result.removeIf((argument -> !argument.isSpecified()));
+		return result;
 	}
 
 	public ArgumentDefinitions getArgumentDefinitions() {

@@ -40,7 +40,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 		);
 		Arguments arguments = argumentDefinitions.parseArgs(new String[0]);
 		assertEquals(argumentDefinitions.size(), arguments.size());
-		assertEquals(0, arguments.getSpecifiedCount());
+		assertFalse("No arguments were specified", arguments.anySpecified());
 		assertEquals(argumentDefinitions, arguments.getArgumentDefinitions());
 		assertTrue(".hasParsingExceptions() should be true (there was one missing mandatory argument)",
 				arguments.hasParsingExceptions());
@@ -82,7 +82,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 				ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testArgumentName6, "true"
 		});
 		assertEquals(argumentDefinitions.size(), arguments.size());
-		assertEquals(argumentDefinitions.size(), arguments.getSpecifiedCount());
+		assertEquals(argumentDefinitions.size(), arguments.getSpecifiedArguments().size());
 		assertTrue(".isSpecified() should be true",
 				arguments.get(testArgumentName1).isSpecified());
 		assertTrue(".isSpecified() should be true",
@@ -118,7 +118,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 				"foo"
 		});
 		assertEquals(argumentDefinitions.size(), arguments.size());
-		assertEquals(1, arguments.getSpecifiedCount());
+		assertEquals(1, arguments.getSpecifiedArguments().size());
 		IArgument<String> argument = arguments.get(testArgumentName1);
 		assertNotNull(argument);
 		assertTrue("Argument .isSpecified() should be true",
@@ -138,7 +138,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 				ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testArgumentName1
 		});
 		assertEquals(argumentDefinitions.size(), arguments.size());
-		assertEquals(0, arguments.getSpecifiedCount());
+		assertEquals(0, arguments.getSpecifiedArguments().size());
 		IArgument<String> argument = arguments.get(testArgumentName1);
 		assertNotNull(argument);
 		assertFalse("Argument .isSpecified() should be false",
@@ -186,7 +186,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 				"123"
 		});
 		assertEquals(argumentDefinitions.size(), arguments.size());
-		assertEquals(1, arguments.getSpecifiedCount());
+		assertEquals(1, arguments.getSpecifiedArguments().size());
 		IArgument argument = arguments.get(testArgumentName2);
 		assertNotNull(argument);
 		assertTrue("Argument .isSpecified() should be true",
@@ -204,7 +204,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 				"123.4"
 		});
 		assertEquals(argumentDefinitions.size(), arguments.size());
-		assertEquals(1, arguments.getSpecifiedCount());
+		assertEquals(1, arguments.getSpecifiedArguments().size());
 		IArgument argument = arguments.get(testArgumentName3);
 		assertNotNull(argument);
 		assertTrue("Argument .isSpecified() should be true",
@@ -221,7 +221,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 				ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testArgumentName4
 		});
 		assertEquals(argumentDefinitions.size(), arguments.size());
-		assertEquals(1, arguments.getSpecifiedCount());
+		assertEquals(1, arguments.getSpecifiedArguments().size());
 		IArgument argument = arguments.get(testArgumentName4);
 		assertNotNull(argument);
 		assertTrue("Argument .isSpecified() should be true",
@@ -238,7 +238,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 				ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testArgumentName5
 		});
 		assertEquals(argumentDefinitions.size(), arguments.size());
-		assertEquals(1, arguments.getSpecifiedCount());
+		assertEquals(1, arguments.getSpecifiedArguments().size());
 		IArgument argument = arguments.get(testArgumentName5);
 		assertNotNull(argument);
 		assertTrue("Argument .isSpecified() should be true",
@@ -259,7 +259,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 				"xxx"
 		});
 		assertEquals(argumentDefinitions.size(), arguments.size());
-		assertEquals(0, arguments.getSpecifiedCount());
+		assertEquals(0, arguments.getSpecifiedArguments().size());
 		IArgument argument = arguments.get(testArgumentName2);
 		assertNotNull(argument);
 		assertFalse("Argument .isSpecified() should be false",
@@ -313,7 +313,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 				"xxx"
 		});
 		assertEquals(argumentDefinitions.size(), arguments.size());
-		assertEquals(0, arguments.getSpecifiedCount());
+		assertEquals(0, arguments.getSpecifiedArguments().size());
 		IArgument argument = arguments.get(testArgumentName3);
 		assertNotNull(argument);
 		assertFalse("Argument .isSpecified() should be false",
@@ -333,7 +333,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 				ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testArgumentName4
 		});
 		assertEquals(argumentDefinitions.size(), arguments.size());
-		assertEquals(1, arguments.getSpecifiedCount());
+		assertEquals(1, arguments.getSpecifiedArguments().size());
 		IArgument argument = arguments.get(testArgumentName3);
 		assertNotNull(argument);
 		assertFalse("Argument .isSpecified() should be false",
@@ -358,7 +358,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 				ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + "badArgName"
 		});
 		assertEquals(argumentDefinitions.size(), arguments.size());
-		assertEquals(0, arguments.getSpecifiedCount());
+		assertEquals(0, arguments.getSpecifiedArguments().size());
 		assertTrue(".hasParsingExceptions() should be true",
 				arguments.hasParsingExceptions());
 		assertEquals(1, arguments.getParsingExceptions().size());
@@ -378,7 +378,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 				"badArgName"
 		});
 		assertEquals(argumentDefinitions.size(), arguments.size());
-		assertEquals(0, arguments.getSpecifiedCount());
+		assertEquals(0, arguments.getSpecifiedArguments().size());
 		assertTrue(".hasParsingExceptions() should be true",
 				arguments.hasParsingExceptions());
 		assertEquals(1, arguments.getParsingExceptions().size());
@@ -398,7 +398,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 				"badArgName"
 		}, new ArgsParsingOptions(null, null, null));
 		assertEquals(argumentDefinitions.size(), arguments.size());
-		assertEquals(0, arguments.getSpecifiedCount());
+		assertEquals(0, arguments.getSpecifiedArguments().size());
 		assertTrue(".hasParsingExceptions() should be true",
 				arguments.hasParsingExceptions());
 		assertEquals(1, arguments.getParsingExceptions().size());

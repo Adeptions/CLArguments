@@ -6,7 +6,7 @@ public class StringArgument extends AbstractArgument<String> implements IArgumen
 	}
 
 	@Override
-	public void setRawValue(ArgName specifiedArgName, String rawValue) throws ArgsParsingException {
+	public void setRawValue(String rawValue, ArgName specifiedArgName) throws ArgsParsingException {
 		values.add(definition.validate(rawValue, this, specifiedArgName));
 		specified = true;
 	}

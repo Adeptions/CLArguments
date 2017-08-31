@@ -10,10 +10,10 @@ public class Application {
 	 */
 	public static void main(String[] args) {
 		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions(
-				new StringArgumentDefinition(new String[] {"say", "s"}, "What to say").makeMandatory().addValidator((value, argument) -> {
-					System.out.println("Custom validator called with: " + value);
+				new StringArgumentDefinition(new String[] {"say", "s"}, "What to say").makeMandatory().addValidator((value, argument, specifiedArgName) -> {
 					if (((String)value).contains(" ")) {
-						throw new ArgsParsingException(ArgsParsingExceptionReason.UNDEFINED, "Cannot contain spaces?");
+						argument.setSpecified();
+						throw new ArgsParsingException(ArgsParsingExceptionReason.INVALID_VALUE, "Cannot contain spaces?", argument);
 					}
 					return value;
 				}),
@@ -24,7 +24,6 @@ public class Application {
 		argsParsingOptions.setArgsParsingExceptionHandler(new IArgsParsingExceptionHandler() {
 			@Override
 			public ArgsParsingException handle(ArgsParsingException argsParsingException) throws ArgsParsingException {
-				System.err.println("Custom exception handler found:- " + argsParsingException);
 				return argsParsingException;
 			}
 		});
@@ -35,7 +34,7 @@ public class Application {
 				for (ArgsParsingException argsParsingException: arguments.getParsingExceptions()) {
 					System.err.println(argsParsingException.getMessage());
 				}
-			} else if (arguments.getSpecifiedCount() == 0 || arguments.get("help").isSpecified()) {
+			} else if (!arguments.anySpecified() || arguments.get("help").isSpecified()) {
 				System.out.println("Help:-");
 				System.out.println(argumentDefinitions.getHelp(argsParsingOptions));
 			} else if (!arguments.hasSpecifiedInformationals()) {

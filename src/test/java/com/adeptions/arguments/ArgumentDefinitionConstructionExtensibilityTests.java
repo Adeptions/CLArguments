@@ -91,7 +91,7 @@ public class ArgumentDefinitionConstructionExtensibilityTests extends TestCase {
 		}
 
 		@Override
-		public void setRawValue(ArgName specifiedArgName, String rawValue) throws ArgsParsingException {
+		public void setRawValue(String rawValue, ArgName specifiedArgName) throws ArgsParsingException {
 			FooEnum setValue = null;
 			for (FooEnum value: FooEnum.values()) {
 				if (value.name().equals(rawValue)) {

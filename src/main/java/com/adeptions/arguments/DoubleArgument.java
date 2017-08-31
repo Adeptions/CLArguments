@@ -8,7 +8,7 @@ public class DoubleArgument extends AbstractArgument<Double> implements IArgumen
 	}
 
 	@Override
-	public void setRawValue(ArgName specifiedArgName, String rawValue) throws ArgsParsingException {
+	public void setRawValue(String rawValue, ArgName specifiedArgName) throws ArgsParsingException {
 		try {
 			values.add(definition.validate(Double.parseDouble(rawValue),this, specifiedArgName));
 			specified = true;

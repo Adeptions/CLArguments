@@ -78,7 +78,7 @@ public class ArgumentTests extends TestCase {
 		ArgName specifiedArgName = ArgName.parseSpacedArgNameFromArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testName, new ArgsParsingOptions());
 		assertFalse(".isSpecified() should be false",
 				argument.isSpecified());
-		argument.setRawValue(specifiedArgName, "123.4");
+		argument.setRawValue("123.4", specifiedArgName);
 		assertTrue(".isSpecified() should now be true",
 				argument.isSpecified());
 		assertEquals(123.4, argument.getValue());
@@ -90,7 +90,7 @@ public class ArgumentTests extends TestCase {
 		ArgName specifiedArgName = ArgName.parseSpacedArgNameFromArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testName, new ArgsParsingOptions());
 		boolean failed = false;
 		try {
-			argument.setRawValue(specifiedArgName, "xxx");
+			argument.setRawValue("xxx", specifiedArgName);
 		} catch (ArgsParsingException argsParsingException) {
 			failed = true;
 		}
@@ -104,7 +104,7 @@ public class ArgumentTests extends TestCase {
 		ArgName specifiedArgName = ArgName.parseSpacedArgNameFromArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testName, new ArgsParsingOptions());
 		assertFalse(".isSpecified() should be false",
 				argument.isSpecified());
-		argument.setRawValue(specifiedArgName, "123");
+		argument.setRawValue("123", specifiedArgName);
 		assertTrue(".isSpecified() should now be true",
 				argument.isSpecified());
 		assertEquals((Integer)123, argument.getValue());
@@ -116,7 +116,7 @@ public class ArgumentTests extends TestCase {
 		ArgName specifiedArgName = ArgName.parseSpacedArgNameFromArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testName, new ArgsParsingOptions());
 		boolean failed = false;
 		try {
-			argument.setRawValue(specifiedArgName, "xxx");
+			argument.setRawValue("xxx", specifiedArgName);
 		} catch (ArgsParsingException argsParsingException) {
 			failed = true;
 		}
@@ -130,7 +130,7 @@ public class ArgumentTests extends TestCase {
 		ArgName specifiedArgName = ArgName.parseSpacedArgNameFromArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testName, new ArgsParsingOptions());
 		assertFalse(".isSpecified() should be false",
 				argument.isSpecified());
-		argument.setRawValue(specifiedArgName, "true");
+		argument.setRawValue("true", specifiedArgName);
 		assertTrue(".isSpecified() should now be true",
 				argument.isSpecified());
 		assertEquals(Boolean.TRUE, argument.getValue());
@@ -142,7 +142,7 @@ public class ArgumentTests extends TestCase {
 		ArgName specifiedArgName = ArgName.parseSpacedArgNameFromArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testName, new ArgsParsingOptions());
 		boolean failed = false;
 		try {
-			argument.setRawValue(specifiedArgName, "xxx");
+			argument.setRawValue("xxx", specifiedArgName);
 		} catch (ArgsParsingException argsParsingException) {
 			failed = true;
 		}
@@ -156,7 +156,7 @@ public class ArgumentTests extends TestCase {
 		ArgName specifiedArgName = ArgName.parseSpacedArgNameFromArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testName, new ArgsParsingOptions());
 		assertFalse(".isSpecified() should be false",
 				argument.isSpecified());
-		argument.setRawValue(specifiedArgName, "foo");
+		argument.setRawValue("foo", specifiedArgName);
 		assertTrue(".isSpecified() should now be true",
 				argument.isSpecified());
 		assertEquals("foo", argument.getValue());
@@ -168,7 +168,7 @@ public class ArgumentTests extends TestCase {
 		ArgName specifiedArgName = ArgName.parseSpacedArgNameFromArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testName, new ArgsParsingOptions());
 		assertFalse(".isSpecified() should be false",
 				argument.isSpecified());
-		argument.setRawValue(specifiedArgName, "foo");
+		argument.setRawValue("foo", specifiedArgName);
 		assertTrue(".isSpecified() should now be true",
 				argument.isSpecified());
 		assertEquals(Boolean.TRUE, argument.getValue());
@@ -180,7 +180,7 @@ public class ArgumentTests extends TestCase {
 		ArgName specifiedArgName = ArgName.parseSpacedArgNameFromArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testName, new ArgsParsingOptions());
 		assertFalse(".isSpecified() should be false",
 				argument.isSpecified());
-		argument.setRawValue(specifiedArgName, "foo");
+		argument.setRawValue("foo", specifiedArgName);
 		assertTrue(".isSpecified() should now be true",
 				argument.isSpecified());
 		assertEquals(Boolean.TRUE, argument.getValue());

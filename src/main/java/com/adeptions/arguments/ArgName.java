@@ -2,7 +2,7 @@ package com.adeptions.arguments;
 
 import static com.adeptions.arguments.ArgsParsingExceptionReason.*;
 
-class ArgName {
+public class ArgName {
 	private String raw;
 	private String name;
 	private String displayName;

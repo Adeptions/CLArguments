@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractArgument<T> implements IArgument<T> {
+	protected Arguments parentArguments;
 	protected IArgumentDefinition<T> definition;
 	protected boolean specified;
 	protected List<T> values = new ArrayList<T>();
+	protected List<String> invalidValues = new ArrayList<String>();
 
 	public AbstractArgument(IArgumentDefinition<T> definition) {
 		this.definition = definition;
@@ -26,7 +28,7 @@ public abstract class AbstractArgument<T> implements IArgument<T> {
 
 	public T getValue() {
 		if (specified) {
-			return values.get(0);
+			return values.size() > 0 ? values.get(0) : null;
 		} else if (definition.hasDefaultValue()) {
 			return definition.getDefaultValue();
 		}
@@ -40,5 +42,13 @@ public abstract class AbstractArgument<T> implements IArgument<T> {
 
 	public List<T> getAllValues() {
 		return values;
+	}
+
+	public Arguments getParentArguments() {
+		return parentArguments;
+	}
+
+	public void setParentArguments(Arguments parentArguments) {
+		this.parentArguments = parentArguments;
 	}
 }

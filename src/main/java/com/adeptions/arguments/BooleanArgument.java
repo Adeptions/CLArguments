@@ -8,7 +8,7 @@ public class BooleanArgument extends AbstractArgument<Boolean> implements IArgum
 	}
 
 	@Override
-	public void setRawValue(ArgName specifiedArgName, String rawValue) throws ArgsParsingException {
+	public void setRawValue(String rawValue, ArgName specifiedArgName) throws ArgsParsingException {
 		if (!"true".equals(rawValue) && !"false".equals(rawValue)) {
 			throw new ArgsParsingException(INVALID_VALUE, "Value '" + rawValue + "' is not a valid boolean (for argument '" + specifiedArgName.getDisplayName() + "')", this);
 		}

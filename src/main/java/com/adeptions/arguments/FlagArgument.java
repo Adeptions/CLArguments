@@ -12,7 +12,7 @@ public class FlagArgument extends AbstractArgument<Boolean> implements IArgument
 	}
 
 	@Override
-	public void setRawValue(ArgName specifiedArgName, String rawValue) {
+	public void setRawValue(String rawValue, ArgName specifiedArgName) {
 		specified = true;
 		values.add(Boolean.TRUE);
 	}

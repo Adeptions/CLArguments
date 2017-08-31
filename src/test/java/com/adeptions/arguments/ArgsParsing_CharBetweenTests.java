@@ -42,7 +42,7 @@ public class ArgsParsing_CharBetweenTests extends TestCase {
 		);
 		Arguments arguments = argumentDefinitions.parseArgs(new String[0], argsParsingOptions);
 		assertEquals(argumentDefinitions.size(), arguments.size());
-		assertEquals(0, arguments.getSpecifiedCount());
+		assertEquals(0, arguments.getSpecifiedArguments().size());
 		assertEquals(argumentDefinitions, arguments.getArgumentDefinitions());
 		assertTrue(".hasParsingExceptions() should be true (there was one missing mandatory argument)",
 				arguments.hasParsingExceptions());
