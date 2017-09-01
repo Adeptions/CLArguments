@@ -1,7 +1,6 @@
 package com.adeptions.arguments;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public abstract class AbstractArgument<T> implements IArgument<T> {
 	protected Arguments parentArguments;

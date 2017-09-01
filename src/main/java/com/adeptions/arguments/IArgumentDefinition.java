@@ -1,6 +1,6 @@
 package com.adeptions.arguments;
 
-import java.util.Set;
+import java.util.*;
 
 public interface IArgumentDefinition<T> {
 	String getName();

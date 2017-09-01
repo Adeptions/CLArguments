@@ -2,8 +2,7 @@ package com.adeptions.arguments;
 
 import com.sun.istack.internal.NotNull;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static com.adeptions.arguments.ArgumentDefinitionType.*;
 

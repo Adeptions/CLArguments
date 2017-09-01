@@ -1,6 +1,6 @@
 package com.adeptions.arguments;
 
-import java.util.List;
+import java.util.*;
 
 public interface IArgument<T> {
 	IArgumentDefinition<T> getDefinition();
