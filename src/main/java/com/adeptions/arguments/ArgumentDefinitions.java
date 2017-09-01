@@ -4,7 +4,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.*;
 
-import static com.adeptions.arguments.ArgsParsingExceptionReason.*;
+import static com.adeptions.arguments.ArgParsingExceptionReason.*;
 
 public class ArgumentDefinitions implements Iterable<IArgumentDefinition> {
 	protected List<IArgumentDefinition> definitions = new ArrayList<IArgumentDefinition>();
@@ -39,11 +39,11 @@ public class ArgumentDefinitions implements Iterable<IArgumentDefinition> {
 		return builder.toString();
 	}
 
-	public Arguments parseArgs(String[] args) throws ArgsParsingException {
+	public Arguments parseArgs(String[] args) throws ArgParsingException {
 		return parseArgs(args, null);
 	}
 
-	public Arguments parseArgs(String[] args, ArgsParsingOptions argsParsingOptions) throws ArgsParsingException {
+	public Arguments parseArgs(String[] args, ArgsParsingOptions argsParsingOptions) throws ArgParsingException {
 		ArgsParsingOptions useArgsParsingOptions = (argsParsingOptions == null ? new ArgsParsingOptions() : argsParsingOptions);
 		Arguments result = new Arguments(this, useArgsParsingOptions);
 		if (useArgsParsingOptions.isSpaceBetweenArgNameAndValue()) {
@@ -54,13 +54,13 @@ public class ArgumentDefinitions implements Iterable<IArgumentDefinition> {
 		if (!result.hasSpecifiedInformationals() && result.hasMissingMandatories()) {
 			Collection<IArgument> missingMandatories = result.getMissingMandatories();
 			for (IArgument argument: missingMandatories) {
-				result.addParsingException(new ArgsParsingException(MISSING_MANDATORY, "Missing mandatory argument: " + argument.getDefinition().getDisplayName(useArgsParsingOptions), argument));
+				result.addParsingException(new ArgParsingException(MISSING_MANDATORY, "Missing mandatory argument: " + argument.getDefinition().getDisplayName(useArgsParsingOptions), argument));
 			}
 		}
 		return result;
 	}
 
-	private static void parseSpaceBetweenArgNameAndValue(String[] args, Arguments arguments, ArgsParsingOptions argsParsingOptions) throws ArgsParsingException {
+	private static void parseSpaceBetweenArgNameAndValue(String[] args, Arguments arguments, ArgsParsingOptions argsParsingOptions) throws ArgParsingException {
 		ListIterator<String> iterator = Arrays.asList(args).listIterator();
 		;
 		while (iterator.hasNext()) {
@@ -93,11 +93,11 @@ public class ArgumentDefinitions implements Iterable<IArgumentDefinition> {
 		}
 	}
 
-	private static ArgName parseSpacedArgName(String arg, Arguments arguments, ArgsParsingOptions argsParsingOptions) throws ArgsParsingException {
+	private static ArgName parseSpacedArgName(String arg, Arguments arguments, ArgsParsingOptions argsParsingOptions) throws ArgParsingException {
 		ArgName result = null;
 		try {
 			result = ArgName.parseSpacedArgNameFromArg(arg, argsParsingOptions);
-		} catch (ArgsParsingException argsParsingException) {
+		} catch (ArgParsingException argsParsingException) {
 			arguments.foundUnknownValue(arg, argsParsingException);
 		}
 		return result;
@@ -109,7 +109,7 @@ public class ArgumentDefinitions implements Iterable<IArgumentDefinition> {
 		try {
 			ArgName argName = ArgName.parseSpacedArgNameFromArg(value, argsParsingOptions);
 			result = arguments.get(argName.getName()) == null;
-		} catch (ArgsParsingException argsParsingException) {
+		} catch (ArgParsingException argsParsingException) {
 			// an exception means it's definitely not an arg name...
 			result = true;
 		}
@@ -121,8 +121,8 @@ public class ArgumentDefinitions implements Iterable<IArgumentDefinition> {
 		throw new NotImplementedException();
 	}
 
-	static void generateArgsParsingException(ArgsParsingExceptionReason reason, String message, Arguments arguments, ArgsParsingOptions argsParsingOptions, IArgument argument, ArgName specifiedArgName) throws ArgsParsingException {
-		ArgsParsingException argsParsingException = new ArgsParsingException(reason, message, argument, specifiedArgName);
+	static void generateArgsParsingException(ArgParsingExceptionReason reason, String message, Arguments arguments, ArgsParsingOptions argsParsingOptions, IArgument argument, ArgName specifiedArgName) throws ArgParsingException {
+		ArgParsingException argsParsingException = new ArgParsingException(reason, message, argument, specifiedArgName);
 		arguments.addParsingException(argsParsingException);
 	}
 

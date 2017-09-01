@@ -25,7 +25,7 @@ public class ArgNameTests extends TestCase {
 		boolean failed = false;
 		try {
 			argName = ArgName.parseSpacedArgNameFromArg("foo", argsParsingOptions);
-		} catch (ArgsParsingException argsParsingException) {
+		} catch (ArgParsingException argsParsingException) {
 			failed = true;
 		}
 		assertTrue("Should have thrown exception",
@@ -38,7 +38,7 @@ public class ArgNameTests extends TestCase {
 		boolean failed = false;
 		try {
 			argName = ArgName.parseSpacedArgNameFromArg("foo", argsParsingOptions);
-		} catch (ArgsParsingException argsParsingException) {
+		} catch (ArgParsingException argsParsingException) {
 			failed = true;
 		}
 		assertTrue("Should have thrown exception",
@@ -51,7 +51,7 @@ public class ArgNameTests extends TestCase {
 		boolean failed = false;
 		try {
 			argName = ArgName.parseSpacedArgNameFromArg("-foo", argsParsingOptions);
-		} catch (ArgsParsingException argsParsingException) {
+		} catch (ArgParsingException argsParsingException) {
 			failed = true;
 		}
 		assertTrue("Should have thrown exception",
@@ -64,7 +64,7 @@ public class ArgNameTests extends TestCase {
 		ArgName argName;
 		try {
 			argName = ArgName.parseSpacedArgNameFromArg("foo", argsParsingOptions);
-		} catch (ArgsParsingException argsParsingException) {
+		} catch (ArgParsingException argsParsingException) {
 			failed = true;
 		}
 		assertTrue("Should have thrown exception",
@@ -75,7 +75,7 @@ public class ArgNameTests extends TestCase {
 		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
 		argsParsingOptions.setArgsParsingExceptionHandler(new IArgsParsingExceptionHandler() {
 			@Override
-			public ArgsParsingException handle(ArgsParsingException argsParsingException) throws ArgsParsingException {
+			public ArgParsingException handle(ArgParsingException argsParsingException) throws ArgParsingException {
 				throw argsParsingException;
 			}
 		});
@@ -83,7 +83,7 @@ public class ArgNameTests extends TestCase {
 		ArgName argName;
 		try {
 			argName = ArgName.parseSpacedArgNameFromArg(null, argsParsingOptions);
-		} catch (ArgsParsingException argsParsingException) {
+		} catch (ArgParsingException argsParsingException) {
 			failed = true;
 		}
 		assertTrue("Should have thrown exception", failed);
@@ -95,7 +95,7 @@ public class ArgNameTests extends TestCase {
 		boolean failed = false;
 		try {
 			argName = ArgName.parseSpacedArgNameFromArg(null, argsParsingOptions);
-		} catch (ArgsParsingException argsParsingException) {
+		} catch (ArgParsingException argsParsingException) {
 			failed = true;
 		}
 		assertTrue("Should have thrown exception", failed);

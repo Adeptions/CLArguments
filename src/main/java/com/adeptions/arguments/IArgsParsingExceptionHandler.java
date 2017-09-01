@@ -2,5 +2,5 @@ package com.adeptions.arguments;
 
 @FunctionalInterface
 public interface IArgsParsingExceptionHandler {
-	ArgsParsingException handle(ArgsParsingException argsParsingException) throws ArgsParsingException;
+	ArgParsingException handle(ArgParsingException argsParsingException) throws ArgParsingException;
 }

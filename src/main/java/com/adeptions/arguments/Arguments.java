@@ -1,9 +1,8 @@
 package com.adeptions.arguments;
 
 import java.util.*;
-import java.util.function.Predicate;
 
-import static com.adeptions.arguments.ArgsParsingExceptionReason.*;
+import static com.adeptions.arguments.ArgParsingExceptionReason.*;
 
 public final class Arguments {
 	private ArgumentDefinitions argumentDefinitions;
@@ -11,7 +10,7 @@ public final class Arguments {
 	private List<IArgument> arguments = new ArrayList<IArgument>();
 	private Map<String,IArgument> argumentsMap = new HashMap<String,IArgument>();
 	private Map<String,IArgument> specifiedInformationals = new HashMap<String,IArgument>();
-	private List<ArgsParsingException> exceptions = new ArrayList<ArgsParsingException>();
+	private List<ArgParsingException> exceptions = new ArrayList<ArgParsingException>();
 	private Map<String,ArgName> unknownArgNames = new HashMap<String,ArgName>();
 	private List<String> unknownArgValues = new ArrayList<String>();
 
@@ -34,12 +33,12 @@ public final class Arguments {
 		}
 	}
 
-	void foundValuedArg(IArgument argument, ArgName specifiedArgName, String rawValue) throws ArgsParsingException {
+	void foundValuedArg(IArgument argument, ArgName specifiedArgName, String rawValue) throws ArgParsingException {
 		IArgumentDefinition argumentDefinition = argument.getDefinition();
 		String argumentName = argumentDefinition.getName();
 		try {
 			argument.setRawValue(rawValue, specifiedArgName);
-		} catch (ArgsParsingException argsParsingException) {
+		} catch (ArgParsingException argsParsingException) {
 			addParsingException(argsParsingException);
 		}
 	}
@@ -53,14 +52,14 @@ public final class Arguments {
 		}
 	}
 
-	void foundUnknownArg(ArgName specifiedArgName) throws ArgsParsingException {
+	void foundUnknownArg(ArgName specifiedArgName) throws ArgParsingException {
 		unknownArgNames.put(specifiedArgName.getName(), specifiedArgName);
-		addParsingException(new ArgsParsingException(UNKNOWN_ARGUMENT, "Unknown argument '" + specifiedArgName.getDisplayName() + "'", specifiedArgName));
+		addParsingException(new ArgParsingException(UNKNOWN_ARGUMENT, "Unknown argument '" + specifiedArgName.getDisplayName() + "'", specifiedArgName));
 	}
 
-	void foundUnknownValue(String unknownValue, ArgsParsingException cause) throws ArgsParsingException {
+	void foundUnknownValue(String unknownValue, ArgParsingException cause) throws ArgParsingException {
 		unknownArgValues.add(unknownValue);
-		addParsingException(new ArgsParsingException(UNKNOWN_ARGUMENT_VALUE, "Unknown argument value '" + unknownValue + "'", cause, new ArgName(unknownValue)));
+		addParsingException(new ArgParsingException(UNKNOWN_ARGUMENT_VALUE, "Unknown argument value '" + unknownValue + "'", cause, new ArgName(unknownValue)));
 	}
 
 	public IArgument get(String argumentName) {
@@ -137,8 +136,8 @@ public final class Arguments {
 		return argsParsingOptions;
 	}
 
-	public void addParsingException(ArgsParsingException argsParsingException) throws ArgsParsingException {
-		ArgsParsingException storeException = argsParsingOptions.getArgsParsingExceptionHandler().handle(argsParsingException);
+	public void addParsingException(ArgParsingException argsParsingException) throws ArgParsingException {
+		ArgParsingException storeException = argsParsingOptions.getArgsParsingExceptionHandler().handle(argsParsingException);
 		if (storeException != null) {
 			exceptions.add(argsParsingException);
 		}
@@ -148,7 +147,7 @@ public final class Arguments {
 		return exceptions.size() != 0;
 	}
 
-	public List<ArgsParsingException> getParsingExceptions() {
+	public List<ArgParsingException> getParsingExceptions() {
 		return exceptions;
 	}
 }

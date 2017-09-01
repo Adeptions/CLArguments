@@ -8,7 +8,7 @@ public interface IArgument<T> {
 	boolean isSpecified();
 	void setSpecified();
 	T getValue();
-	void setRawValue(String rawValue, ArgName specifiedArgName) throws ArgsParsingException;
+	void setRawValue(String rawValue, ArgName specifiedArgName) throws ArgParsingException;
 	void addValue(T value);
 	List<T> getAllValues();
 

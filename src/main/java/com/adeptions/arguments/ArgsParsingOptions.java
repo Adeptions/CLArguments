@@ -11,7 +11,7 @@ public class ArgsParsingOptions {
 	protected Character argNameSuffix;
 	protected IArgsParsingExceptionHandler argsParsingExceptionHandler = new IArgsParsingExceptionHandler() {
 		@Override
-		public ArgsParsingException handle(ArgsParsingException argsParsingException) throws ArgsParsingException {
+		public ArgParsingException handle(ArgParsingException argsParsingException) throws ArgParsingException {
 			return argsParsingException;
 		}
 	};

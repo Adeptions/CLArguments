@@ -13,7 +13,7 @@ public class Application {
 				new StringArgumentDefinition(new String[] {"say", "s"}, "What to say").makeMandatory().addValidator((value, argument, specifiedArgName) -> {
 					if (((String)value).contains(" ")) {
 						argument.setSpecified();
-						throw new ArgsParsingException(ArgsParsingExceptionReason.INVALID_VALUE, "Cannot contain spaces?", argument);
+						throw new ArgParsingException(ArgParsingExceptionReason.INVALID_VALUE, "Cannot contain spaces?", argument);
 					}
 					return value;
 				}),
@@ -23,7 +23,7 @@ public class Application {
 		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
 		argsParsingOptions.setArgsParsingExceptionHandler(new IArgsParsingExceptionHandler() {
 			@Override
-			public ArgsParsingException handle(ArgsParsingException argsParsingException) throws ArgsParsingException {
+			public ArgParsingException handle(ArgParsingException argsParsingException) throws ArgParsingException {
 				return argsParsingException;
 			}
 		});
@@ -31,7 +31,7 @@ public class Application {
 			Arguments arguments = argumentDefinitions.parseArgs(args, argsParsingOptions);
 			printVersionIfRequested(arguments);
 			if (arguments.hasParsingExceptions()) {
-				for (ArgsParsingException argsParsingException: arguments.getParsingExceptions()) {
+				for (ArgParsingException argsParsingException: arguments.getParsingExceptions()) {
 					System.err.println(argsParsingException.getMessage());
 				}
 			} else if (!arguments.anySpecified() || arguments.get("help").isSpecified()) {
@@ -40,7 +40,7 @@ public class Application {
 			} else if (!arguments.hasSpecifiedInformationals()) {
 				System.out.println("Say... " + arguments.get("say").getValue());
 			}
-		} catch (ArgsParsingException e) {
+		} catch (ArgParsingException e) {
 			e.printStackTrace();
 		}
 	}

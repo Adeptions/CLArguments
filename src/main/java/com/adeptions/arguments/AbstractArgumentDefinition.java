@@ -101,7 +101,7 @@ public abstract class AbstractArgumentDefinition<T> implements IArgumentDefiniti
 		return builder.toString();
 	}
 
-	public T validate(T value, IArgument<T> argument, ArgName specifiedArgName) throws ArgsParsingException {
+	public T validate(T value, IArgument<T> argument, ArgName specifiedArgName) throws ArgParsingException {
 		if (valueValidator != null) {
 			return (T)valueValidator.validate(value, argument, specifiedArgName);
 		}

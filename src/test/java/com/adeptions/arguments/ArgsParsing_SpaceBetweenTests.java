@@ -162,7 +162,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
 		argsParsingOptions.setArgsParsingExceptionHandler(new IArgsParsingExceptionHandler() {
 			@Override
-			public ArgsParsingException handle(ArgsParsingException argsParsingException) throws ArgsParsingException {
+			public ArgParsingException handle(ArgParsingException argsParsingException) throws ArgParsingException {
 				throw argsParsingException;
 			}
 		});
@@ -170,7 +170,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 		boolean failed = false;
 		try {
 			arguments = argumentDefinitions.parseArgs(new String[] {}, argsParsingOptions);
-		} catch (ArgsParsingException argsParsingException) {
+		} catch (ArgParsingException argsParsingException) {
 			failed = true;
 		}
 		assertTrue("Should have failed",
@@ -276,7 +276,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
 		argsParsingOptions.setArgsParsingExceptionHandler(new IArgsParsingExceptionHandler() {
 			@Override
-			public ArgsParsingException handle(ArgsParsingException argsParsingException) throws ArgsParsingException {
+			public ArgParsingException handle(ArgParsingException argsParsingException) throws ArgParsingException {
 				throw argsParsingException;
 			}
 		});
@@ -287,7 +287,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 					ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testArgumentName2,
 					"xxx"
 			}, argsParsingOptions);
-		} catch (ArgsParsingException argsParsingException) {
+		} catch (ArgParsingException argsParsingException) {
 			failed = true;
 		}
 		assertTrue("Should have failed", failed);
@@ -411,7 +411,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
 		argsParsingOptions.setArgsParsingExceptionHandler(new IArgsParsingExceptionHandler() {
 			@Override
-			public ArgsParsingException handle(ArgsParsingException argsParsingException) throws ArgsParsingException {
+			public ArgParsingException handle(ArgParsingException argsParsingException) throws ArgParsingException {
 				throw argsParsingException;
 			}
 		});
@@ -427,7 +427,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 			arguments = argumentDefinitions.parseArgs(new String[] {
 					ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + "badArgName"
 			}, argsParsingOptions);
-		} catch (ArgsParsingException argsParsingException) {
+		} catch (ArgParsingException argsParsingException) {
 			failed = true;
 		}
 		assertTrue("Should have failed",
@@ -438,7 +438,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
 		argsParsingOptions.setArgsParsingExceptionHandler(new IArgsParsingExceptionHandler() {
 			@Override
-			public ArgsParsingException handle(ArgsParsingException argsParsingException) throws ArgsParsingException {
+			public ArgParsingException handle(ArgParsingException argsParsingException) throws ArgParsingException {
 				throw argsParsingException;
 			}
 		});
@@ -454,7 +454,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 			arguments = argumentDefinitions.parseArgs(new String[] {
 					"badArgName"
 			}, argsParsingOptions);
-		} catch (ArgsParsingException argsParsingException) {
+		} catch (ArgParsingException argsParsingException) {
 			failed = true;
 		}
 		assertTrue("Should have failed",

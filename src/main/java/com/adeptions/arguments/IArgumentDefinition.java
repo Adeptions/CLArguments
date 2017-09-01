@@ -20,7 +20,7 @@ public interface IArgumentDefinition<T> {
 	IArgumentValueValidator getValidator();
 	void setValidator(IArgumentValueValidator valueValidator);
 	Set<String> getAlternativeNames();
-	T validate(T value, IArgument<T> argument, ArgName specifiedArgName) throws ArgsParsingException;
+	T validate(T value, IArgument<T> argument, ArgName specifiedArgName) throws ArgParsingException;
 
 	IArgumentDefinition<T> addFormat(String format);
 	IArgumentDefinition<T> addValidator(IArgumentValueValidator valueValidator);

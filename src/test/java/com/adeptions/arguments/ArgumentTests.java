@@ -91,7 +91,7 @@ public class ArgumentTests extends TestCase {
 		boolean failed = false;
 		try {
 			argument.setRawValue("xxx", specifiedArgName);
-		} catch (ArgsParsingException argsParsingException) {
+		} catch (ArgParsingException argsParsingException) {
 			failed = true;
 		}
 		assertTrue(".setRawValue() should have failed",
@@ -117,7 +117,7 @@ public class ArgumentTests extends TestCase {
 		boolean failed = false;
 		try {
 			argument.setRawValue("xxx", specifiedArgName);
-		} catch (ArgsParsingException argsParsingException) {
+		} catch (ArgParsingException argsParsingException) {
 			failed = true;
 		}
 		assertTrue(".setRawValue() should have failed",
@@ -143,7 +143,7 @@ public class ArgumentTests extends TestCase {
 		boolean failed = false;
 		try {
 			argument.setRawValue("xxx", specifiedArgName);
-		} catch (ArgsParsingException argsParsingException) {
+		} catch (ArgParsingException argsParsingException) {
 			failed = true;
 		}
 		assertTrue(".setRawValue() should have failed",

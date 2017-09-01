@@ -1,6 +1,6 @@
 package com.adeptions.arguments;
 
-public enum ArgsParsingExceptionReason {
+public enum ArgParsingExceptionReason {
 	MISSING_MANDATORY,
 	INVALID_VALUE,
 	MISSING_VALUE,

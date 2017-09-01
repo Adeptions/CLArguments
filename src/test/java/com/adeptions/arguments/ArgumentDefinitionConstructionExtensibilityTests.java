@@ -2,7 +2,7 @@ package com.adeptions.arguments;
 
 import junit.framework.TestCase;
 
-import static com.adeptions.arguments.ArgsParsingExceptionReason.*;
+import static com.adeptions.arguments.ArgParsingExceptionReason.*;
 
 public class ArgumentDefinitionConstructionExtensibilityTests extends TestCase {
 	private static final String testName = "test";
@@ -91,7 +91,7 @@ public class ArgumentDefinitionConstructionExtensibilityTests extends TestCase {
 		}
 
 		@Override
-		public void setRawValue(String rawValue, ArgName specifiedArgName) throws ArgsParsingException {
+		public void setRawValue(String rawValue, ArgName specifiedArgName) throws ArgParsingException {
 			FooEnum setValue = null;
 			for (FooEnum value: FooEnum.values()) {
 				if (value.name().equals(rawValue)) {
@@ -102,7 +102,7 @@ public class ArgumentDefinitionConstructionExtensibilityTests extends TestCase {
 				values.add(setValue);
 				specified = true;
 			} else {
-				throw new ArgsParsingException(INVALID_VALUE, "Value '" + rawValue + "' is not permissible (for argument '" + specifiedArgName.getDisplayName() + "')", this, specifiedArgName);
+				throw new ArgParsingException(INVALID_VALUE, "Value '" + rawValue + "' is not permissible (for argument '" + specifiedArgName.getDisplayName() + "')", this, specifiedArgName);
 			}
 		}
 	}

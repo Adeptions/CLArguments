@@ -21,7 +21,7 @@ public class ArgumentDefinitionAccessorsTests extends TestCase {
 				stringArgumentDefinition.getValidator());
 		stringArgumentDefinition.setValidator(new IArgumentValueValidator() {
 			@Override
-			public Object validate(Object value, IArgument argument, ArgName specifiedArgName) throws ArgsParsingException {
+			public Object validate(Object value, IArgument argument, ArgName specifiedArgName) throws ArgParsingException {
 				return null;
 			}
 		});
