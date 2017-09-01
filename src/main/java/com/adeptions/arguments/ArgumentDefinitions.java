@@ -6,7 +6,7 @@ import java.util.*;
 
 import static com.adeptions.arguments.ArgsParsingExceptionReason.*;
 
-public class ArgumentDefinitions implements List<IArgumentDefinition> {
+public class ArgumentDefinitions implements Iterable<IArgumentDefinition> {
 	protected List<IArgumentDefinition> definitions = new ArrayList<IArgumentDefinition>();
 	protected Map<String,IArgumentDefinition> definitionsNameMap = new HashMap<String, IArgumentDefinition>();
 
@@ -134,37 +134,9 @@ public class ArgumentDefinitions implements List<IArgumentDefinition> {
 		return definitions.isEmpty();
 	}
 
-	public boolean contains(Object o) {
-		return definitions.contains(o);
-	}
-
-	public Iterator<IArgumentDefinition> iterator() {
-		return definitions.iterator();
-	}
-
-	public Object[] toArray() {
-		return definitions.toArray();
-	}
-
-	public <T> T[] toArray(T[] a) {
-		return definitions.toArray(a);
-	}
-
 	public boolean add(IArgumentDefinition argumentDefinition) {
 		addNames(argumentDefinition);
 		return definitions.add(argumentDefinition);
-	}
-
-	public boolean remove(Object o) {
-		boolean result = definitions.remove(o);
-		if (result) {
-			removeNames((IArgumentDefinition)o);
-		}
-		return result;
-	}
-
-	public boolean containsAll(Collection<?> c) {
-		return definitions.containsAll(c);
 	}
 
 	public boolean addAll(Collection<? extends IArgumentDefinition> c) {
@@ -174,74 +146,8 @@ public class ArgumentDefinitions implements List<IArgumentDefinition> {
 		return definitions.addAll(c);
 	}
 
-	public boolean addAll(int index, Collection<? extends IArgumentDefinition> c) {
-		for (IArgumentDefinition argumentDefinition: c) {
-			addNames(argumentDefinition);
-		}
-		return definitions.addAll(index, c);
-	}
-
-	public boolean removeAll(Collection<?> c) {
-		for (Object o: c) {
-			if (o != null && o instanceof IArgumentDefinition) {
-				removeNames((IArgumentDefinition)o);
-			}
-		}
-		return definitions.removeAll(c);
-	}
-
-	public boolean retainAll(Collection<?> c) {
-		for (IArgumentDefinition argumentDefinition: definitions) {
-			if (!c.contains(argumentDefinition)) {
-				removeNames(argumentDefinition);
-			}
-		}
-		return definitions.retainAll(c);
-	}
-
-	public void clear() {
-		definitionsNameMap.clear();
-		definitions.clear();
-	}
-
 	public IArgumentDefinition get(int index) {
 		return definitions.get(index);
-	}
-
-	public IArgumentDefinition set(int index, IArgumentDefinition argumentDefinition) {
-		removeNames(definitions.get(index));
-		addNames(argumentDefinition);
-		return definitions.set(index, argumentDefinition);
-	}
-
-	public void add(int index, IArgumentDefinition argumentDefinition) {
-		addNames(argumentDefinition);
-		definitions.add(index, argumentDefinition);
-	}
-
-	public IArgumentDefinition remove(int index) {
-		removeNames(definitions.get(index));
-		return definitions.remove(index);
-	}
-
-	public int indexOf(Object o) {
-		return definitions.indexOf(o);
-	}
-
-	public int lastIndexOf(Object o) {
-		return definitions.lastIndexOf(o);
-	}
-
-	public ListIterator<IArgumentDefinition> listIterator() {
-		return definitions.listIterator();
-	}
-
-	public ListIterator<IArgumentDefinition> listIterator(int index) {
-		return definitions.listIterator(index);
-	}
-
-	public List<IArgumentDefinition> subList(int fromIndex, int toIndex) {
-		return definitions.subList(fromIndex, toIndex);
 	}
 
 	private void addNames(IArgumentDefinition argumentDefinition) {
@@ -263,14 +169,8 @@ public class ArgumentDefinitions implements List<IArgumentDefinition> {
 		definitionsNameMap.put(name, argumentDefinition);
 	}
 
-	private void removeNames(IArgumentDefinition argumentDefinition) {
-		definitionsNameMap.remove(argumentDefinition.getName());
-		for (Object name: argumentDefinition.getAlternativeNames()) {
-			removeName((String)name);
-		}
-	}
-
-	private void removeName(String name) {
-		definitionsNameMap.remove(name);
+	@Override
+	public Iterator<IArgumentDefinition> iterator() {
+		return definitions.iterator();
 	}
 }

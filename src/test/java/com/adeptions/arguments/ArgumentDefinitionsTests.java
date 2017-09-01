@@ -124,18 +124,6 @@ public class ArgumentDefinitionsTests extends TestCase {
 				argumentDefinitions.hasArgumentName(testAlternateArgumentName1));
 	}
 
-	public void testArgumentDefinitionsAdd2() throws Exception {
-		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions();
-		assertEquals(0, argumentDefinitions.size());
-		argumentDefinitions.add(0, argumentDefinition1);
-		assertEquals(1, argumentDefinitions.size());
-		assertEquals(argumentDefinition1, argumentDefinitions.get(0));
-		argumentDefinitions.add(0, argumentDefinition2);
-		assertEquals(2, argumentDefinitions.size());
-		assertEquals(argumentDefinition2, argumentDefinitions.get(0));
-		assertEquals(argumentDefinition1, argumentDefinitions.get(1));
-	}
-
 	public void testArgumentDefinitionsAddFailsWithDuplicateName() throws Exception {
 		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions(argumentDefinition1);
 		assertEquals(1, argumentDefinitions.size());
@@ -160,50 +148,6 @@ public class ArgumentDefinitionsTests extends TestCase {
 		assertTrue("Should have thrown exception", failed);
 	}
 
-	public void testArgumentDefinitionsRemoveArgumentDefinition() throws Exception {
-		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions(
-				argumentDefinition1,
-				argumentDefinition2
-		);
-		assertEquals(2, argumentDefinitions.size());
-		assertTrue("Should contain argument name",
-				argumentDefinitions.hasArgumentName(testArgumentName1));
-		assertTrue("Should contain argument name",
-				argumentDefinitions.hasArgumentName(testAlternateArgumentName1));
-		argumentDefinitions.remove(0);
-		assertEquals(1, argumentDefinitions.size());
-		assertFalse("Should not contain argument name",
-				argumentDefinitions.hasArgumentName(testArgumentName1));
-		assertFalse("Should not contain argument name",
-				argumentDefinitions.hasArgumentName(testAlternateArgumentName1));
-	}
-
-	public void testArgumentDefinitionsClear() throws Exception {
-		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions(
-				argumentDefinition1,
-				argumentDefinition2
-		);
-		assertEquals(2, argumentDefinitions.size());
-		assertTrue("Should contain argument name",
-				argumentDefinitions.hasArgumentName(testArgumentName1));
-		assertTrue("Should contain argument name",
-				argumentDefinitions.hasArgumentName(testAlternateArgumentName1));
-		assertTrue("Should contain argument name",
-				argumentDefinitions.hasArgumentName(testArgumentName2));
-		assertTrue("Should contain argument name",
-				argumentDefinitions.hasArgumentName(testAlternateArgumentName2));
-		argumentDefinitions.clear();
-		assertEquals(0, argumentDefinitions.size());
-		assertFalse("Should not contain argument name",
-				argumentDefinitions.hasArgumentName(testArgumentName1));
-		assertFalse("Should not contain argument name",
-				argumentDefinitions.hasArgumentName(testAlternateArgumentName1));
-		assertFalse("Should not contain argument name",
-				argumentDefinitions.hasArgumentName(testArgumentName2));
-		assertFalse("Should not contain argument name",
-				argumentDefinitions.hasArgumentName(testAlternateArgumentName2));
-	}
-
 	public void testArgumentDefinitionsIsEmpty() throws Exception {
 		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions();
 		assertTrue("Should be empty",
@@ -211,69 +155,6 @@ public class ArgumentDefinitionsTests extends TestCase {
 		argumentDefinitions.add(argumentDefinition1);
 		assertFalse("Should not be empty",
 				argumentDefinitions.isEmpty());
-	}
-
-	public void testArgumentDefinitionsContains() throws Exception {
-		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions(argumentDefinition1);
-		assertTrue("Should contain argument definition",
-				argumentDefinitions.contains(argumentDefinition1));
-		assertFalse("Should not contain null",
-				argumentDefinitions.contains(null));
-		assertFalse("Should not contain 'nope'",
-				argumentDefinitions.contains("nope"));
-	}
-
-	public void testArgumentDefinitionsToArray() throws Exception {
-		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions(
-				argumentDefinition1,
-				argumentDefinition2
-		);
-		Object[] array = argumentDefinitions.toArray();
-		assertEquals(2, array.length);
-		assertEquals(argumentDefinition1, array[0]);
-		assertEquals(argumentDefinition2, array[1]);
-	}
-
-	public void testArgumentDefinitionsToTypedArray() throws Exception {
-		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions(
-				argumentDefinition1,
-				argumentDefinition2
-		);
-		IArgumentDefinition[] array = new IArgumentDefinition[argumentDefinitions.size()];
-		argumentDefinitions.toArray(array);
-		assertEquals(2, array.length);
-		assertEquals(argumentDefinition1, array[0]);
-		assertEquals(argumentDefinition2, array[1]);
-	}
-
-	public void testArgumentDefinitionsGet() throws Exception {
-		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions(
-				argumentDefinition1,
-				argumentDefinition2
-		);
-		assertEquals(argumentDefinition1, argumentDefinitions.get(0));
-		assertEquals(argumentDefinition2, argumentDefinitions.get(1));
-	}
-
-	public void testArgumentDefinitionsSet() throws Exception {
-		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions(
-				argumentDefinition1,
-				argumentDefinition2
-		);
-		assertEquals(argumentDefinition1, argumentDefinitions.get(0));
-		assertEquals(argumentDefinition2, argumentDefinitions.get(1));
-		assertTrue("Should contain argument name",
-				argumentDefinitions.hasArgumentName(testArgumentName1));
-		assertTrue("Should contain argument name",
-				argumentDefinitions.hasArgumentName(testAlternateArgumentName1));
-		argumentDefinitions.set(0, argumentDefinition3);
-		assertEquals(argumentDefinition3, argumentDefinitions.get(0));
-		assertFalse("Should not contain argument name",
-				argumentDefinitions.hasArgumentName(testArgumentName1));
-		assertFalse("Should not contain argument name",
-				argumentDefinitions.hasArgumentName(testAlternateArgumentName1));
-		assertTrue("Should contain argument name",
-				argumentDefinitions.hasArgumentName(testArgumentName3));
 	}
 
 	public void testArgumentDefinitionsAddAll() throws Exception {
@@ -288,94 +169,6 @@ public class ArgumentDefinitionsTests extends TestCase {
 		}));
 		argumentDefinitions.addAll(argumentDefinitionList);
 		assertEquals(6, argumentDefinitions.size());
-	}
-
-	public void testArgumentDefinitionsAddAll2() throws Exception {
-		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions(argumentDefinition1);
-		List<IArgumentDefinition> argumentDefinitionList = new ArrayList<IArgumentDefinition>(Arrays.asList(new IArgumentDefinition[] {
-				argumentDefinition2,
-				argumentDefinition3,
-				argumentDefinition4,
-				argumentDefinition5,
-				argumentDefinition6
-		}));
-		argumentDefinitions.addAll(0, argumentDefinitionList);
-		assertEquals(6, argumentDefinitions.size());
-		assertEquals(argumentDefinition1, argumentDefinitions.get(5));
-	}
-
-	public void testArgumentDefinitionsRemoveAll() throws Exception {
-		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions(
-				argumentDefinition1,
-				argumentDefinition2,
-				argumentDefinition3,
-				argumentDefinition4,
-				argumentDefinition5
-		);
-		assertEquals(5, argumentDefinitions.size());
-		List<IArgumentDefinition> removeList = new ArrayList<IArgumentDefinition>(Arrays.asList(new IArgumentDefinition[] {
-				argumentDefinition2,
-				argumentDefinition3,
-				argumentDefinition4
-		}));
-		argumentDefinitions.removeAll(removeList);
-		assertEquals(2, argumentDefinitions.size());
-		assertEquals(argumentDefinition1, argumentDefinitions.get(0));
-		assertEquals(argumentDefinition5, argumentDefinitions.get(1));
-	}
-
-	public void testArgumentDefinitionsRetainAll() throws Exception {
-		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions(
-				argumentDefinition1,
-				argumentDefinition2,
-				argumentDefinition3,
-				argumentDefinition4,
-				argumentDefinition5
-		);
-		assertEquals(5, argumentDefinitions.size());
-		List<IArgumentDefinition> retainList = new ArrayList<IArgumentDefinition>(Arrays.asList(new IArgumentDefinition[] {
-				argumentDefinition1,
-				argumentDefinition5
-		}));
-		argumentDefinitions.retainAll(retainList);
-		assertEquals(2, argumentDefinitions.size());
-		assertEquals(argumentDefinition1, argumentDefinitions.get(0));
-		assertEquals(argumentDefinition5, argumentDefinitions.get(1));
-	}
-
-	public void testArgumentDefinitionsContainsAll() throws Exception {
-		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions(
-				argumentDefinition1,
-				argumentDefinition2,
-				argumentDefinition3,
-				argumentDefinition4,
-				argumentDefinition5,
-				argumentDefinition6
-		);
-		List<IArgumentDefinition> checkList = new ArrayList<IArgumentDefinition>(Arrays.asList(new IArgumentDefinition[] {
-				argumentDefinition1,
-				argumentDefinition2
-		}));
-		assertTrue("Should contain all in list",
-				argumentDefinitions.containsAll(checkList));
-	}
-
-	public void testArgumentDefinitionsRemove() throws Exception {
-		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions(
-				argumentDefinition1,
-				argumentDefinition2,
-				argumentDefinition3,
-				argumentDefinition4,
-				argumentDefinition5
-		);
-		assertEquals(5, argumentDefinitions.size());
-		assertTrue(".remove() should succeed",
-				argumentDefinitions.remove(argumentDefinition1));
-		assertFalse(".remove() should not succeed",
-				argumentDefinitions.remove(argumentDefinition1));
-		assertFalse(".remove() should not succeed",
-				argumentDefinitions.remove("nope"));
-		assertEquals(4, argumentDefinitions.size());
 	}
 
 	public void testArgumentDefinitionsIterator() throws Exception {
@@ -394,83 +187,6 @@ public class ArgumentDefinitionsTests extends TestCase {
 			index++;
 		}
 		assertEquals(6, index);
-	}
-
-	public void testArgumentDefinitionsIndexOf() throws Exception {
-		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions(
-				argumentDefinition1,
-				argumentDefinition2,
-				argumentDefinition3,
-				argumentDefinition4,
-				argumentDefinition5
-		);
-		assertEquals(0, argumentDefinitions.indexOf(argumentDefinition1));
-		assertEquals(4, argumentDefinitions.indexOf(argumentDefinition5));
-		assertEquals(-1, argumentDefinitions.indexOf(null));
-		assertEquals(-1, argumentDefinitions.indexOf("nope"));
-	}
-
-	public void testArgumentDefinitionsLastIndexOf() throws Exception {
-		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions(
-				argumentDefinition1,
-				argumentDefinition2,
-				argumentDefinition3,
-				argumentDefinition4,
-				argumentDefinition5
-		);
-		assertEquals(0, argumentDefinitions.lastIndexOf(argumentDefinition1));
-		assertEquals(4, argumentDefinitions.lastIndexOf(argumentDefinition5));
-		assertEquals(-1, argumentDefinitions.lastIndexOf(null));
-		assertEquals(-1, argumentDefinitions.lastIndexOf("nope"));
-	}
-
-	public void testArgumentDefinitionsSubList() throws Exception {
-		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions(
-				argumentDefinition1,
-				argumentDefinition2,
-				argumentDefinition3,
-				argumentDefinition4,
-				argumentDefinition5
-		);
-		List<IArgumentDefinition> subList = argumentDefinitions.subList(1, 4);
-		assertEquals(3, subList.size());
-		assertEquals(argumentDefinition2, subList.get(0));
-		assertEquals(argumentDefinition3, subList.get(1));
-		assertEquals(argumentDefinition4, subList.get(2));
-	}
-
-	public void testArgumentDefinitionsListIterator() throws Exception {
-		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions(
-				argumentDefinition1,
-				argumentDefinition2,
-				argumentDefinition3,
-				argumentDefinition4,
-				argumentDefinition5
-		);
-		ListIterator<IArgumentDefinition> iterator = argumentDefinitions.listIterator();
-		int index = 0;
-		while (iterator.hasNext()) {
-			assertEquals(iterator.next(), argumentDefinitions.get(index));
-			index++;
-		}
-		assertEquals(5, index);
-	}
-
-	public void testArgumentDefinitionsListIterator2() throws Exception {
-		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions(
-				argumentDefinition1,
-				argumentDefinition2,
-				argumentDefinition3,
-				argumentDefinition4,
-				argumentDefinition5
-		);
-		int index = 1;
-		ListIterator<IArgumentDefinition> iterator = argumentDefinitions.listIterator(index);
-		while (iterator.hasNext()) {
-			assertEquals(iterator.next(), argumentDefinitions.get(index));
-			index++;
-		}
-		assertEquals(5, index);
 	}
 
 	public void testArgumentDefinitionsHelp() throws Exception {
