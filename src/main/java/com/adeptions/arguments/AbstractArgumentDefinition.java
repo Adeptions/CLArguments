@@ -12,7 +12,8 @@ public abstract class AbstractArgumentDefinition<T> implements ArgumentDefinitio
 	protected final String description;
 	protected String format;
 	protected boolean mandatory;
-	protected ArgumentValueValidator valueValidator;
+	protected ArgumentValueConverter<T> valueConverter;
+	protected ArgumentValueValidator<T> valueValidator;
 	private Set<String> alternativeNames = new HashSet<String>();
 	protected boolean hasDefaultValue;
 	protected T defaultValue;
@@ -140,11 +141,19 @@ public abstract class AbstractArgumentDefinition<T> implements ArgumentDefinitio
 		this.mandatory = mandatory;
 	}
 
-	public ArgumentValueValidator getValidator() {
+	public ArgumentValueConverter<T> getValueConverter() {
+		return valueConverter;
+	}
+
+	public void setValueConverter(ArgumentValueConverter<T> valueConverter) {
+		this.valueConverter = valueConverter;
+	}
+
+	public ArgumentValueValidator<T> getValueValidator() {
 		return valueValidator;
 	}
 
-	public void setValidator(ArgumentValueValidator valueValidator) {
+	public void setValueValidator(ArgumentValueValidator<T> valueValidator) {
 		this.valueValidator = valueValidator;
 	}
 
@@ -153,8 +162,13 @@ public abstract class AbstractArgumentDefinition<T> implements ArgumentDefinitio
 		return new HashSet<String>(alternativeNames);
 	}
 
-	public ArgumentDefinition<T> addValidator(ArgumentValueValidator valueValidator) {
-		setValidator(valueValidator);
+	public ArgumentDefinition<T> addValueConverter(ArgumentValueConverter<T> valueConverter) {
+		setValueConverter(valueConverter);
+		return this;
+	}
+
+	public ArgumentDefinition<T> addValueValidator(ArgumentValueValidator<T> valueValidator) {
+		setValueValidator(valueValidator);
 		return this;
 	}
 

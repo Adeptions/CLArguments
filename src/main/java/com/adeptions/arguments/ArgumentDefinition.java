@@ -4,6 +4,7 @@ import java.util.*;
 
 public interface ArgumentDefinition<T> {
 	String getName();
+	Set<String> getAlternativeNames();
 	String getDisplayName(ArgsParsingOptions argsParsingOptions);
 	String getDescription();
 	String getFormat();
@@ -17,13 +18,17 @@ public interface ArgumentDefinition<T> {
 	boolean hasDefaultValue();
 	T getDefaultValue();
 	void setDefaultValue(T value);
-	ArgumentValueValidator getValidator();
-	void setValidator(ArgumentValueValidator valueValidator);
-	Set<String> getAlternativeNames();
+	ArgumentValueConverter<T> getValueConverter();
+	void setValueConverter(ArgumentValueConverter<T> valueConverter);
+	ArgumentValueValidator<T> getValueValidator();
+	void setValueValidator(ArgumentValueValidator<T> valueValidator);
+
+	T convertRawValue(String rawValue, Argument<T> argument, ArgName specifiedArgName) throws ArgParsingException;
 	T validateValue(T value, Argument<T> argument, ArgName specifiedArgName) throws ArgParsingException;
 
 	ArgumentDefinition<T> addFormat(String format);
-	ArgumentDefinition<T> addValidator(ArgumentValueValidator valueValidator);
+	ArgumentDefinition<T> addValueConverter(ArgumentValueConverter<T> valueConverter);
+	ArgumentDefinition<T> addValueValidator(ArgumentValueValidator<T> valueValidator);
 	ArgumentDefinition<T> makeMandatory();
 	ArgumentDefinition<T> addDefaultValue(T value);
 

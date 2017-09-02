@@ -9,11 +9,7 @@ public class IntegerArgument extends AbstractArgument<Integer> implements Argume
 
 	@Override
 	public void setRawValue(String rawValue, ArgName specifiedArgName) throws ArgParsingException {
-		try {
-			values.add(definition.validateValue(Integer.parseInt(rawValue), this, specifiedArgName));
-			specified = true;
-		} catch (NumberFormatException numberFormatException) {
-			throw new ArgParsingException(INVALID_VALUE, "Value '" + rawValue + "' is not a valid integer (for argument '" + specifiedArgName.getDisplayName() + "')", numberFormatException, this, specifiedArgName);
-		}
+		values.add(definition.validateValue(definition.convertRawValue(rawValue, this, specifiedArgName), this, specifiedArgName));
+		specified = true;
 	}
 }

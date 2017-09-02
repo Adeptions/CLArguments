@@ -9,10 +9,7 @@ public class BooleanArgument extends AbstractArgument<Boolean> implements Argume
 
 	@Override
 	public void setRawValue(String rawValue, ArgName specifiedArgName) throws ArgParsingException {
-		if (!"true".equals(rawValue) && !"false".equals(rawValue)) {
-			throw new ArgParsingException(INVALID_VALUE, "Value '" + rawValue + "' is not a valid boolean (for argument '" + specifiedArgName.getDisplayName() + "')", this);
-		}
+		values.add(definition.validateValue(definition.convertRawValue(rawValue, this, specifiedArgName), this, specifiedArgName));
 		specified = true;
-		values.add(definition.validateValue("true".equals(rawValue), this, specifiedArgName));
 	}
 }

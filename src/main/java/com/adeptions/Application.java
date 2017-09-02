@@ -10,7 +10,7 @@ public class Application {
 	 */
 	public static void main(String[] args) {
 		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions(
-				new StringArgumentDefinition(new String[] {"say", "s"}, "What to say").makeMandatory().addValidator((value, argument, specifiedArgName) -> {
+				new StringArgumentDefinition(new String[] {"say", "s"}, "What to say").makeMandatory().addValueValidator((value, argument, specifiedArgName) -> {
 					if (((String)value).contains(" ")) {
 						argument.setSpecified();
 						throw new ArgParsingException(ArgParsingExceptionReason.INVALID_VALUE, "Cannot contain spaces?", argument);

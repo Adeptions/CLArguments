@@ -80,6 +80,20 @@ public class ArgumentDefinitionConstructionExtensibilityTests extends TestCase {
 		}
 
 		@Override
+		public FooEnum convertRawValue(String rawValue, Argument<FooEnum> argument, ArgName specifiedArgName) throws ArgParsingException {
+			FooEnum result = null;
+			for (FooEnum value: FooEnum.values()) {
+				if (value.name().equals(rawValue)) {
+					result = value;
+				}
+			}
+			if (result == null) {
+				throw new ArgParsingException(INVALID_VALUE, "Value '" + rawValue + "' is not permissible (for argument '" + specifiedArgName.getDisplayName() + "')", argument, specifiedArgName);
+			}
+			return result;
+		}
+
+		@Override
 		public Argument<FooEnum> createArgumentInstance() {
 			return new FooEnumArgument(this);
 		}
@@ -92,18 +106,8 @@ public class ArgumentDefinitionConstructionExtensibilityTests extends TestCase {
 
 		@Override
 		public void setRawValue(String rawValue, ArgName specifiedArgName) throws ArgParsingException {
-			FooEnum setValue = null;
-			for (FooEnum value: FooEnum.values()) {
-				if (value.name().equals(rawValue)) {
-					setValue = value;
-				}
-			}
-			if (setValue != null) {
-				values.add(setValue);
-				specified = true;
-			} else {
-				throw new ArgParsingException(INVALID_VALUE, "Value '" + rawValue + "' is not permissible (for argument '" + specifiedArgName.getDisplayName() + "')", this, specifiedArgName);
-			}
+			values.add(definition.validateValue(definition.convertRawValue(rawValue, this, specifiedArgName), this, specifiedArgName));
+			specified = true;
 		}
 	}
 

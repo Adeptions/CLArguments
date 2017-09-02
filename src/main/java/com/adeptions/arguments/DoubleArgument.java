@@ -9,11 +9,7 @@ public class DoubleArgument extends AbstractArgument<Double> implements Argument
 
 	@Override
 	public void setRawValue(String rawValue, ArgName specifiedArgName) throws ArgParsingException {
-		try {
-			values.add(definition.validateValue(Double.parseDouble(rawValue),this, specifiedArgName));
-			specified = true;
-		} catch (NumberFormatException numberFormatException) {
-			throw new ArgParsingException(INVALID_VALUE, "Value '" + rawValue + "' is not a valid number (for argument '" + specifiedArgName.getDisplayName() + "')", numberFormatException, this, specifiedArgName);
-		}
+		values.add(definition.validateValue(definition.convertRawValue(rawValue, this, specifiedArgName),this, specifiedArgName));
+		specified = true;
 	}
 }

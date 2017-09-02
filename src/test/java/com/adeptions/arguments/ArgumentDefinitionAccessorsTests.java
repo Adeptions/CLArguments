@@ -17,15 +17,15 @@ public class ArgumentDefinitionAccessorsTests extends TestCase {
 
 	public void testArgumentDefinitionSetValidator() throws Exception {
 		StringArgumentDefinition stringArgumentDefinition = new StringArgumentDefinition(testName, testDescription);
-		assertNull("Default .getValidator() should be null",
-				stringArgumentDefinition.getValidator());
-		stringArgumentDefinition.setValidator(new ArgumentValueValidator() {
+		assertNull("Default .getValueValidator() should be null",
+				stringArgumentDefinition.getValueValidator());
+		stringArgumentDefinition.setValueValidator(new ArgumentValueValidator() {
 			@Override
 			public Object validate(Object value, Argument argument, ArgName specifiedArgName) throws ArgParsingException {
 				return null;
 			}
 		});
-		assertNotNull(".getValidator() should now be set",
-				stringArgumentDefinition.getValidator());
+		assertNotNull(".getValueValidator() should now be set",
+				stringArgumentDefinition.getValueValidator());
 	}
 }

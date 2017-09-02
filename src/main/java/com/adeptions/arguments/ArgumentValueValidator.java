@@ -1,6 +1,6 @@
 package com.adeptions.arguments;
 
 @FunctionalInterface
-public interface ArgumentValueValidator {
-	Object validate(Object value, Argument argument, ArgName specifiedArgName) throws ArgParsingException;
+public interface ArgumentValueValidator<T> {
+	T validate(T value, Argument argument, ArgName specifiedArgName) throws ArgParsingException;
 }

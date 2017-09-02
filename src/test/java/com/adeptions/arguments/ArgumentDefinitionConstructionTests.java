@@ -310,6 +310,11 @@ public class ArgumentDefinitionConstructionTests extends TestCase {
 		}
 
 		@Override
+		public Boolean convertRawValue(String rawValue, Argument<Boolean> argument, ArgName specifiedArgName) throws ArgParsingException {
+			return null;
+		}
+
+		@Override
 		public ArgumentDefinition<Boolean> addDefaultValue(Boolean value) {
 			return null;
 		}

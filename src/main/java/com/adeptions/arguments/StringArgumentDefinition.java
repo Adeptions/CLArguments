@@ -11,6 +11,15 @@ public class StringArgumentDefinition extends AbstractArgumentDefinition<String>
 		addFormat("string");
 	}
 
+	@Override
+	public String convertRawValue(String rawValue, Argument<String> argument, ArgName specifiedArgName) throws ArgParsingException {
+		if (valueConverter != null) {
+			return valueConverter.convert(rawValue, argument, specifiedArgName);
+		}
+		// no conversion necessary...
+		return rawValue;
+	}
+
 	public Argument<String> createArgumentInstance() {
 		return new StringArgument(this);
 	}
