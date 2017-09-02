@@ -71,8 +71,9 @@ public abstract class AbstractArgumentDefinition<T> implements ArgumentDefinitio
 	}
 
 	public String getDisplayName(ArgsParsingOptions argsParsingOptions) {
-		Character argNamePrefix = argsParsingOptions.getArgNamePrefix();
-		Character argNameSuffix = argsParsingOptions.getArgNameSuffix();
+		ArgsParsingOptions useArgsParsingOptions = argsParsingOptions == null ? new ArgsParsingOptions() : argsParsingOptions;
+		String argNamePrefix = argsParsingOptions.getArgNamePrefix();
+		String argNameSuffix = argsParsingOptions.getArgNameSuffix();
 		return (argNamePrefix != null ? "" + argNamePrefix : "") +
 				name +
 				(argNameSuffix != null ? "" + argNameSuffix : "");

@@ -12,7 +12,7 @@ public class ArgNameTests extends TestCase {
 	}
 
 	public void testArgNameSpaced2() throws Exception {
-		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions(null, '-', '+');
+		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions(null, "-", "+");
 		ArgName argName = ArgName.parseSpacedArgNameFromArg("-foo+", argsParsingOptions);
 		assertEquals("foo", argName.getName());
 		assertEquals("-foo+", argName.getDisplayName());
@@ -33,7 +33,7 @@ public class ArgNameTests extends TestCase {
 	}
 
 	public void testArgNameSpaced4() throws Exception {
-		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions(null, '-', '+');
+		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions(null, "-", "+");
 		ArgName argName;
 		boolean failed = false;
 		try {
@@ -46,7 +46,7 @@ public class ArgNameTests extends TestCase {
 	}
 
 	public void testArgNameSpaced5() throws Exception {
-		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions(null, '-', '+');
+		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions(null, "-", "+");
 		ArgName argName;
 		boolean failed = false;
 		try {

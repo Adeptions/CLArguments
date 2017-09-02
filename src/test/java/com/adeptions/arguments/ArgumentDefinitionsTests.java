@@ -23,8 +23,8 @@ public class ArgumentDefinitionsTests extends TestCase {
 	private static final ArgumentDefinition argumentDefinition6 = new BooleanArgumentDefinition(testArgumentName6, testDescription);
 
 	private static final Character alternateCharBetweenArgNameAndValue = ':';
-	private static final Character alternateArgNamePrefix = '[';
-	private static final Character alternateArgNameSuffix = ']';
+	private static final String alternateArgNamePrefix = "[";
+	private static final String alternateArgNameSuffix = "]";
 
 	public void testArgumentDefinitionsConstructor() throws Exception {
 		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions();

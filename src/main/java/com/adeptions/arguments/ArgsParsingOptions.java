@@ -1,14 +1,14 @@
 package com.adeptions.arguments;
 
 public class ArgsParsingOptions {
-	public static final Character DEFAULT_ARG_NAME_PREFIX = '-';
+	public static final String DEFAULT_ARG_NAME_PREFIX = "-";
 	public static final Character DEFAULT_CHAR_BETWEEN_ARG_NAME_AND_VALUE = ':';
 	private static final Character SPACE = ' ';
 
 	protected boolean spaceBetweenArgNameAndValue;
 	protected Character characterBetweenArgNameAndValue;
-	protected Character argNamePrefix;
-	protected Character argNameSuffix;
+	protected String argNamePrefix;
+	protected String argNameSuffix;
 	protected ArgsParsingExceptionHandler argsParsingExceptionHandler = new ArgsParsingExceptionHandler() {
 		@Override
 		public ArgParsingException handle(ArgParsingException argsParsingException) throws ArgParsingException {
@@ -22,8 +22,8 @@ public class ArgsParsingOptions {
 	}
 
 	public ArgsParsingOptions(Character characterBetweenArgNameAndValue,
-							  Character argNamePrefix,
-							  Character argNameSuffix) {
+							  String argNamePrefix,
+							  String argNameSuffix) {
 		setCharacterBetweenArgNameAndValue(characterBetweenArgNameAndValue);
 		setArgNamePrefix(argNamePrefix);
 		setArgNameSuffix(argNameSuffix);
@@ -51,20 +51,20 @@ public class ArgsParsingOptions {
 		spaceBetweenArgNameAndValue = (this.characterBetweenArgNameAndValue == null);
 	}
 
-	public Character getArgNamePrefix() {
+	public String getArgNamePrefix() {
 		return argNamePrefix;
 	}
 
-	public void setArgNamePrefix(Character argNamePrefix) {
-		this.argNamePrefix = argNamePrefix;
+	public void setArgNamePrefix(String argNamePrefix) {
+		this.argNamePrefix = argNamePrefix == null || argNamePrefix.isEmpty() ? null : argNamePrefix;
 	}
 
-	public Character getArgNameSuffix() {
+	public String getArgNameSuffix() {
 		return argNameSuffix;
 	}
 
-	public void setArgNameSuffix(Character argNameSuffix) {
-		this.argNameSuffix = argNameSuffix;
+	public void setArgNameSuffix(String argNameSuffix) {
+		this.argNameSuffix = argNameSuffix == null || argNameSuffix.isEmpty() ? null : argNameSuffix;
 	}
 
 	public ArgsParsingExceptionHandler getArgsParsingExceptionHandler() {

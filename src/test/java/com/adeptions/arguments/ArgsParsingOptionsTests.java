@@ -4,8 +4,8 @@ import junit.framework.TestCase;
 
 public class ArgsParsingOptionsTests extends TestCase {
 	private static final Character alternateCharBetweenArgNameAndValue = '=';
-	private static final Character alternateArgNamePrefix = '[';
-	private static final Character alternateArgNameSuffix = ']';
+	private static final String alternateArgNamePrefix = "[";
+	private static final String alternateArgNameSuffix = "]";
 
 	public void testArgsParsingOptionsConstructor() throws Exception {
 		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();

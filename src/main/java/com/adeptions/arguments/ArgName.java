@@ -24,8 +24,8 @@ public class ArgName {
 	}
 
 	static ArgName parseSpacedArgNameFromArg(String arg, ArgsParsingOptions argsParsingOptions) throws ArgParsingException {
-		Character argNamePrefix = argsParsingOptions.getArgNamePrefix();
-		Character argNameSuffix = argsParsingOptions.getArgNameSuffix();
+		String argNamePrefix = argsParsingOptions.getArgNamePrefix();
+		String argNameSuffix = argsParsingOptions.getArgNameSuffix();
 		ArgName result = new ArgName(arg);
 		String name = arg;
 		try {
