@@ -13,6 +13,6 @@ public class BooleanArgument extends AbstractArgument<Boolean> implements Argume
 			throw new ArgParsingException(INVALID_VALUE, "Value '" + rawValue + "' is not a valid boolean (for argument '" + specifiedArgName.getDisplayName() + "')", this);
 		}
 		specified = true;
-		values.add(definition.validate("true".equals(rawValue), this, specifiedArgName));
+		values.add(definition.validateValue("true".equals(rawValue), this, specifiedArgName));
 	}
 }

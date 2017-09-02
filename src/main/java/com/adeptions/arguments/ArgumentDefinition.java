@@ -20,7 +20,7 @@ public interface ArgumentDefinition<T> {
 	ArgumentValueValidator getValidator();
 	void setValidator(ArgumentValueValidator valueValidator);
 	Set<String> getAlternativeNames();
-	T validate(T value, Argument<T> argument, ArgName specifiedArgName) throws ArgParsingException;
+	T validateValue(T value, Argument<T> argument, ArgName specifiedArgName) throws ArgParsingException;
 
 	ArgumentDefinition<T> addFormat(String format);
 	ArgumentDefinition<T> addValidator(ArgumentValueValidator valueValidator);

@@ -18,42 +18,51 @@ public abstract class AbstractArgumentDefinition<T> implements ArgumentDefinitio
 	protected T defaultValue;
 
 	AbstractArgumentDefinition(@NotNull ArgumentDefinitionType type, @NotNull String name, @NotNull String description) {
-		if (type == null) {
-			throw new IllegalArgumentException("Argument 'type' cannot be null on AbstractArgumentDefinition constructor");
-		}
-		this.type = type;
-		if (name == null) {
-			throw new IllegalArgumentException("Argument 'name' cannot be null on AbstractArgumentDefinition constructor");
-		}
-		this.name = name;
-		if (description == null) {
-			throw new IllegalArgumentException("Argument 'description' cannot be null on AbstractArgumentDefinition constructor");
-		}
-		this.description = description;
+		this.type = checkType(type);
+		this.name = checkName(name);
+		this.description = checkDescription(description);
 	}
 
 	AbstractArgumentDefinition(@NotNull ArgumentDefinitionType type, @NotNull String[] names, @NotNull String description) {
-		if (type == null) {
-			throw new IllegalArgumentException("Argument 'type' cannot be null on AbstractArgumentDefinition constructor");
-		}
-		this.type = type;
+		this.type = checkType(type);
 		if (names.length == 0) {
 			throw new ArgumentDefinitionException("Argument definition must have at least one name");
 		}
-		this.name = names[0];
+		this.name = checkName(names[0]);
 		for (int n = 1, nmax = names.length; n < nmax; n++) {
-			String alternateName = names[n];
-			if (alternateName == null) {
-				throw new ArgumentDefinitionException("Argument definition alternative name cannot be null");
-			} else if (name.equals(alternateName) || alternativeNames.contains(alternateName)) {
-				throw new ArgumentDefinitionException("Argument definition alternative name already used");
-			}
-			alternativeNames.add(alternateName);
+			alternativeNames.add(checkAlternativeName(names[n]));
 		}
+		this.description = checkDescription(description);
+	}
+
+	private ArgumentDefinitionType checkType(ArgumentDefinitionType type) {
+		if (type == null) {
+			throw new IllegalArgumentException("Argument 'type' cannot be null on AbstractArgumentDefinition constructor");
+		}
+		return type;
+	}
+
+	private String checkName(String name) {
+		if (name == null) {
+			throw new IllegalArgumentException("Argument 'name' cannot be null on AbstractArgumentDefinition constructor");
+		}
+		return name;
+	}
+
+	private String checkAlternativeName(String alternativeName) {
+		if (alternativeName == null) {
+			throw new ArgumentDefinitionException("Argument definition alternative name cannot be null");
+		} else if (name.equals(alternativeName) || alternativeNames.contains(alternativeName)) {
+			throw new ArgumentDefinitionException("Argument definition alternative name already used");
+		}
+		return alternativeName;
+	}
+
+	private String checkDescription(String description) {
 		if (description == null) {
 			throw new IllegalArgumentException("Argument 'description' cannot be null on AbstractArgumentDefinition constructor");
 		}
-		this.description = description;
+		return description;
 	}
 
 	public String getName() {
@@ -100,7 +109,7 @@ public abstract class AbstractArgumentDefinition<T> implements ArgumentDefinitio
 		return builder.toString();
 	}
 
-	public T validate(T value, Argument<T> argument, ArgName specifiedArgName) throws ArgParsingException {
+	public T validateValue(T value, Argument<T> argument, ArgName specifiedArgName) throws ArgParsingException {
 		if (valueValidator != null) {
 			return (T)valueValidator.validate(value, argument, specifiedArgName);
 		}
