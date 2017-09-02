@@ -51,18 +51,21 @@ public class ArgumentDefinitions implements Iterable<ArgumentDefinition> {
 		} else {
 			parseCharBetweenArgNameAndValue(args, result, useArgsParsingOptions);
 		}
-		if (!result.hasSpecifiedInformationals() && result.hasMissingMandatories()) {
-			Collection<Argument> missingMandatories = result.getMissingMandatories();
+		checkForMissingMandatoriesAfterParsing(result, useArgsParsingOptions);
+		return result;
+	}
+
+	protected void checkForMissingMandatoriesAfterParsing(Arguments arguments, ArgsParsingOptions argsParsingOptions) throws ArgParsingException {
+		if (!arguments.hasSpecifiedInformationals() && arguments.hasMissingMandatories()) {
+			Collection<Argument> missingMandatories = arguments.getMissingMandatories();
 			for (Argument argument: missingMandatories) {
-				result.addParsingException(new ArgParsingException(MISSING_MANDATORY, "Missing mandatory argument: " + argument.getDefinition().getDisplayName(useArgsParsingOptions), argument));
+				arguments.addParsingException(new ArgParsingException(MISSING_MANDATORY, "Missing mandatory argument: " + argument.getDefinition().getDisplayName(argsParsingOptions), argument));
 			}
 		}
-		return result;
 	}
 
 	private static void parseSpaceBetweenArgNameAndValue(String[] args, Arguments arguments, ArgsParsingOptions argsParsingOptions) throws ArgParsingException {
 		ListIterator<String> iterator = Arrays.asList(args).listIterator();
-		;
 		while (iterator.hasNext()) {
 			String arg = iterator.next();
 			ArgName argName = parseSpacedArgName(arg, arguments, argsParsingOptions);
@@ -96,7 +99,7 @@ public class ArgumentDefinitions implements Iterable<ArgumentDefinition> {
 	private static ArgName parseSpacedArgName(String arg, Arguments arguments, ArgsParsingOptions argsParsingOptions) throws ArgParsingException {
 		ArgName result = null;
 		try {
-			result = ArgName.parseSpacedArgNameFromArg(arg, argsParsingOptions);
+			result = ArgName.createFromSpacedArg(arg, argsParsingOptions);
 		} catch (ArgParsingException argsParsingException) {
 			arguments.foundUnknownValue(arg, argsParsingException);
 		}
@@ -107,7 +110,7 @@ public class ArgumentDefinitions implements Iterable<ArgumentDefinition> {
 		boolean result = true;
 		// trap any exceptions that ArgName may throw...
 		try {
-			ArgName argName = ArgName.parseSpacedArgNameFromArg(value, argsParsingOptions);
+			ArgName argName = ArgName.createFromSpacedArg(value, argsParsingOptions);
 			result = arguments.get(argName.getName()) == null;
 		} catch (ArgParsingException argsParsingException) {
 			// an exception means it's definitely not an arg name...
@@ -116,12 +119,43 @@ public class ArgumentDefinitions implements Iterable<ArgumentDefinition> {
 		return result;
 	}
 
-	private static void parseCharBetweenArgNameAndValue(String[] args, Arguments arguments, ArgsParsingOptions argsParsingOptions) {
-		// TODO - the hard work!
-		throw new NotImplementedException();
+	private static void parseCharBetweenArgNameAndValue(String[] args, Arguments arguments, ArgsParsingOptions argsParsingOptions) throws ArgParsingException {
+		Iterator<String> iterator = Arrays.asList(args).iterator();
+		while (iterator.hasNext()) {
+			String arg = iterator.next();
+			ArgName argName = parseNonSpacedArg(arg, arguments, argsParsingOptions);
+			if (argName != null) {
+				Argument argument = arguments.get(argName.getName());
+				if (argument != null) {
+					ArgumentDefinition definition = argument.getDefinition();
+					if (definition.isValued()) {
+						// even though the argument definition says it should have a value we allow for it not having a value
+						arguments.foundValuedArg(argument, argName, argName.getValue());
+					} else if (argName.hasValue()) {
+						// non-valued (flag or informational) cannot have a value...
+						generateArgsParsingException((definition.isFlag() ? FLAG_WITH_VALUE : INFORMATIONAL_WITH_VALUE),
+								definition.getType().getDescription() + " argument '" + argName.getDisplayName() + "' has unexpected value", arguments, argsParsingOptions, argument, argName);
+					} else {
+						arguments.foundFlagOrInformationalArg(argument, argName);
+					}
+				} else {
+					arguments.foundUnknownArg(argName);
+				}
+			}
+		}
 	}
 
-	static void generateArgsParsingException(ArgParsingExceptionReason reason, String message, Arguments arguments, ArgsParsingOptions argsParsingOptions, Argument argument, ArgName specifiedArgName) throws ArgParsingException {
+	private static ArgName parseNonSpacedArg(String arg, Arguments arguments, ArgsParsingOptions argsParsingOptions) throws ArgParsingException {
+		ArgName result = null;
+		try {
+			result = ArgName.createFromNonSpacedArg(arg, argsParsingOptions);
+		} catch (ArgParsingException argsParsingException) {
+			arguments.foundUnknownValue(arg, argsParsingException);
+		}
+		return result;
+	}
+
+	private static void generateArgsParsingException(ArgParsingExceptionReason reason, String message, Arguments arguments, ArgsParsingOptions argsParsingOptions, Argument argument, ArgName specifiedArgName) throws ArgParsingException {
 		ArgParsingException argsParsingException = new ArgParsingException(reason, message, argument, specifiedArgName);
 		arguments.addParsingException(argsParsingException);
 	}

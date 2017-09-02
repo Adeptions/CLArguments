@@ -75,7 +75,7 @@ public class ArgumentTests extends TestCase {
 	public void testDoubleArgumentSetRawValue() throws Exception {
 		DoubleArgumentDefinition doubleArgumentDefinition = new DoubleArgumentDefinition(testName, testDescription);
 		DoubleArgument argument = new DoubleArgument(doubleArgumentDefinition);
-		ArgName specifiedArgName = ArgName.parseSpacedArgNameFromArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testName, new ArgsParsingOptions());
+		ArgName specifiedArgName = ArgName.createFromSpacedArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testName, new ArgsParsingOptions());
 		assertFalse(".isSpecified() should be false",
 				argument.isSpecified());
 		argument.setRawValue("123.4", specifiedArgName);
@@ -87,7 +87,7 @@ public class ArgumentTests extends TestCase {
 	public void testDoubleArgumentSetRawValueFails() throws Exception {
 		DoubleArgumentDefinition doubleArgumentDefinition = new DoubleArgumentDefinition(testName, testDescription);
 		DoubleArgument argument = new DoubleArgument(doubleArgumentDefinition);
-		ArgName specifiedArgName = ArgName.parseSpacedArgNameFromArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testName, new ArgsParsingOptions());
+		ArgName specifiedArgName = ArgName.createFromSpacedArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testName, new ArgsParsingOptions());
 		boolean failed = false;
 		try {
 			argument.setRawValue("xxx", specifiedArgName);
@@ -101,7 +101,7 @@ public class ArgumentTests extends TestCase {
 	public void testIntegerArgumentSetRawValue() throws Exception {
 		IntegerArgumentDefinition integerArgumentDefinition = new IntegerArgumentDefinition(testName, testDescription);
 		IntegerArgument argument = new IntegerArgument(integerArgumentDefinition);
-		ArgName specifiedArgName = ArgName.parseSpacedArgNameFromArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testName, new ArgsParsingOptions());
+		ArgName specifiedArgName = ArgName.createFromSpacedArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testName, new ArgsParsingOptions());
 		assertFalse(".isSpecified() should be false",
 				argument.isSpecified());
 		argument.setRawValue("123", specifiedArgName);
@@ -113,7 +113,7 @@ public class ArgumentTests extends TestCase {
 	public void testIntegerArgumentSetRawValueFailes() throws Exception {
 		IntegerArgumentDefinition integerArgumentDefinition = new IntegerArgumentDefinition(testName, testDescription);
 		IntegerArgument argument = new IntegerArgument(integerArgumentDefinition);
-		ArgName specifiedArgName = ArgName.parseSpacedArgNameFromArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testName, new ArgsParsingOptions());
+		ArgName specifiedArgName = ArgName.createFromSpacedArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testName, new ArgsParsingOptions());
 		boolean failed = false;
 		try {
 			argument.setRawValue("xxx", specifiedArgName);
@@ -127,7 +127,7 @@ public class ArgumentTests extends TestCase {
 	public void testBooleanArgumentSetRawValue() throws Exception {
 		BooleanArgumentDefinition booleanArgumentDefinition = new BooleanArgumentDefinition(testName, testDescription);
 		BooleanArgument argument = new BooleanArgument(booleanArgumentDefinition);
-		ArgName specifiedArgName = ArgName.parseSpacedArgNameFromArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testName, new ArgsParsingOptions());
+		ArgName specifiedArgName = ArgName.createFromSpacedArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testName, new ArgsParsingOptions());
 		assertFalse(".isSpecified() should be false",
 				argument.isSpecified());
 		argument.setRawValue("true", specifiedArgName);
@@ -139,7 +139,7 @@ public class ArgumentTests extends TestCase {
 	public void testBooleanArgumentSetRawValueFails() throws Exception {
 		BooleanArgumentDefinition booleanArgumentDefinition = new BooleanArgumentDefinition(testName, testDescription);
 		BooleanArgument argument = new BooleanArgument(booleanArgumentDefinition);
-		ArgName specifiedArgName = ArgName.parseSpacedArgNameFromArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testName, new ArgsParsingOptions());
+		ArgName specifiedArgName = ArgName.createFromSpacedArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testName, new ArgsParsingOptions());
 		boolean failed = false;
 		try {
 			argument.setRawValue("xxx", specifiedArgName);
@@ -153,7 +153,7 @@ public class ArgumentTests extends TestCase {
 	public void testStringArgumentSetRawValue() throws Exception {
 		StringArgumentDefinition stringArgumentDefinition = new StringArgumentDefinition(testName, testDescription);
 		StringArgument argument = new StringArgument(stringArgumentDefinition);
-		ArgName specifiedArgName = ArgName.parseSpacedArgNameFromArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testName, new ArgsParsingOptions());
+		ArgName specifiedArgName = ArgName.createFromSpacedArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testName, new ArgsParsingOptions());
 		assertFalse(".isSpecified() should be false",
 				argument.isSpecified());
 		argument.setRawValue("foo", specifiedArgName);
@@ -165,7 +165,7 @@ public class ArgumentTests extends TestCase {
 	public void testFlagArgumentSetRawValue() throws Exception {
 		FlagArgumentDefinition flagArgumentDefinition = new FlagArgumentDefinition(testName, testDescription);
 		FlagArgument argument = new FlagArgument(flagArgumentDefinition);
-		ArgName specifiedArgName = ArgName.parseSpacedArgNameFromArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testName, new ArgsParsingOptions());
+		ArgName specifiedArgName = ArgName.createFromSpacedArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testName, new ArgsParsingOptions());
 		assertFalse(".isSpecified() should be false",
 				argument.isSpecified());
 		argument.setRawValue("foo", specifiedArgName);
@@ -177,7 +177,7 @@ public class ArgumentTests extends TestCase {
 	public void testInformationalArgumentSetRawValue() throws Exception {
 		InformationalArgumentDefinition informationalArgumentDefinition = new InformationalArgumentDefinition(testName, testDescription);
 		InformationalArgument argument = new InformationalArgument(informationalArgumentDefinition);
-		ArgName specifiedArgName = ArgName.parseSpacedArgNameFromArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testName, new ArgsParsingOptions());
+		ArgName specifiedArgName = ArgName.createFromSpacedArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testName, new ArgsParsingOptions());
 		assertFalse(".isSpecified() should be false",
 				argument.isSpecified());
 		argument.setRawValue("foo", specifiedArgName);
