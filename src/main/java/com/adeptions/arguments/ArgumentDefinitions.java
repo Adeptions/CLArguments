@@ -6,18 +6,18 @@ import java.util.*;
 
 import static com.adeptions.arguments.ArgParsingExceptionReason.*;
 
-public class ArgumentDefinitions implements Iterable<IArgumentDefinition> {
-	protected List<IArgumentDefinition> definitions = new ArrayList<IArgumentDefinition>();
-	protected Map<String,IArgumentDefinition> definitionsNameMap = new HashMap<String, IArgumentDefinition>();
+public class ArgumentDefinitions implements Iterable<ArgumentDefinition> {
+	protected List<ArgumentDefinition> definitions = new ArrayList<ArgumentDefinition>();
+	protected Map<String,ArgumentDefinition> definitionsNameMap = new HashMap<String, ArgumentDefinition>();
 
 	public ArgumentDefinitions() throws ArgumentDefinitionException {
 	}
 
-	public ArgumentDefinitions(IArgumentDefinition... argumentDefinitions) throws ArgumentDefinitionException {
+	public ArgumentDefinitions(ArgumentDefinition... argumentDefinitions) throws ArgumentDefinitionException {
 		addAll(Arrays.asList(argumentDefinitions));
 	}
 
-	public ArgumentDefinitions(List<IArgumentDefinition> argumentDefinitions) throws ArgumentDefinitionException {
+	public ArgumentDefinitions(List<ArgumentDefinition> argumentDefinitions) throws ArgumentDefinitionException {
 		addAll(argumentDefinitions);
 	}
 
@@ -25,13 +25,13 @@ public class ArgumentDefinitions implements Iterable<IArgumentDefinition> {
 		return definitionsNameMap.containsKey(argumentName);
 	}
 
-	public IArgumentDefinition getArgumentDefinitionByName(String argumentName) {
+	public ArgumentDefinition getArgumentDefinitionByName(String argumentName) {
 		return definitionsNameMap.get(argumentName);
 	}
 
 	public String getHelp(ArgsParsingOptions argsParsingOptions) {
 		StringBuilder builder = new StringBuilder();
-		Iterator<IArgumentDefinition> iterator = definitions.iterator();
+		Iterator<ArgumentDefinition> iterator = definitions.iterator();
 		while (iterator.hasNext()) {
 			builder.append(iterator.next().getHelp(argsParsingOptions))
 					.append(iterator.hasNext() ? "\n" : "");
@@ -52,8 +52,8 @@ public class ArgumentDefinitions implements Iterable<IArgumentDefinition> {
 			parseCharBetweenArgNameAndValue(args, result, useArgsParsingOptions);
 		}
 		if (!result.hasSpecifiedInformationals() && result.hasMissingMandatories()) {
-			Collection<IArgument> missingMandatories = result.getMissingMandatories();
-			for (IArgument argument: missingMandatories) {
+			Collection<Argument> missingMandatories = result.getMissingMandatories();
+			for (Argument argument: missingMandatories) {
 				result.addParsingException(new ArgParsingException(MISSING_MANDATORY, "Missing mandatory argument: " + argument.getDefinition().getDisplayName(useArgsParsingOptions), argument));
 			}
 		}
@@ -67,7 +67,7 @@ public class ArgumentDefinitions implements Iterable<IArgumentDefinition> {
 			String arg = iterator.next();
 			ArgName argName = parseSpacedArgName(arg, arguments, argsParsingOptions);
 			if (argName != null) {
-				IArgument argument = arguments.get(argName.getName());
+				Argument argument = arguments.get(argName.getName());
 				if (argument != null) {
 					if (argument.getDefinition().isValued()) {
 						if (!iterator.hasNext()) {
@@ -121,7 +121,7 @@ public class ArgumentDefinitions implements Iterable<IArgumentDefinition> {
 		throw new NotImplementedException();
 	}
 
-	static void generateArgsParsingException(ArgParsingExceptionReason reason, String message, Arguments arguments, ArgsParsingOptions argsParsingOptions, IArgument argument, ArgName specifiedArgName) throws ArgParsingException {
+	static void generateArgsParsingException(ArgParsingExceptionReason reason, String message, Arguments arguments, ArgsParsingOptions argsParsingOptions, Argument argument, ArgName specifiedArgName) throws ArgParsingException {
 		ArgParsingException argsParsingException = new ArgParsingException(reason, message, argument, specifiedArgName);
 		arguments.addParsingException(argsParsingException);
 	}
@@ -134,23 +134,23 @@ public class ArgumentDefinitions implements Iterable<IArgumentDefinition> {
 		return definitions.isEmpty();
 	}
 
-	public boolean add(IArgumentDefinition argumentDefinition) {
+	public boolean add(ArgumentDefinition argumentDefinition) {
 		addNames(argumentDefinition);
 		return definitions.add(argumentDefinition);
 	}
 
-	public boolean addAll(Collection<? extends IArgumentDefinition> c) {
-		for (IArgumentDefinition argumentDefinition: c) {
+	public boolean addAll(Collection<? extends ArgumentDefinition> c) {
+		for (ArgumentDefinition argumentDefinition: c) {
 			addNames(argumentDefinition);
 		}
 		return definitions.addAll(c);
 	}
 
-	public IArgumentDefinition get(int index) {
+	public ArgumentDefinition get(int index) {
 		return definitions.get(index);
 	}
 
-	private void addNames(IArgumentDefinition argumentDefinition) {
+	private void addNames(ArgumentDefinition argumentDefinition) {
 		if (definitionsNameMap.containsKey(argumentDefinition.getName())) {
 			throw new ArgumentDefinitionException("Argument definitions already contains argument name '" + argumentDefinition.getName() + "'");
 		}
@@ -165,12 +165,12 @@ public class ArgumentDefinitions implements Iterable<IArgumentDefinition> {
 		}
 	}
 
-	private void addName(String name, IArgumentDefinition argumentDefinition) {
+	private void addName(String name, ArgumentDefinition argumentDefinition) {
 		definitionsNameMap.put(name, argumentDefinition);
 	}
 
 	@Override
-	public Iterator<IArgumentDefinition> iterator() {
+	public Iterator<ArgumentDefinition> iterator() {
 		return definitions.iterator();
 	}
 }

@@ -21,7 +21,7 @@ public class Application {
 				new InformationalArgumentDefinition(new String[] {"help", "h"}, "Show this help")
 		);
 		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
-		argsParsingOptions.setArgsParsingExceptionHandler(new IArgsParsingExceptionHandler() {
+		argsParsingOptions.setArgsParsingExceptionHandler(new ArgsParsingExceptionHandler() {
 			@Override
 			public ArgParsingException handle(ArgParsingException argsParsingException) throws ArgParsingException {
 				return argsParsingException;

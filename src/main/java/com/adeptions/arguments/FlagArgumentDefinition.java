@@ -1,6 +1,6 @@
 package com.adeptions.arguments;
 
-public class FlagArgumentDefinition extends AbstractArgumentDefinition<Boolean> implements IArgumentDefinition<Boolean> {
+public class FlagArgumentDefinition extends AbstractArgumentDefinition<Boolean> implements ArgumentDefinition<Boolean> {
 	public FlagArgumentDefinition(String name, String description) {
 		super(ArgumentDefinitionType.FLAG, name, description);
 	}

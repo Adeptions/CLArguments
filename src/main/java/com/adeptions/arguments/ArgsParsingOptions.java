@@ -9,7 +9,7 @@ public class ArgsParsingOptions {
 	protected Character characterBetweenArgNameAndValue;
 	protected Character argNamePrefix;
 	protected Character argNameSuffix;
-	protected IArgsParsingExceptionHandler argsParsingExceptionHandler = new IArgsParsingExceptionHandler() {
+	protected ArgsParsingExceptionHandler argsParsingExceptionHandler = new ArgsParsingExceptionHandler() {
 		@Override
 		public ArgParsingException handle(ArgParsingException argsParsingException) throws ArgParsingException {
 			return argsParsingException;
@@ -67,11 +67,11 @@ public class ArgsParsingOptions {
 		this.argNameSuffix = argNameSuffix;
 	}
 
-	public IArgsParsingExceptionHandler getArgsParsingExceptionHandler() {
+	public ArgsParsingExceptionHandler getArgsParsingExceptionHandler() {
 		return argsParsingExceptionHandler;
 	}
 
-	public void setArgsParsingExceptionHandler(IArgsParsingExceptionHandler argsParsingExceptionHandler) {
+	public void setArgsParsingExceptionHandler(ArgsParsingExceptionHandler argsParsingExceptionHandler) {
 		this.argsParsingExceptionHandler = argsParsingExceptionHandler;
 	}
 }

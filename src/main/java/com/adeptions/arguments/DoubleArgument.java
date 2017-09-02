@@ -2,8 +2,8 @@ package com.adeptions.arguments;
 
 import static com.adeptions.arguments.ArgParsingExceptionReason.*;
 
-public class DoubleArgument extends AbstractArgument<Double> implements IArgument<Double> {
-	public DoubleArgument(IArgumentDefinition<Double> definition) {
+public class DoubleArgument extends AbstractArgument<Double> implements Argument<Double> {
+	public DoubleArgument(ArgumentDefinition<Double> definition) {
 		super(definition);
 	}
 

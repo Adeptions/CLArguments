@@ -6,13 +6,13 @@ import java.util.*;
 
 import static com.adeptions.arguments.ArgumentDefinitionType.*;
 
-public abstract class AbstractArgumentDefinition<T> implements IArgumentDefinition<T> {
+public abstract class AbstractArgumentDefinition<T> implements ArgumentDefinition<T> {
 	protected final ArgumentDefinitionType type;
 	protected final String name;
 	protected final String description;
 	protected String format;
 	protected boolean mandatory;
-	protected IArgumentValueValidator valueValidator;
+	protected ArgumentValueValidator valueValidator;
 	private Set<String> alternativeNames = new HashSet<String>();
 	protected boolean hasDefaultValue;
 	protected T defaultValue;
@@ -76,7 +76,7 @@ public abstract class AbstractArgumentDefinition<T> implements IArgumentDefiniti
 		return format;
 	}
 
-	public IArgumentDefinition<T> addFormat(String format) {
+	public ArgumentDefinition<T> addFormat(String format) {
 		this.format = format;
 		return this;
 	}
@@ -100,7 +100,7 @@ public abstract class AbstractArgumentDefinition<T> implements IArgumentDefiniti
 		return builder.toString();
 	}
 
-	public T validate(T value, IArgument<T> argument, ArgName specifiedArgName) throws ArgParsingException {
+	public T validate(T value, Argument<T> argument, ArgName specifiedArgName) throws ArgParsingException {
 		if (valueValidator != null) {
 			return (T)valueValidator.validate(value, argument, specifiedArgName);
 		}
@@ -131,11 +131,11 @@ public abstract class AbstractArgumentDefinition<T> implements IArgumentDefiniti
 		this.mandatory = mandatory;
 	}
 
-	public IArgumentValueValidator getValidator() {
+	public ArgumentValueValidator getValidator() {
 		return valueValidator;
 	}
 
-	public void setValidator(IArgumentValueValidator valueValidator) {
+	public void setValidator(ArgumentValueValidator valueValidator) {
 		this.valueValidator = valueValidator;
 	}
 
@@ -144,12 +144,12 @@ public abstract class AbstractArgumentDefinition<T> implements IArgumentDefiniti
 		return new HashSet<String>(alternativeNames);
 	}
 
-	public IArgumentDefinition<T> addValidator(IArgumentValueValidator valueValidator) {
+	public ArgumentDefinition<T> addValidator(ArgumentValueValidator valueValidator) {
 		setValidator(valueValidator);
 		return this;
 	}
 
-	public IArgumentDefinition<T> makeMandatory() {
+	public ArgumentDefinition<T> makeMandatory() {
 		mandatory = true;
 		return this;
 	}
@@ -168,7 +168,7 @@ public abstract class AbstractArgumentDefinition<T> implements IArgumentDefiniti
 		this.hasDefaultValue = true;
 	}
 
-	public IArgumentDefinition<T> addDefaultValue(T defaultValue) {
+	public ArgumentDefinition<T> addDefaultValue(T defaultValue) {
 		setDefaultValue(defaultValue);
 		return this;
 	}

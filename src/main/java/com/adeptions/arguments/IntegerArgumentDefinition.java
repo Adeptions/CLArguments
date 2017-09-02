@@ -1,6 +1,6 @@
 package com.adeptions.arguments;
 
-public class IntegerArgumentDefinition extends AbstractArgumentDefinition<Integer> implements IArgumentDefinition<Integer> {
+public class IntegerArgumentDefinition extends AbstractArgumentDefinition<Integer> implements ArgumentDefinition<Integer> {
 	public IntegerArgumentDefinition(String name, String description) {
 		super(ArgumentDefinitionType.VALUED, name, description);
 		addFormat("integer");
@@ -11,7 +11,7 @@ public class IntegerArgumentDefinition extends AbstractArgumentDefinition<Intege
 		addFormat("integer");
 	}
 
-	public IArgument<Integer> createArgumentInstance() {
+	public Argument<Integer> createArgumentInstance() {
 		return new IntegerArgument(this);
 	}
 }

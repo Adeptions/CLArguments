@@ -73,7 +73,7 @@ public class ArgNameTests extends TestCase {
 
 	public void testArgNameSpaced7() throws Exception {
 		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
-		argsParsingOptions.setArgsParsingExceptionHandler(new IArgsParsingExceptionHandler() {
+		argsParsingOptions.setArgsParsingExceptionHandler(new ArgsParsingExceptionHandler() {
 			@Override
 			public ArgParsingException handle(ArgParsingException argsParsingException) throws ArgParsingException {
 				throw argsParsingException;

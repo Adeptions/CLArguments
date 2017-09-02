@@ -1,7 +1,7 @@
 package com.adeptions.arguments;
 
-public class InformationalArgument extends AbstractArgument<Boolean> implements IArgument<Boolean> {
-	public InformationalArgument(IArgumentDefinition<Boolean> definition) {
+public class InformationalArgument extends AbstractArgument<Boolean> implements Argument<Boolean> {
+	public InformationalArgument(ArgumentDefinition<Boolean> definition) {
 		super(definition);
 	}
 

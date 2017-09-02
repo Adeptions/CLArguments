@@ -2,7 +2,7 @@ package com.adeptions.arguments;
 
 import java.util.*;
 
-public interface IArgumentDefinition<T> {
+public interface ArgumentDefinition<T> {
 	String getName();
 	String getDisplayName(ArgsParsingOptions argsParsingOptions);
 	String getDescription();
@@ -17,15 +17,15 @@ public interface IArgumentDefinition<T> {
 	boolean hasDefaultValue();
 	T getDefaultValue();
 	void setDefaultValue(T value);
-	IArgumentValueValidator getValidator();
-	void setValidator(IArgumentValueValidator valueValidator);
+	ArgumentValueValidator getValidator();
+	void setValidator(ArgumentValueValidator valueValidator);
 	Set<String> getAlternativeNames();
-	T validate(T value, IArgument<T> argument, ArgName specifiedArgName) throws ArgParsingException;
+	T validate(T value, Argument<T> argument, ArgName specifiedArgName) throws ArgParsingException;
 
-	IArgumentDefinition<T> addFormat(String format);
-	IArgumentDefinition<T> addValidator(IArgumentValueValidator valueValidator);
-	IArgumentDefinition<T> makeMandatory();
-	IArgumentDefinition<T> addDefaultValue(T value);
+	ArgumentDefinition<T> addFormat(String format);
+	ArgumentDefinition<T> addValidator(ArgumentValueValidator valueValidator);
+	ArgumentDefinition<T> makeMandatory();
+	ArgumentDefinition<T> addDefaultValue(T value);
 
-	IArgument<T> createArgumentInstance();
+	Argument<T> createArgumentInstance();
 }

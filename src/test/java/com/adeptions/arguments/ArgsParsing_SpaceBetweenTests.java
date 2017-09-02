@@ -22,12 +22,12 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 	};
 	private static final String testDescription = "This is an argument definition description";
 
-	private static final IArgumentDefinition argumentDefinition1 = new StringArgumentDefinition(new String[] {testArgumentName1, testAlternateArgumentName1}, testDescription).makeMandatory();
-	private static final IArgumentDefinition argumentDefinition2 = new IntegerArgumentDefinition(new String[] {testArgumentName2, testAlternateArgumentName2}, testDescription);
-	private static final IArgumentDefinition argumentDefinition3 = new DoubleArgumentDefinition(testArgumentName3, testDescription);
-	private static final IArgumentDefinition argumentDefinition4 = new FlagArgumentDefinition(testArgumentName4, testDescription);
-	private static final IArgumentDefinition argumentDefinition5 = new InformationalArgumentDefinition(new String[] {testArgumentName5, testAlternateArgumentName5}, testDescription);
-	private static final IArgumentDefinition argumentDefinition6 = new BooleanArgumentDefinition(testArgumentName6, testDescription);
+	private static final ArgumentDefinition argumentDefinition1 = new StringArgumentDefinition(new String[] {testArgumentName1, testAlternateArgumentName1}, testDescription).makeMandatory();
+	private static final ArgumentDefinition argumentDefinition2 = new IntegerArgumentDefinition(new String[] {testArgumentName2, testAlternateArgumentName2}, testDescription);
+	private static final ArgumentDefinition argumentDefinition3 = new DoubleArgumentDefinition(testArgumentName3, testDescription);
+	private static final ArgumentDefinition argumentDefinition4 = new FlagArgumentDefinition(testArgumentName4, testDescription);
+	private static final ArgumentDefinition argumentDefinition5 = new InformationalArgumentDefinition(new String[] {testArgumentName5, testAlternateArgumentName5}, testDescription);
+	private static final ArgumentDefinition argumentDefinition6 = new BooleanArgumentDefinition(testArgumentName6, testDescription);
 
 	public void testArgsParsingEmptyArgs() throws Exception {
 		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions(
@@ -119,7 +119,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 		});
 		assertEquals(argumentDefinitions.size(), arguments.size());
 		assertEquals(1, arguments.getSpecifiedArguments().size());
-		IArgument<String> argument = arguments.get(testArgumentName1);
+		Argument<String> argument = arguments.get(testArgumentName1);
 		assertNotNull(argument);
 		assertTrue("Argument .isSpecified() should be true",
 				argument.isSpecified());
@@ -139,7 +139,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 		});
 		assertEquals(argumentDefinitions.size(), arguments.size());
 		assertEquals(0, arguments.getSpecifiedArguments().size());
-		IArgument<String> argument = arguments.get(testArgumentName1);
+		Argument<String> argument = arguments.get(testArgumentName1);
 		assertNotNull(argument);
 		assertFalse("Argument .isSpecified() should be false",
 				argument.isSpecified());
@@ -160,7 +160,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 				argumentDefinition5
 		);
 		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
-		argsParsingOptions.setArgsParsingExceptionHandler(new IArgsParsingExceptionHandler() {
+		argsParsingOptions.setArgsParsingExceptionHandler(new ArgsParsingExceptionHandler() {
 			@Override
 			public ArgParsingException handle(ArgParsingException argsParsingException) throws ArgParsingException {
 				throw argsParsingException;
@@ -187,7 +187,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 		});
 		assertEquals(argumentDefinitions.size(), arguments.size());
 		assertEquals(1, arguments.getSpecifiedArguments().size());
-		IArgument argument = arguments.get(testArgumentName2);
+		Argument argument = arguments.get(testArgumentName2);
 		assertNotNull(argument);
 		assertTrue("Argument .isSpecified() should be true",
 				argument.isSpecified());
@@ -205,7 +205,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 		});
 		assertEquals(argumentDefinitions.size(), arguments.size());
 		assertEquals(1, arguments.getSpecifiedArguments().size());
-		IArgument argument = arguments.get(testArgumentName3);
+		Argument argument = arguments.get(testArgumentName3);
 		assertNotNull(argument);
 		assertTrue("Argument .isSpecified() should be true",
 				argument.isSpecified());
@@ -222,7 +222,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 		});
 		assertEquals(argumentDefinitions.size(), arguments.size());
 		assertEquals(1, arguments.getSpecifiedArguments().size());
-		IArgument argument = arguments.get(testArgumentName4);
+		Argument argument = arguments.get(testArgumentName4);
 		assertNotNull(argument);
 		assertTrue("Argument .isSpecified() should be true",
 				argument.isSpecified());
@@ -239,7 +239,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 		});
 		assertEquals(argumentDefinitions.size(), arguments.size());
 		assertEquals(1, arguments.getSpecifiedArguments().size());
-		IArgument argument = arguments.get(testArgumentName5);
+		Argument argument = arguments.get(testArgumentName5);
 		assertNotNull(argument);
 		assertTrue("Argument .isSpecified() should be true",
 				argument.isSpecified());
@@ -260,7 +260,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 		});
 		assertEquals(argumentDefinitions.size(), arguments.size());
 		assertEquals(0, arguments.getSpecifiedArguments().size());
-		IArgument argument = arguments.get(testArgumentName2);
+		Argument argument = arguments.get(testArgumentName2);
 		assertNotNull(argument);
 		assertFalse("Argument .isSpecified() should be false",
 				argument.isSpecified());
@@ -274,7 +274,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 				argumentDefinition2
 		);
 		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
-		argsParsingOptions.setArgsParsingExceptionHandler(new IArgsParsingExceptionHandler() {
+		argsParsingOptions.setArgsParsingExceptionHandler(new ArgsParsingExceptionHandler() {
 			@Override
 			public ArgParsingException handle(ArgParsingException argsParsingException) throws ArgParsingException {
 				throw argsParsingException;
@@ -314,7 +314,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 		});
 		assertEquals(argumentDefinitions.size(), arguments.size());
 		assertEquals(0, arguments.getSpecifiedArguments().size());
-		IArgument argument = arguments.get(testArgumentName3);
+		Argument argument = arguments.get(testArgumentName3);
 		assertNotNull(argument);
 		assertFalse("Argument .isSpecified() should be false",
 				argument.isSpecified());
@@ -334,7 +334,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 		});
 		assertEquals(argumentDefinitions.size(), arguments.size());
 		assertEquals(1, arguments.getSpecifiedArguments().size());
-		IArgument argument = arguments.get(testArgumentName3);
+		Argument argument = arguments.get(testArgumentName3);
 		assertNotNull(argument);
 		assertFalse("Argument .isSpecified() should be false",
 				argument.isSpecified());
@@ -409,7 +409,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 
 	public void testArgsParsingUnknownArgValue3() throws Exception {
 		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
-		argsParsingOptions.setArgsParsingExceptionHandler(new IArgsParsingExceptionHandler() {
+		argsParsingOptions.setArgsParsingExceptionHandler(new ArgsParsingExceptionHandler() {
 			@Override
 			public ArgParsingException handle(ArgParsingException argsParsingException) throws ArgParsingException {
 				throw argsParsingException;
@@ -436,7 +436,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 
 	public void testArgsParsingUnknownArgValue4() throws Exception {
 		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
-		argsParsingOptions.setArgsParsingExceptionHandler(new IArgsParsingExceptionHandler() {
+		argsParsingOptions.setArgsParsingExceptionHandler(new ArgsParsingExceptionHandler() {
 			@Override
 			public ArgParsingException handle(ArgParsingException argsParsingException) throws ArgParsingException {
 				throw argsParsingException;

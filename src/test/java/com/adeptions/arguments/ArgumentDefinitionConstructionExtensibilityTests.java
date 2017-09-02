@@ -28,15 +28,15 @@ public class ArgumentDefinitionConstructionExtensibilityTests extends TestCase {
 	}
 
 	public void testFooEnumArgumentDefinitionConstructorWithDefault() throws Exception {
-		IArgumentDefinition<FooEnum> fooEnumArgumentDefinition = new FooEnumArgumentDefinition(testName, testDescription).addDefaultValue(FooEnum.FOO_2);
+		ArgumentDefinition<FooEnum> fooEnumArgumentDefinition = new FooEnumArgumentDefinition(testName, testDescription).addDefaultValue(FooEnum.FOO_2);
 		assertTrue(".hasDefaultValue() should be true",
 				fooEnumArgumentDefinition.hasDefaultValue());
 		assertEquals(FooEnum.FOO_2, fooEnumArgumentDefinition.getDefaultValue());
 	}
 
 	public void testFooEnumArgumentDefinitionArgumentCreate() throws Exception {
-		IArgumentDefinition<FooEnum> fooEnumArgumentDefinition = new FooEnumArgumentDefinition(testName, testDescription).addDefaultValue(FooEnum.FOO_2);
-		IArgument<FooEnum> fooEnumIArgument = fooEnumArgumentDefinition.createArgumentInstance();
+		ArgumentDefinition<FooEnum> fooEnumArgumentDefinition = new FooEnumArgumentDefinition(testName, testDescription).addDefaultValue(FooEnum.FOO_2);
+		Argument<FooEnum> fooEnumIArgument = fooEnumArgumentDefinition.createArgumentInstance();
 		assertFalse(".isSpecified() should be false",
 				fooEnumIArgument.isSpecified());
 		assertEquals(FooEnum.FOO_2, fooEnumIArgument.getValue());
@@ -44,13 +44,13 @@ public class ArgumentDefinitionConstructionExtensibilityTests extends TestCase {
 
 	public void testFooEnumArgumentDefinitionArgumentCreate2() throws Exception {
 		FooEnumArgumentDefinition fooEnumArgumentDefinition = new FooEnumArgumentDefinition(testName, testDescription);
-		IArgument<FooEnum> fooEnumIArgument = fooEnumArgumentDefinition.createArgumentInstance();
+		Argument<FooEnum> fooEnumIArgument = fooEnumArgumentDefinition.createArgumentInstance();
 		assertFalse(".isSpecified() should be false",
 				fooEnumIArgument.isSpecified());
 		assertNull(fooEnumIArgument.getValue());
 	}
 
-	private class FooEnumArgumentDefinition extends AbstractArgumentDefinition<FooEnum> implements IArgumentDefinition<FooEnum> {
+	private class FooEnumArgumentDefinition extends AbstractArgumentDefinition<FooEnum> implements ArgumentDefinition<FooEnum> {
 		private FooEnum defaultValue;
 		private boolean hasDefaultValue;
 
@@ -73,20 +73,20 @@ public class ArgumentDefinitionConstructionExtensibilityTests extends TestCase {
 		}
 
 		@Override
-		public IArgumentDefinition<FooEnum> addDefaultValue(FooEnum defaultValue) {
+		public ArgumentDefinition<FooEnum> addDefaultValue(FooEnum defaultValue) {
 			hasDefaultValue = true;
 			this.defaultValue = defaultValue;
 			return this;
 		}
 
 		@Override
-		public IArgument<FooEnum> createArgumentInstance() {
+		public Argument<FooEnum> createArgumentInstance() {
 			return new FooEnumArgument(this);
 		}
 	}
 
-	private class FooEnumArgument extends AbstractArgument<FooEnum> implements IArgument<FooEnum> {
-		public FooEnumArgument(IArgumentDefinition<FooEnum> definition) {
+	private class FooEnumArgument extends AbstractArgument<FooEnum> implements Argument<FooEnum> {
+		public FooEnumArgument(ArgumentDefinition<FooEnum> definition) {
 			super(definition);
 		}
 

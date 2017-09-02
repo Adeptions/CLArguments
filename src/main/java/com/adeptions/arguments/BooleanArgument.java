@@ -2,8 +2,8 @@ package com.adeptions.arguments;
 
 import static com.adeptions.arguments.ArgParsingExceptionReason.*;
 
-public class BooleanArgument extends AbstractArgument<Boolean> implements IArgument<Boolean> {
-	public BooleanArgument(IArgumentDefinition<Boolean> definition) {
+public class BooleanArgument extends AbstractArgument<Boolean> implements Argument<Boolean> {
+	public BooleanArgument(ArgumentDefinition<Boolean> definition) {
 		super(definition);
 	}
 

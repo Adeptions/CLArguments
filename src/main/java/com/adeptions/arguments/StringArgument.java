@@ -1,7 +1,7 @@
 package com.adeptions.arguments;
 
-public class StringArgument extends AbstractArgument<String> implements IArgument<String> {
-	public StringArgument(IArgumentDefinition<String> definition) {
+public class StringArgument extends AbstractArgument<String> implements Argument<String> {
+	public StringArgument(ArgumentDefinition<String> definition) {
 		super(definition);
 	}
 

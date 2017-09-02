@@ -2,7 +2,7 @@ package com.adeptions.arguments;
 
 public class ArgParsingException extends Exception {
 	private ArgParsingExceptionReason reason;
-	private IArgument argument;
+	private Argument argument;
 	private ArgName specifiedArgName;
 
 	public ArgParsingException(ArgParsingExceptionReason reason) {
@@ -15,13 +15,13 @@ public class ArgParsingException extends Exception {
 		this.reason = reason;
 	}
 
-	public ArgParsingException(ArgParsingExceptionReason reason, String message, IArgument argument) {
+	public ArgParsingException(ArgParsingExceptionReason reason, String message, Argument argument) {
 		super(message);
 		this.reason = reason;
 		this.argument = argument;
 	}
 
-	public ArgParsingException(ArgParsingExceptionReason reason, String message, IArgument argument, ArgName specifiedArgName) {
+	public ArgParsingException(ArgParsingExceptionReason reason, String message, Argument argument, ArgName specifiedArgName) {
 		super(message);
 		this.reason = reason;
 		this.argument = argument;
@@ -39,7 +39,7 @@ public class ArgParsingException extends Exception {
 		this.reason = reason;
 	}
 
-	public ArgParsingException(ArgParsingExceptionReason reason, String message, Throwable cause, IArgument argument, ArgName specifiedArgName) {
+	public ArgParsingException(ArgParsingExceptionReason reason, String message, Throwable cause, Argument argument, ArgName specifiedArgName) {
 		super(message, cause);
 		this.reason = reason;
 		this.argument = argument;
@@ -60,7 +60,7 @@ public class ArgParsingException extends Exception {
 		return reason;
 	}
 
-	public IArgument getArgument() {
+	public Argument getArgument() {
 		return argument;
 	}
 

@@ -15,12 +15,12 @@ public class ArgumentDefinitionsTests extends TestCase {
 	private static final String testArgumentName6 = "arg6";
 	private static final String testDescription = "This is an argument definition description";
 
-	private static final IArgumentDefinition argumentDefinition1 = new StringArgumentDefinition(new String[] {testArgumentName1, testAlternateArgumentName1}, testDescription).makeMandatory();
-	private static final IArgumentDefinition argumentDefinition2 = new IntegerArgumentDefinition(new String[] {testArgumentName2, testAlternateArgumentName2}, testDescription);
-	private static final IArgumentDefinition argumentDefinition3 = new DoubleArgumentDefinition(testArgumentName3, testDescription);
-	private static final IArgumentDefinition argumentDefinition4 = new FlagArgumentDefinition(testArgumentName4, testDescription);
-	private static final IArgumentDefinition argumentDefinition5 = new InformationalArgumentDefinition(testArgumentName5, testDescription);
-	private static final IArgumentDefinition argumentDefinition6 = new BooleanArgumentDefinition(testArgumentName6, testDescription);
+	private static final ArgumentDefinition argumentDefinition1 = new StringArgumentDefinition(new String[] {testArgumentName1, testAlternateArgumentName1}, testDescription).makeMandatory();
+	private static final ArgumentDefinition argumentDefinition2 = new IntegerArgumentDefinition(new String[] {testArgumentName2, testAlternateArgumentName2}, testDescription);
+	private static final ArgumentDefinition argumentDefinition3 = new DoubleArgumentDefinition(testArgumentName3, testDescription);
+	private static final ArgumentDefinition argumentDefinition4 = new FlagArgumentDefinition(testArgumentName4, testDescription);
+	private static final ArgumentDefinition argumentDefinition5 = new InformationalArgumentDefinition(testArgumentName5, testDescription);
+	private static final ArgumentDefinition argumentDefinition6 = new BooleanArgumentDefinition(testArgumentName6, testDescription);
 
 	private static final Character alternateCharBetweenArgNameAndValue = ':';
 	private static final Character alternateArgNamePrefix = '[';
@@ -43,7 +43,7 @@ public class ArgumentDefinitionsTests extends TestCase {
 	}
 
 	public void testArgumentDefinitionsConstructor3() throws Exception {
-		List<IArgumentDefinition> argumentDefinitionList = new ArrayList<IArgumentDefinition>(Arrays.asList(new IArgumentDefinition[] {
+		List<ArgumentDefinition> argumentDefinitionList = new ArrayList<ArgumentDefinition>(Arrays.asList(new ArgumentDefinition[] {
 				argumentDefinition1,
 				argumentDefinition2,
 				argumentDefinition3,
@@ -159,7 +159,7 @@ public class ArgumentDefinitionsTests extends TestCase {
 
 	public void testArgumentDefinitionsAddAll() throws Exception {
 		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions();
-		List<IArgumentDefinition> argumentDefinitionList = new ArrayList<IArgumentDefinition>(Arrays.asList(new IArgumentDefinition[] {
+		List<ArgumentDefinition> argumentDefinitionList = new ArrayList<ArgumentDefinition>(Arrays.asList(new ArgumentDefinition[] {
 				argumentDefinition1,
 				argumentDefinition2,
 				argumentDefinition3,
@@ -180,7 +180,7 @@ public class ArgumentDefinitionsTests extends TestCase {
 				argumentDefinition5,
 				argumentDefinition6
 		);
-		Iterator<IArgumentDefinition> iterator = argumentDefinitions.iterator();
+		Iterator<ArgumentDefinition> iterator = argumentDefinitions.iterator();
 		int index = 0;
 		while (iterator.hasNext()) {
 			assertEquals(iterator.next(), argumentDefinitions.get(index));

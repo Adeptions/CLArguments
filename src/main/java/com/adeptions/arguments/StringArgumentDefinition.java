@@ -1,6 +1,6 @@
 package com.adeptions.arguments;
 
-public class StringArgumentDefinition extends AbstractArgumentDefinition<String> implements IArgumentDefinition<String> {
+public class StringArgumentDefinition extends AbstractArgumentDefinition<String> implements ArgumentDefinition<String> {
 	public StringArgumentDefinition(String name, String description) {
 		super(ArgumentDefinitionType.VALUED, name, description);
 		addFormat("string");
@@ -11,7 +11,7 @@ public class StringArgumentDefinition extends AbstractArgumentDefinition<String>
 		addFormat("string");
 	}
 
-	public IArgument<String> createArgumentInstance() {
+	public Argument<String> createArgumentInstance() {
 		return new StringArgument(this);
 	}
 }

@@ -2,8 +2,8 @@ package com.adeptions.arguments;
 
 import static com.adeptions.arguments.ArgParsingExceptionReason.*;
 
-public class IntegerArgument extends AbstractArgument<Integer> implements IArgument<Integer> {
-	public IntegerArgument(IArgumentDefinition<Integer> definition) {
+public class IntegerArgument extends AbstractArgument<Integer> implements Argument<Integer> {
+	public IntegerArgument(ArgumentDefinition<Integer> definition) {
 		super(definition);
 	}
 

@@ -19,9 +19,9 @@ public class ArgumentDefinitionAccessorsTests extends TestCase {
 		StringArgumentDefinition stringArgumentDefinition = new StringArgumentDefinition(testName, testDescription);
 		assertNull("Default .getValidator() should be null",
 				stringArgumentDefinition.getValidator());
-		stringArgumentDefinition.setValidator(new IArgumentValueValidator() {
+		stringArgumentDefinition.setValidator(new ArgumentValueValidator() {
 			@Override
-			public Object validate(Object value, IArgument argument, ArgName specifiedArgName) throws ArgParsingException {
+			public Object validate(Object value, Argument argument, ArgName specifiedArgName) throws ArgParsingException {
 				return null;
 			}
 		});

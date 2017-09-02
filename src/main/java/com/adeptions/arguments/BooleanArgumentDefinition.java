@@ -1,6 +1,6 @@
 package com.adeptions.arguments;
 
-public class BooleanArgumentDefinition extends AbstractArgumentDefinition<Boolean> implements IArgumentDefinition<Boolean> {
+public class BooleanArgumentDefinition extends AbstractArgumentDefinition<Boolean> implements ArgumentDefinition<Boolean> {
 	BooleanArgumentDefinition(String name, String description) {
 		super(ArgumentDefinitionType.VALUED, name, description);
 		addFormat("true|false");
@@ -11,7 +11,7 @@ public class BooleanArgumentDefinition extends AbstractArgumentDefinition<Boolea
 		addFormat("true|false");
 	}
 
-	public IArgument<Boolean> createArgumentInstance() {
+	public Argument<Boolean> createArgumentInstance() {
 		return new BooleanArgument(this);
 	}
 }

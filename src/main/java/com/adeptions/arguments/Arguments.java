@@ -7,9 +7,9 @@ import static com.adeptions.arguments.ArgParsingExceptionReason.*;
 public final class Arguments {
 	private ArgumentDefinitions argumentDefinitions;
 	private ArgsParsingOptions argsParsingOptions;
-	private List<IArgument> arguments = new ArrayList<IArgument>();
-	private Map<String,IArgument> argumentsMap = new HashMap<String,IArgument>();
-	private Map<String,IArgument> specifiedInformationals = new HashMap<String,IArgument>();
+	private List<Argument> arguments = new ArrayList<Argument>();
+	private Map<String,Argument> argumentsMap = new HashMap<String,Argument>();
+	private Map<String,Argument> specifiedInformationals = new HashMap<String,Argument>();
 	private List<ArgParsingException> exceptions = new ArrayList<ArgParsingException>();
 	private Map<String,ArgName> unknownArgNames = new HashMap<String,ArgName>();
 	private List<String> unknownArgValues = new ArrayList<String>();
@@ -21,8 +21,8 @@ public final class Arguments {
 	}
 
 	private void initialize() {
-		for (IArgumentDefinition argumentDefinition: argumentDefinitions) {
-			IArgument argument = argumentDefinition.createArgumentInstance();
+		for (ArgumentDefinition argumentDefinition: argumentDefinitions) {
+			Argument argument = argumentDefinition.createArgumentInstance();
 			argument.setParentArguments(this);
 			arguments.add(argument);
 			argumentsMap.put(argumentDefinition.getName(), argument);
@@ -33,8 +33,8 @@ public final class Arguments {
 		}
 	}
 
-	void foundValuedArg(IArgument argument, ArgName specifiedArgName, String rawValue) throws ArgParsingException {
-		IArgumentDefinition argumentDefinition = argument.getDefinition();
+	void foundValuedArg(Argument argument, ArgName specifiedArgName, String rawValue) throws ArgParsingException {
+		ArgumentDefinition argumentDefinition = argument.getDefinition();
 		String argumentName = argumentDefinition.getName();
 		try {
 			argument.setRawValue(rawValue, specifiedArgName);
@@ -43,8 +43,8 @@ public final class Arguments {
 		}
 	}
 
-	void foundFlagOrInformationalArg(IArgument argument, ArgName specifiedArgName) {
-		IArgumentDefinition argumentDefinition = argument.getDefinition();
+	void foundFlagOrInformationalArg(Argument argument, ArgName specifiedArgName) {
+		ArgumentDefinition argumentDefinition = argument.getDefinition();
 		String argumentName = argumentDefinition.getName();
 		argument.setSpecified();
 		if (argumentDefinition.isInformational()) {
@@ -62,7 +62,7 @@ public final class Arguments {
 		addParsingException(new ArgParsingException(UNKNOWN_ARGUMENT_VALUE, "Unknown argument value '" + unknownValue + "'", cause, new ArgName(unknownValue)));
 	}
 
-	public IArgument get(String argumentName) {
+	public Argument get(String argumentName) {
 		return argumentsMap.get(argumentName);
 	}
 
@@ -70,13 +70,13 @@ public final class Arguments {
 		return specifiedInformationals.size() != 0;
 	}
 
-	public Collection<IArgument> getSpecifiedInformationals() {
+	public Collection<Argument> getSpecifiedInformationals() {
 		return specifiedInformationals.values();
 	}
 
 	public boolean hasMissingMandatories() {
 		boolean result = false;
-		for (IArgument argument: arguments) {
+		for (Argument argument: arguments) {
 			if (!argument.isSpecified() && argument.getDefinition().isMandatory()) {
 				result = true;
 				break;
@@ -85,8 +85,8 @@ public final class Arguments {
 		return result;
 	}
 
-	public List<IArgument> getMissingMandatories() {
-		List<IArgument> result = new ArrayList<IArgument>(arguments);
+	public List<Argument> getMissingMandatories() {
+		List<Argument> result = new ArrayList<Argument>(arguments);
 		result.removeIf(argument -> argument.isSpecified() || !argument.getDefinition().isMandatory());
 		return result;
 	}
@@ -113,7 +113,7 @@ public final class Arguments {
 
 	public boolean anySpecified() {
 		boolean result = false;
-		for (IArgument argument: arguments) {
+		for (Argument argument: arguments) {
 			if (argument.isSpecified()) {
 				result = true;
 				break;
@@ -122,8 +122,8 @@ public final class Arguments {
 		return result;
 	}
 
-	public List<IArgument> getSpecifiedArguments() {
-		List<IArgument> result = new ArrayList<IArgument>(arguments);
+	public List<Argument> getSpecifiedArguments() {
+		List<Argument> result = new ArrayList<Argument>(arguments);
 		result.removeIf((argument -> !argument.isSpecified()));
 		return result;
 	}

@@ -2,8 +2,8 @@ package com.adeptions.arguments;
 
 import java.util.*;
 
-public interface IArgument<T> {
-	IArgumentDefinition<T> getDefinition();
+public interface Argument<T> {
+	ArgumentDefinition<T> getDefinition();
 
 	boolean isSpecified();
 	void setSpecified();

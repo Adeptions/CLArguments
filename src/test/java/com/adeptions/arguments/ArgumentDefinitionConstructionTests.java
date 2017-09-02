@@ -125,7 +125,7 @@ public class ArgumentDefinitionConstructionTests extends TestCase {
 	}
 
 	public void testIntegerArgumentDefinitionChainedConstruction() throws Exception {
-		IArgumentDefinition<Integer> integerArgumentDefinition = new IntegerArgumentDefinition(testName, testDescription).addDefaultValue(defaultIntegerValue).makeMandatory();
+		ArgumentDefinition<Integer> integerArgumentDefinition = new IntegerArgumentDefinition(testName, testDescription).addDefaultValue(defaultIntegerValue).makeMandatory();
 		assertTrue(".hasDefaultValue() should be true",
 				integerArgumentDefinition.hasDefaultValue());
 		assertEquals(defaultIntegerValue, integerArgumentDefinition.getDefaultValue());
@@ -149,7 +149,7 @@ public class ArgumentDefinitionConstructionTests extends TestCase {
 	}
 
 	public void testDoubleArgumentDefinitionChainedConstruction() throws Exception {
-		IArgumentDefinition<Double> doubleArgumentDefinition = new DoubleArgumentDefinition(testName, testDescription).addDefaultValue(defaultDoubleValue).makeMandatory();
+		ArgumentDefinition<Double> doubleArgumentDefinition = new DoubleArgumentDefinition(testName, testDescription).addDefaultValue(defaultDoubleValue).makeMandatory();
 		assertTrue(".hasDefaultValue() should be true",
 				doubleArgumentDefinition.hasDefaultValue());
 		assertEquals(defaultDoubleValue, doubleArgumentDefinition.getDefaultValue());
@@ -173,7 +173,7 @@ public class ArgumentDefinitionConstructionTests extends TestCase {
 	}
 
 	public void testBooleanArgumentDefinitionChainedConstruction() throws Exception {
-		IArgumentDefinition<Boolean> booleanIArgumentDefinition = new BooleanArgumentDefinition(testName, testDescription).addDefaultValue(Boolean.TRUE).makeMandatory();
+		ArgumentDefinition<Boolean> booleanIArgumentDefinition = new BooleanArgumentDefinition(testName, testDescription).addDefaultValue(Boolean.TRUE).makeMandatory();
 		assertTrue(".hasDefaultValue() should be true",
 				booleanIArgumentDefinition.hasDefaultValue());
 		assertEquals(Boolean.TRUE, booleanIArgumentDefinition.getDefaultValue());
@@ -201,7 +201,7 @@ public class ArgumentDefinitionConstructionTests extends TestCase {
 	}
 
 	public void testFlagArgumentDefinitionChainedConstruction() throws Exception {
-		IArgumentDefinition<Boolean> flagArgumentDefinition = new FlagArgumentDefinition(testName, testDescription).addDefaultValue(true).makeMandatory();
+		ArgumentDefinition<Boolean> flagArgumentDefinition = new FlagArgumentDefinition(testName, testDescription).addDefaultValue(true).makeMandatory();
 		assertTrue(".hasDefaultValue() should be true",
 				flagArgumentDefinition.hasDefaultValue());
 		assertEquals(Boolean.TRUE, flagArgumentDefinition.getDefaultValue());
@@ -229,7 +229,7 @@ public class ArgumentDefinitionConstructionTests extends TestCase {
 	}
 
 	public void testInformationalArgumentDefinitionChainedConstruction() throws Exception {
-		IArgumentDefinition<Boolean> informationalArgumentDefinition = new InformationalArgumentDefinition(testName, testDescription).addDefaultValue(true).makeMandatory();
+		ArgumentDefinition<Boolean> informationalArgumentDefinition = new InformationalArgumentDefinition(testName, testDescription).addDefaultValue(true).makeMandatory();
 		assertTrue("Default .hasDefaultValue() should be true",
 				informationalArgumentDefinition.hasDefaultValue());
 		assertNotNull(informationalArgumentDefinition.getDefaultValue());
@@ -268,21 +268,21 @@ public class ArgumentDefinitionConstructionTests extends TestCase {
 	}
 
 	public void testStringArgumentDefinitionChainedConstruction() throws Exception {
-		IArgumentDefinition<String> stringArgumentDefinition = new StringArgumentDefinition(testName, testDescription).addDefaultValue(defaultStringValue);
+		ArgumentDefinition<String> stringArgumentDefinition = new StringArgumentDefinition(testName, testDescription).addDefaultValue(defaultStringValue);
 		assertTrue(".hasDefaultValue() should be true",
 				stringArgumentDefinition.hasDefaultValue());
 		assertEquals(defaultStringValue, stringArgumentDefinition.getDefaultValue());
 	}
 
 	public void testStringArgumentDefinitionChained2Construction() throws Exception {
-		IArgumentDefinition<String> stringArgumentDefinition = new StringArgumentDefinition(testName, testDescription).addDefaultValue(defaultStringValue);
+		ArgumentDefinition<String> stringArgumentDefinition = new StringArgumentDefinition(testName, testDescription).addDefaultValue(defaultStringValue);
 		assertTrue(".hasDefaultValue() should be true",
 				stringArgumentDefinition.hasDefaultValue());
 		assertEquals(defaultStringValue, stringArgumentDefinition.getDefaultValue());
 	}
 
 	public void testStringArgumentDefinitionChained3Construction() throws Exception {
-		IArgumentDefinition<String> stringArgumentDefinition = new StringArgumentDefinition(testName, testDescription).addDefaultValue(defaultStringValue).makeMandatory();
+		ArgumentDefinition<String> stringArgumentDefinition = new StringArgumentDefinition(testName, testDescription).addDefaultValue(defaultStringValue).makeMandatory();
 		assertTrue(".hasDefaultValue() should be true",
 				stringArgumentDefinition.hasDefaultValue());
 		assertEquals(defaultStringValue, stringArgumentDefinition.getDefaultValue());
@@ -290,7 +290,7 @@ public class ArgumentDefinitionConstructionTests extends TestCase {
 				stringArgumentDefinition.isMandatory());
 	}
 
-	private class BadArgumentDefinition extends AbstractArgumentDefinition<Boolean> implements IArgumentDefinition<Boolean> {
+	private class BadArgumentDefinition extends AbstractArgumentDefinition<Boolean> implements ArgumentDefinition<Boolean> {
 		BadArgumentDefinition(ArgumentDefinitionType type, String name, String description) {
 			super(type, name, description);
 		}
@@ -310,12 +310,12 @@ public class ArgumentDefinitionConstructionTests extends TestCase {
 		}
 
 		@Override
-		public IArgumentDefinition<Boolean> addDefaultValue(Boolean value) {
+		public ArgumentDefinition<Boolean> addDefaultValue(Boolean value) {
 			return null;
 		}
 
 		@Override
-		public IArgument<Boolean> createArgumentInstance() {
+		public Argument<Boolean> createArgumentInstance() {
 			return null;
 		}
 	}

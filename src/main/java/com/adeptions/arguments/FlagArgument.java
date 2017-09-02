@@ -1,7 +1,7 @@
 package com.adeptions.arguments;
 
-public class FlagArgument extends AbstractArgument<Boolean> implements IArgument<Boolean> {
-	public FlagArgument(IArgumentDefinition<Boolean> definition) {
+public class FlagArgument extends AbstractArgument<Boolean> implements Argument<Boolean> {
+	public FlagArgument(ArgumentDefinition<Boolean> definition) {
 		super(definition);
 	}
 

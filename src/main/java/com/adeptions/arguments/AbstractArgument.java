@@ -2,18 +2,18 @@ package com.adeptions.arguments;
 
 import java.util.*;
 
-public abstract class AbstractArgument<T> implements IArgument<T> {
+public abstract class AbstractArgument<T> implements Argument<T> {
 	protected Arguments parentArguments;
-	protected IArgumentDefinition<T> definition;
+	protected ArgumentDefinition<T> definition;
 	protected boolean specified;
 	protected List<T> values = new ArrayList<T>();
 	protected List<String> invalidValues = new ArrayList<String>();
 
-	public AbstractArgument(IArgumentDefinition<T> definition) {
+	public AbstractArgument(ArgumentDefinition<T> definition) {
 		this.definition = definition;
 	}
 
-	public IArgumentDefinition<T> getDefinition() {
+	public ArgumentDefinition<T> getDefinition() {
 		return definition;
 	}
 

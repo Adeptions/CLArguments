@@ -1,6 +1,6 @@
 package com.adeptions.arguments;
 
-public class DoubleArgumentDefinition extends AbstractArgumentDefinition<Double> implements IArgumentDefinition<Double> {
+public class DoubleArgumentDefinition extends AbstractArgumentDefinition<Double> implements ArgumentDefinition<Double> {
 	public DoubleArgumentDefinition(String name, String description) {
 		super(ArgumentDefinitionType.VALUED, name, description);
 		addFormat("number");
@@ -11,7 +11,7 @@ public class DoubleArgumentDefinition extends AbstractArgumentDefinition<Double>
 		addFormat("number");
 	}
 
-	public IArgument<Double> createArgumentInstance() {
+	public Argument<Double> createArgumentInstance() {
 		return new DoubleArgument(this);
 	}
 }
