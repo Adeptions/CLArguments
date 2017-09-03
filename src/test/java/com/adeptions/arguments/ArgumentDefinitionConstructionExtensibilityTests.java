@@ -1,3 +1,18 @@
+/*
+ * Copyright 2017 Martin Rowlinson. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package com.adeptions.arguments;
 
 import junit.framework.TestCase;
@@ -32,22 +47,6 @@ public class ArgumentDefinitionConstructionExtensibilityTests extends TestCase {
 		assertTrue(".hasDefaultValue() should be true",
 				fooEnumArgumentDefinition.hasDefaultValue());
 		assertEquals(FooEnum.FOO_2, fooEnumArgumentDefinition.getDefaultValue());
-	}
-
-	public void testFooEnumArgumentDefinitionArgumentCreate() throws Exception {
-		ArgumentDefinition<FooEnum> fooEnumArgumentDefinition = new FooEnumArgumentDefinition(testName, testDescription).addDefaultValue(FooEnum.FOO_2);
-		Argument<FooEnum> fooEnumIArgument = fooEnumArgumentDefinition.createArgumentInstance();
-		assertFalse(".isSpecified() should be false",
-				fooEnumIArgument.isSpecified());
-		assertEquals(FooEnum.FOO_2, fooEnumIArgument.getValue());
-	}
-
-	public void testFooEnumArgumentDefinitionArgumentCreate2() throws Exception {
-		FooEnumArgumentDefinition fooEnumArgumentDefinition = new FooEnumArgumentDefinition(testName, testDescription);
-		Argument<FooEnum> fooEnumIArgument = fooEnumArgumentDefinition.createArgumentInstance();
-		assertFalse(".isSpecified() should be false",
-				fooEnumIArgument.isSpecified());
-		assertNull(fooEnumIArgument.getValue());
 	}
 
 	private class FooEnumArgumentDefinition extends AbstractArgumentDefinition<FooEnum> implements ArgumentDefinition<FooEnum> {
@@ -94,14 +93,14 @@ public class ArgumentDefinitionConstructionExtensibilityTests extends TestCase {
 		}
 
 		@Override
-		public Argument<FooEnum> createArgumentInstance() {
-			return new FooEnumArgument(this);
+		public Argument<FooEnum> createArgumentInstance(Arguments parentArguments) {
+			return new FooEnumArgument(parentArguments, this);
 		}
 	}
 
 	private class FooEnumArgument extends AbstractArgument<FooEnum> implements Argument<FooEnum> {
-		public FooEnumArgument(ArgumentDefinition<FooEnum> definition) {
-			super(definition);
+		public FooEnumArgument(Arguments parentArguments, ArgumentDefinition<FooEnum> definition) {
+			super(parentArguments, definition);
 		}
 
 		@Override
@@ -115,5 +114,4 @@ public class ArgumentDefinitionConstructionExtensibilityTests extends TestCase {
 		FOO_1,
 		FOO_2
 	}
-
 }

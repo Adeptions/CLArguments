@@ -1,3 +1,18 @@
+/*
+ * Copyright 2017 Martin Rowlinson. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package com.adeptions.arguments;
 
 import junit.framework.TestCase;
@@ -48,7 +63,6 @@ public class ArgsParsing_CharBetweenTests extends TestCase {
 		Arguments arguments = argumentDefinitions.parseArgs(new String[0], argsParsingOptions);
 		assertEquals(argumentDefinitions.size(), arguments.size());
 		assertEquals(0, arguments.getSpecifiedArguments().size());
-		assertEquals(argumentDefinitions, arguments.getArgumentDefinitions());
 		assertTrue(".hasParsingExceptions() should be true (there was one missing mandatory argument)",
 				arguments.hasParsingExceptions());
 		assertEquals(1, arguments.getParsingExceptions().size());
@@ -63,12 +77,6 @@ public class ArgsParsing_CharBetweenTests extends TestCase {
 		assertTrue(".hasMissingMandatories() should be true",
 				arguments.hasMissingMandatories());
 		assertEquals(1, arguments.getMissingMandatories().size());
-		ArgsParsingOptions argsParsingOptions = arguments.getArgsParsingOptions();
-		assertFalse("Default .isSpaceBetweenArgNameAndValue() should be false",
-				argsParsingOptions.isSpaceBetweenArgNameAndValue());
-		assertEquals(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX, argsParsingOptions.getArgNamePrefix());
-		assertNull(argsParsingOptions.getArgNameSuffix());
-		assertEquals(argNameAndValueSeparator, argsParsingOptions.getCharacterBetweenArgNameAndValue());
 	}
 
 	public void testArgsParsingAllArgs() throws Exception {

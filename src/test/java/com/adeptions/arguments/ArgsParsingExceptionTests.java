@@ -1,3 +1,18 @@
+/*
+ * Copyright 2017 Martin Rowlinson. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package com.adeptions.arguments;
 
 import junit.framework.TestCase;
@@ -28,60 +43,20 @@ public class ArgsParsingExceptionTests extends TestCase {
 	}
 
 	public void testArgsParsingExceptionConstructor4() throws Exception {
-		IllegalArgumentException cause = new IllegalArgumentException();
-		ArgParsingException argsParsingException = new ArgParsingException(cause);
-		assertEquals(cause.getClass().getName(), argsParsingException.getMessage());
-		assertEquals(cause, argsParsingException.getCause());
-	}
-
-	public void testArgsParsingExceptionConstructor5() throws Exception {
-		BooleanArgumentDefinition booleanArgumentDefinition = new BooleanArgumentDefinition("foo", "foo");
-		BooleanArgument argument = new BooleanArgument(booleanArgumentDefinition);
-		ArgParsingException argsParsingException = new ArgParsingException(ArgParsingExceptionReason.UNDEFINED, testMessage, argument);
-		assertEquals(testMessage, argsParsingException.getMessage());
-		assertEquals(ArgParsingExceptionReason.UNDEFINED, argsParsingException.getReason());
-		assertEquals(argument, argsParsingException.getArgument());
-	}
-
-	public void testArgsParsingExceptionConstructor7() throws Exception {
-		BooleanArgumentDefinition booleanArgumentDefinition = new BooleanArgumentDefinition("foo", "foo");
-		BooleanArgument argument = new BooleanArgument(booleanArgumentDefinition);
-		ArgName specifiedArgName = ArgName.createFromSpacedArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + "foo", new ArgsParsingOptions());
-		ArgParsingException argsParsingException = new ArgParsingException(ArgParsingExceptionReason.UNDEFINED, testMessage, argument, specifiedArgName);
-		assertEquals(testMessage, argsParsingException.getMessage());
-		assertEquals(ArgParsingExceptionReason.UNDEFINED, argsParsingException.getReason());
-		assertEquals(argument, argsParsingException.getArgument());
-		assertEquals(specifiedArgName, argsParsingException.getSpecifiedArgName());
-	}
-
-	public void testArgsParsingExceptionConstructor8() throws Exception {
-		ArgName specifiedArgName = ArgName.createFromSpacedArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + "foo", new ArgsParsingOptions());
+		ArgName specifiedArgName = ArgName.parseFromSpacedArgToken(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + "foo", new ArgsParsingOptions());
 		ArgParsingException argsParsingException = new ArgParsingException(ArgParsingExceptionReason.UNDEFINED, testMessage, specifiedArgName);
 		assertEquals(testMessage, argsParsingException.getMessage());
 		assertEquals(ArgParsingExceptionReason.UNDEFINED, argsParsingException.getReason());
 		assertEquals(specifiedArgName, argsParsingException.getSpecifiedArgName());
 	}
 
-	public void testArgsParsingExceptionConstructor9() throws Exception {
+	public void testArgsParsingExceptionConstructor5() throws Exception {
 		IllegalArgumentException cause = new IllegalArgumentException();
-		ArgName specifiedArgName = ArgName.createFromSpacedArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + "foo", new ArgsParsingOptions());
+		ArgName specifiedArgName = ArgName.parseFromSpacedArgToken(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + "foo", new ArgsParsingOptions());
 		ArgParsingException argsParsingException = new ArgParsingException(ArgParsingExceptionReason.UNDEFINED, testMessage, cause, specifiedArgName);
 		assertEquals(testMessage, argsParsingException.getMessage());
 		assertEquals(ArgParsingExceptionReason.UNDEFINED, argsParsingException.getReason());
 		assertEquals(specifiedArgName, argsParsingException.getSpecifiedArgName());
-		assertEquals(cause, argsParsingException.getCause());
-	}
-
-	public void testArgsParsingExceptionConstructor10() throws Exception {
-		IllegalArgumentException cause = new IllegalArgumentException();
-		ArgName specifiedArgName = ArgName.createFromSpacedArg(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + "foo", new ArgsParsingOptions());
-		BooleanArgumentDefinition booleanArgumentDefinition = new BooleanArgumentDefinition("foo", "foo");
-		BooleanArgument argument = new BooleanArgument(booleanArgumentDefinition);
-		ArgParsingException argsParsingException = new ArgParsingException(ArgParsingExceptionReason.UNDEFINED, testMessage, cause, argument, specifiedArgName);
-		assertEquals(testMessage, argsParsingException.getMessage());
-		assertEquals(ArgParsingExceptionReason.UNDEFINED, argsParsingException.getReason());
-		assertEquals(specifiedArgName, argsParsingException.getSpecifiedArgName());
-		assertEquals(argument, argsParsingException.getArgument());
 		assertEquals(cause, argsParsingException.getCause());
 	}
 }

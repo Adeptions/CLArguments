@@ -1,34 +1,78 @@
+/*
+ * Copyright 2017 Martin Rowlinson. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package com.adeptions.arguments;
-
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.*;
 
 import static com.adeptions.arguments.ArgParsingExceptionReason.*;
 
+/**
+ * Represents a list of argument definitions and provides methods for parsing args
+ */
 public class ArgumentDefinitions implements Iterable<ArgumentDefinition> {
 	protected List<ArgumentDefinition> definitions = new ArrayList<ArgumentDefinition>();
 	protected Map<String,ArgumentDefinition> definitionsNameMap = new HashMap<String, ArgumentDefinition>();
 
-	public ArgumentDefinitions() throws ArgumentDefinitionException {
+	/**
+	 * Constructs an empty ArgumentDefinitions
+	 */
+	public ArgumentDefinitions() {
 	}
 
+	/**
+	 * Constructs an ArgumentDefinitions with the specified argument definitions
+	 * @param argumentDefinitions the argument definitions
+	 * @throws ArgumentDefinitionException if there was a problem with the argument definitions (e.g. a non-unique argument name)
+	 */
 	public ArgumentDefinitions(ArgumentDefinition... argumentDefinitions) throws ArgumentDefinitionException {
 		addAll(Arrays.asList(argumentDefinitions));
 	}
 
+	/**
+	 * Constructs an ArgumentDefinitions with the specified argument definitions
+	 * @param argumentDefinitions the argument definitions
+	 * @throws ArgumentDefinitionException if there was a problem with the argument definitions (e.g. a non-unique argument name)
+	 */
 	public ArgumentDefinitions(List<ArgumentDefinition> argumentDefinitions) throws ArgumentDefinitionException {
 		addAll(argumentDefinitions);
 	}
 
+	/**
+	 * Gets whether the arguments contains an argument with the specified name
+	 * @param argumentName the argument name to be checked
+	 * @return whether the arguments contains an argument with the specified name
+	 */
 	public boolean hasArgumentName(String argumentName) {
 		return definitionsNameMap.containsKey(argumentName);
 	}
 
+	/**
+	 * Gets the argument definition for a specified argument name
+	 * @param argumentName the argument name
+	 * @return the argument definition (or null if no definition found for the specified argument name)
+	 */
 	public ArgumentDefinition getArgumentDefinitionByName(String argumentName) {
 		return definitionsNameMap.get(argumentName);
 	}
 
+	/**
+	 * Gets a constructed help string for the argument definitions using the specified args parsing options
+	 * @param argsParsingOptions the args parsing options
+	 * @return the help string
+	 */
 	public String getHelp(ArgsParsingOptions argsParsingOptions) {
 		StringBuilder builder = new StringBuilder();
 		Iterator<ArgumentDefinition> iterator = definitions.iterator();
@@ -39,13 +83,26 @@ public class ArgumentDefinitions implements Iterable<ArgumentDefinition> {
 		return builder.toString();
 	}
 
+	/**
+	 * Main method for parsing args (using default ArgsParsingOptions)
+	 * @param args the args to be parsed
+	 * @return the Arguments (from which values can be read)
+	 * @throws ArgParsingException if there were any parsing exception found (and thrown)
+	 */
 	public Arguments parseArgs(String[] args) throws ArgParsingException {
 		return parseArgs(args, null);
 	}
 
+	/**
+	 * Main method for parsing args using the specified ArgsParsingOptions
+	 * @param args the args to be parsed
+	 * @param argsParsingOptions the options for parsing the args
+	 * @return the Arguments (from which values can be read)
+	 * @throws ArgParsingException if there were any parsing exception found (and thrown)
+	 */
 	public Arguments parseArgs(String[] args, ArgsParsingOptions argsParsingOptions) throws ArgParsingException {
 		ArgsParsingOptions useArgsParsingOptions = (argsParsingOptions == null ? new ArgsParsingOptions() : argsParsingOptions);
-		Arguments result = new Arguments(this, useArgsParsingOptions);
+		Arguments result = new Arguments(this, useArgsParsingOptions.getArgsParsingExceptionHandler());
 		if (useArgsParsingOptions.isSpaceBetweenArgNameAndValue()) {
 			parseSpaceBetweenArgNameAndValue(args, result, useArgsParsingOptions);
 		} else {
@@ -99,7 +156,7 @@ public class ArgumentDefinitions implements Iterable<ArgumentDefinition> {
 	private static ArgName parseSpacedArgName(String arg, Arguments arguments, ArgsParsingOptions argsParsingOptions) throws ArgParsingException {
 		ArgName result = null;
 		try {
-			result = ArgName.createFromSpacedArg(arg, argsParsingOptions);
+			result = ArgName.parseFromSpacedArgToken(arg, argsParsingOptions);
 		} catch (ArgParsingException argsParsingException) {
 			arguments.foundUnknownValue(arg, argsParsingException);
 		}
@@ -110,7 +167,7 @@ public class ArgumentDefinitions implements Iterable<ArgumentDefinition> {
 		boolean result = true;
 		// trap any exceptions that ArgName may throw...
 		try {
-			ArgName argName = ArgName.createFromSpacedArg(value, argsParsingOptions);
+			ArgName argName = ArgName.parseFromSpacedArgToken(value, argsParsingOptions);
 			result = arguments.get(argName.getName()) == null;
 		} catch (ArgParsingException argsParsingException) {
 			// an exception means it's definitely not an arg name...
@@ -148,7 +205,7 @@ public class ArgumentDefinitions implements Iterable<ArgumentDefinition> {
 	private static ArgName parseNonSpacedArg(String arg, Arguments arguments, ArgsParsingOptions argsParsingOptions) throws ArgParsingException {
 		ArgName result = null;
 		try {
-			result = ArgName.createFromNonSpacedArg(arg, argsParsingOptions);
+			result = ArgName.parseFromNonSpacedArgToken(arg, argsParsingOptions);
 		} catch (ArgParsingException argsParsingException) {
 			arguments.foundUnknownValue(arg, argsParsingException);
 		}
@@ -160,26 +217,49 @@ public class ArgumentDefinitions implements Iterable<ArgumentDefinition> {
 		arguments.addParsingException(argsParsingException);
 	}
 
+	/**
+	 * Gets the size of the argument definitions in the list
+	 * @return the size of the argument definitions in the list
+	 */
 	public int size() {
 		return definitions.size();
 	}
 
+	/**
+	 * Gets whether the list of argument definitions is empty
+	 * @return whether the list of argument definitions is empty
+	 */
 	public boolean isEmpty() {
 		return definitions.isEmpty();
 	}
 
+	/**
+	 * Adds the specified argument definition to the list
+	 * @param argumentDefinition the argument definition to be added
+	 * @return
+	 */
 	public boolean add(ArgumentDefinition argumentDefinition) {
 		addNames(argumentDefinition);
 		return definitions.add(argumentDefinition);
 	}
 
-	public boolean addAll(Collection<? extends ArgumentDefinition> c) {
-		for (ArgumentDefinition argumentDefinition: c) {
+	/**
+	 * Adds the specified argument definitions to the list
+	 * @param argumentDefinitions the argument definitions to be added
+	 * @return
+	 */
+	public boolean addAll(Collection<? extends ArgumentDefinition> argumentDefinitions) {
+		for (ArgumentDefinition argumentDefinition: argumentDefinitions) {
 			addNames(argumentDefinition);
 		}
-		return definitions.addAll(c);
+		return definitions.addAll(argumentDefinitions);
 	}
 
+	/**
+	 * Gets the indexed argument definition from the list
+	 * @param index the index of the argument definition
+	 * @return the argument definition
+	 */
 	public ArgumentDefinition get(int index) {
 		return definitions.get(index);
 	}
@@ -203,6 +283,9 @@ public class ArgumentDefinitions implements Iterable<ArgumentDefinition> {
 		definitionsNameMap.put(name, argumentDefinition);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Iterator<ArgumentDefinition> iterator() {
 		return definitions.iterator();
