@@ -23,7 +23,7 @@ public class BooleanArgumentDefinition extends AbstractArgumentDefinition<Boolea
 	 * @param name the name of the argument
 	 * @param description the description of the argument
 	 */
-	BooleanArgumentDefinition(String name, String description) {
+	public BooleanArgumentDefinition(String name, String description) {
 		super(ArgumentDefinitionType.VALUED, name, description);
 		addValueFormat("true|false");
 	}
@@ -33,7 +33,7 @@ public class BooleanArgumentDefinition extends AbstractArgumentDefinition<Boolea
 	 * @param names the names of the argument
 	 * @param description the description of the argument
 	 */
-	BooleanArgumentDefinition(String[] names, String description) {
+	public BooleanArgumentDefinition(String[] names, String description) {
 		super(ArgumentDefinitionType.VALUED, names, description);
 		addValueFormat("true|false");
 	}
