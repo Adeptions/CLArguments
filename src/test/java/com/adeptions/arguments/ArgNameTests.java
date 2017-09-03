@@ -20,7 +20,7 @@ import junit.framework.TestCase;
 public class ArgNameTests extends TestCase {
 	public void testArgNameSpaced() throws Exception {
 		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
-		ArgName argName = ArgName.parseFromSpacedArgToken("-foo", argsParsingOptions);
+		ArgName argName = ArgName.parseFromSpacedArgToken(-1, "-foo", argsParsingOptions);
 		assertEquals("foo", argName.getName());
 		assertEquals("-foo", argName.getDisplayName());
 		assertEquals("-foo", argName.getRawToken());
@@ -28,7 +28,7 @@ public class ArgNameTests extends TestCase {
 
 	public void testArgNameSpaced2() throws Exception {
 		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions(null, "-", "+");
-		ArgName argName = ArgName.parseFromSpacedArgToken("-foo+", argsParsingOptions);
+		ArgName argName = ArgName.parseFromSpacedArgToken(-1, "-foo+", argsParsingOptions);
 		assertEquals("foo", argName.getName());
 		assertEquals("-foo+", argName.getDisplayName());
 		assertEquals("-foo+", argName.getRawToken());
@@ -39,7 +39,7 @@ public class ArgNameTests extends TestCase {
 		ArgName argName;
 		boolean failed = false;
 		try {
-			argName = ArgName.parseFromSpacedArgToken("foo", argsParsingOptions);
+			argName = ArgName.parseFromSpacedArgToken(-1, "foo", argsParsingOptions);
 		} catch (ArgParsingException argsParsingException) {
 			failed = true;
 		}
@@ -52,7 +52,7 @@ public class ArgNameTests extends TestCase {
 		ArgName argName;
 		boolean failed = false;
 		try {
-			argName = ArgName.parseFromSpacedArgToken("foo", argsParsingOptions);
+			argName = ArgName.parseFromSpacedArgToken(-1, "foo", argsParsingOptions);
 		} catch (ArgParsingException argsParsingException) {
 			failed = true;
 		}
@@ -65,7 +65,7 @@ public class ArgNameTests extends TestCase {
 		ArgName argName;
 		boolean failed = false;
 		try {
-			argName = ArgName.parseFromSpacedArgToken("-foo", argsParsingOptions);
+			argName = ArgName.parseFromSpacedArgToken(-1, "-foo", argsParsingOptions);
 		} catch (ArgParsingException argsParsingException) {
 			failed = true;
 		}
@@ -78,7 +78,7 @@ public class ArgNameTests extends TestCase {
 		boolean failed = false;
 		ArgName argName;
 		try {
-			argName = ArgName.parseFromSpacedArgToken("foo", argsParsingOptions);
+			argName = ArgName.parseFromSpacedArgToken(-1, "foo", argsParsingOptions);
 		} catch (ArgParsingException argsParsingException) {
 			failed = true;
 		}
@@ -97,7 +97,7 @@ public class ArgNameTests extends TestCase {
 		boolean failed = false;
 		ArgName argName;
 		try {
-			argName = ArgName.parseFromSpacedArgToken(null, argsParsingOptions);
+			argName = ArgName.parseFromSpacedArgToken(-1, null, argsParsingOptions);
 		} catch (ArgParsingException argsParsingException) {
 			failed = true;
 		}
@@ -109,7 +109,7 @@ public class ArgNameTests extends TestCase {
 		ArgName argName;
 		boolean failed = false;
 		try {
-			argName = ArgName.parseFromSpacedArgToken(null, argsParsingOptions);
+			argName = ArgName.parseFromSpacedArgToken(-1, null, argsParsingOptions);
 		} catch (ArgParsingException argsParsingException) {
 			failed = true;
 		}

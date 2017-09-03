@@ -38,9 +38,9 @@ public class FlagArgumentDefinition extends AbstractArgumentDefinition<Boolean> 
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Boolean convertRawValue(String rawValue, Argument<Boolean> argument, ArgName specifiedArgName) throws ArgParsingException {
+	public Boolean convertRawValue(int tokenPosition, String rawValue, Argument<Boolean> argument, ArgName specifiedArgName) throws ArgParsingException {
 		if (valueConverter != null) {
-			return valueConverter.convert(rawValue, argument, specifiedArgName);
+			return valueConverter.convert(tokenPosition, rawValue, argument, specifiedArgName);
 		}
 		return true;
 	}

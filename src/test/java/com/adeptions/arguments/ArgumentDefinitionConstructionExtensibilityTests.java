@@ -79,7 +79,7 @@ public class ArgumentDefinitionConstructionExtensibilityTests extends TestCase {
 		}
 
 		@Override
-		public FooEnum convertRawValue(String rawValue, Argument<FooEnum> argument, ArgName specifiedArgName) throws ArgParsingException {
+		public FooEnum convertRawValue(int tokenPosition, String rawValue, Argument<FooEnum> argument, ArgName specifiedArgName) throws ArgParsingException {
 			FooEnum result = null;
 			for (FooEnum value: FooEnum.values()) {
 				if (value.name().equals(rawValue)) {
@@ -87,7 +87,7 @@ public class ArgumentDefinitionConstructionExtensibilityTests extends TestCase {
 				}
 			}
 			if (result == null) {
-				throw new ArgParsingException(INVALID_VALUE, "Value '" + rawValue + "' is not permissible (for argument '" + specifiedArgName.getDisplayName() + "')", argument, specifiedArgName);
+				throw new ArgParsingException(INVALID_VALUE, tokenPosition, "Value '" + rawValue + "' is not permissible (for argument '" + specifiedArgName.getDisplayName() + "')", argument, specifiedArgName);
 			}
 			return result;
 		}
@@ -104,8 +104,8 @@ public class ArgumentDefinitionConstructionExtensibilityTests extends TestCase {
 		}
 
 		@Override
-		public void setRawValue(String rawValue, ArgName specifiedArgName) throws ArgParsingException {
-			values.add(definition.validateValue(definition.convertRawValue(rawValue, this, specifiedArgName), this, specifiedArgName));
+		public void setRawValue(int tokenPosition, String rawValue, ArgName specifiedArgName) throws ArgParsingException {
+			values.add(definition.validateValue(tokenPosition, definition.convertRawValue(tokenPosition, rawValue, this, specifiedArgName), this, specifiedArgName));
 			specified = true;
 		}
 	}

@@ -42,14 +42,14 @@ public class IntegerArgumentDefinition extends AbstractArgumentDefinition<Intege
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Integer convertRawValue(String rawValue, Argument<Integer> argument, ArgName specifiedArgName) throws ArgParsingException {
+	public Integer convertRawValue(int tokenPosition, String rawValue, Argument<Integer> argument, ArgName specifiedArgName) throws ArgParsingException {
 		if (valueConverter != null) {
-			return valueConverter.convert(rawValue, argument, specifiedArgName);
+			return valueConverter.convert(tokenPosition, rawValue, argument, specifiedArgName);
 		}
 		try {
 			return Integer.parseInt(rawValue, 10);
 		} catch (NumberFormatException numberFormatException) {
-			throw new ArgParsingException(INVALID_VALUE, "Value '" + rawValue + "' is not a valid integer (for argument '" + specifiedArgName.getDisplayName() + "')", numberFormatException, argument, specifiedArgName);
+			throw new ArgParsingException(INVALID_VALUE, tokenPosition, "Value '" + rawValue + "' is not a valid integer (for argument '" + specifiedArgName.getDisplayName() + "')", numberFormatException, argument, specifiedArgName);
 		}
 	}
 

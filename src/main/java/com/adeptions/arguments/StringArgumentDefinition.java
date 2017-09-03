@@ -40,9 +40,9 @@ public class StringArgumentDefinition extends AbstractArgumentDefinition<String>
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String convertRawValue(String rawValue, Argument<String> argument, ArgName specifiedArgName) throws ArgParsingException {
+	public String convertRawValue(int tokenPosition, String rawValue, Argument<String> argument, ArgName specifiedArgName) throws ArgParsingException {
 		if (valueConverter != null) {
-			return valueConverter.convert(rawValue, argument, specifiedArgName);
+			return valueConverter.convert(tokenPosition, rawValue, argument, specifiedArgName);
 		}
 		// no conversion necessary...
 		return rawValue;

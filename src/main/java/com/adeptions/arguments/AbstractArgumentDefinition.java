@@ -180,9 +180,9 @@ public abstract class AbstractArgumentDefinition<T> implements ArgumentDefinitio
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T validateValue(T value, Argument<T> argument, ArgName specifiedArgName) throws ArgParsingException {
+	public T validateValue(int tokenPosition, T value, Argument<T> argument, ArgName specifiedArgName) throws ArgParsingException {
 		if (valueValidator != null) {
-			return (T)valueValidator.validate(value, argument, specifiedArgName);
+			return (T)valueValidator.validate(tokenPosition, value, argument, specifiedArgName);
 		}
 		return value;
 	}

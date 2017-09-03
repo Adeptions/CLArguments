@@ -22,11 +22,12 @@ package com.adeptions.arguments;
 public interface ArgumentValueValidator<T> {
 	/**
 	 * Validates the value
+	 * @param tokenPosition the position of the token (in original args[])
 	 * @param value the value to be validated
 	 * @param argument the argument for which the value was found
 	 * @param specifiedArgName the name by which the argument was specified
 	 * @return the validated value (normally the same as was passed in)
 	 * @throws ArgParsingException if the validation fails
 	 */
-	T validate(T value, Argument argument, ArgName specifiedArgName) throws ArgParsingException;
+	T validate(int tokenPosition, T value, Argument argument, ArgName specifiedArgName) throws ArgParsingException;
 }

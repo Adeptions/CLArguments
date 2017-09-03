@@ -29,8 +29,8 @@ public class IntegerArgument extends AbstractArgument<Integer> implements Argume
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setRawValue(String rawValue, ArgName specifiedArgName) throws ArgParsingException {
-		values.add(definition.validateValue(definition.convertRawValue(rawValue, this, specifiedArgName), this, specifiedArgName));
+	public void setRawValue(int tokenPosition, String rawValue, ArgName specifiedArgName) throws ArgParsingException {
+		values.add(definition.validateValue(tokenPosition, definition.convertRawValue(tokenPosition, rawValue, this, specifiedArgName), this, specifiedArgName));
 		specified = true;
 	}
 }

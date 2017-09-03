@@ -22,11 +22,12 @@ package com.adeptions.arguments;
 public interface ArgumentValueConverter<T> {
 	/**
 	 * Convert the raw incoming arg value string to the appropriate type
+	 * @param tokenPosition the position of the token (in original args[])
 	 * @param rawValue the raw string arg value
 	 * @param argument the argument for which the value was found
 	 * @param specifiedArgName the name by which the argument was specified
 	 * @return the converted value
 	 * @throws ArgParsingException if the conversion fails
 	 */
-	T convert(String rawValue, Argument argument, ArgName specifiedArgName) throws ArgParsingException;
+	T convert(int tokenPosition, String rawValue, Argument argument, ArgName specifiedArgName) throws ArgParsingException;
 }

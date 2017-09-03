@@ -38,7 +38,7 @@ public class FlagArgument extends AbstractArgument<Boolean> implements Argument<
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setRawValue(String rawValue, ArgName specifiedArgName) {
+	public void setRawValue(int tokenPosition, String rawValue, ArgName specifiedArgName) {
 		specified = true;
 		values.add(Boolean.TRUE);
 	}

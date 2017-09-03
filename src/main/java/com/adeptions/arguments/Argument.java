@@ -51,13 +51,14 @@ public interface Argument<T> {
 	T getValue();
 
 	/**
-	 *
+	 * Sets the value of the argument
+	 * @param tokenPosition the position of the token in args[]
 	 * @param rawValue the raw string value found in the command line args
 	 * @param specifiedArgName the name by which the arg was specified
 	 * @throws ArgParsingException if the raw value cannot be converted to the appropriate type, or the value is invalid
 	 *         (or can be use to throw exception where a multiple value was found but not allowed)
 	 */
-	void setRawValue(String rawValue, ArgName specifiedArgName) throws ArgParsingException;
+	void setRawValue(int tokenPosition, String rawValue, ArgName specifiedArgName) throws ArgParsingException;
 
 	/**
 	 * Gets a list of all the values found for the argument

@@ -79,12 +79,13 @@ public class ArgName {
 
 	/**
 	 * Parses a found arg token into an ArgName (used when parsing spaced args)
+	 * @param tokenPosition the position of the token (in original args[])
 	 * @param rawToken the raw args token encountered
 	 * @param argsParsingOptions the parsing options
 	 * @return the created ArgName
 	 * @throws ArgParsingException if there was a problem with the token (e.g. the name was invalid)
 	 */
-	static ArgName parseFromSpacedArgToken(String rawToken, ArgsParsingOptions argsParsingOptions) throws ArgParsingException {
+	static ArgName parseFromSpacedArgToken(int tokenPosition, String rawToken, ArgsParsingOptions argsParsingOptions) throws ArgParsingException {
 		String argNamePrefix = argsParsingOptions.getArgNamePrefix();
 		String argNameSuffix = argsParsingOptions.getArgNameSuffix();
 		ArgName result = new ArgName(rawToken);
@@ -94,14 +95,14 @@ public class ArgName {
 				if (name.startsWith(argNamePrefix)) {
 					name = name.substring(argNamePrefix.length());
 				} else {
-					throw new ArgParsingException(INVALID_ARGUMENT_NAME_PREFIX, "Argument names must begin with '" + argNamePrefix + "'", result);
+					throw new ArgParsingException(INVALID_ARGUMENT_NAME_PREFIX, tokenPosition, "Argument names must begin with '" + argNamePrefix + "'", result);
 				}
 			}
 			if (argNameSuffix != null) {
 				if (name.endsWith(argNameSuffix)) {
 					name = name.substring(0, name.length() - argNameSuffix.length());
 				} else {
-					throw new ArgParsingException(INVALID_ARGUMENT_NAME_SUFFIX, "Argument names must end with '" + argNameSuffix + "'", result);
+					throw new ArgParsingException(INVALID_ARGUMENT_NAME_SUFFIX, tokenPosition, "Argument names must end with '" + argNameSuffix + "'", result);
 				}
 			}
 			result.name = name;
@@ -111,19 +112,20 @@ public class ArgName {
 		} catch (ArgParsingException argsParsingException) {
 			throw argsParsingException;
 		} catch (Exception ex) {
-			throw new ArgParsingException(UNEXPECTED_EXCEPTION, "Unknown error parsing argument name", ex, result);
+			throw new ArgParsingException(UNEXPECTED_EXCEPTION, tokenPosition, "Unknown error parsing argument name", ex, result);
 		}
 		return result;
 	}
 
 	/**
 	 * Parses a found arg token into an ArgName (used when parsing non-spaced args)
+	 * @param tokenPosition the position of the token (in original args[])
 	 * @param rawToken the raw args token encountered
 	 * @param argsParsingOptions the parsing options
 	 * @return the created ArgName
 	 * @throws ArgParsingException if there was a problem with the token (e.g. the name was invalid)
 	 */
-	static ArgName parseFromNonSpacedArgToken(String rawToken, ArgsParsingOptions argsParsingOptions) throws ArgParsingException {
+	static ArgName parseFromNonSpacedArgToken(int tokenPosition, String rawToken, ArgsParsingOptions argsParsingOptions) throws ArgParsingException {
 		String argNamePrefix = argsParsingOptions.getArgNamePrefix();
 		String argNameSuffix = argsParsingOptions.getArgNameSuffix();
 		Character argNameAndValueSeparator = argsParsingOptions.getCharacterBetweenArgNameAndValue();
@@ -135,7 +137,7 @@ public class ArgName {
 				if (name.startsWith(argNamePrefix)) {
 					name = name.substring(argNamePrefix.length());
 				} else {
-					throw new ArgParsingException(INVALID_ARGUMENT_NAME_PREFIX, "Argument names must begin with '" + argNamePrefix + "'", result);
+					throw new ArgParsingException(INVALID_ARGUMENT_NAME_PREFIX, tokenPosition, "Argument names must begin with '" + argNamePrefix + "'", result);
 				}
 			}
 			if ((separatorAt = name.indexOf(argNameAndValueSeparator)) != -1) {
@@ -146,7 +148,7 @@ public class ArgName {
 				if (name.endsWith(argNameSuffix)) {
 					name = name.substring(0, name.length() - argNameSuffix.length());
 				} else {
-					throw new ArgParsingException(INVALID_ARGUMENT_NAME_SUFFIX, "Argument names must end with '" + argNameSuffix + "'", result);
+					throw new ArgParsingException(INVALID_ARGUMENT_NAME_SUFFIX, tokenPosition, "Argument names must end with '" + argNameSuffix + "'", result);
 				}
 			}
 			result.name = name;
@@ -156,7 +158,7 @@ public class ArgName {
 		} catch (ArgParsingException argsParsingException) {
 			throw argsParsingException;
 		} catch (Exception ex) {
-			throw new ArgParsingException(UNEXPECTED_EXCEPTION, "Unknown error parsing argument name", ex, result);
+			throw new ArgParsingException(UNEXPECTED_EXCEPTION, tokenPosition, "Unknown error parsing argument name", ex, result);
 		}
 		return result;
 	}

@@ -21,14 +21,14 @@ public class ArgsParsingExceptionTests extends TestCase {
 	private static final String testMessage = "This is a test exception message";
 
 	public void testArgsParsingExceptionConstructor() throws Exception {
-		ArgParsingException argsParsingException = new ArgParsingException(ArgParsingExceptionReason.UNDEFINED);
+		ArgParsingException argsParsingException = new ArgParsingException(ArgParsingExceptionReason.UNDEFINED, -1);
 		assertNull(argsParsingException.getMessage());
 		assertNull(argsParsingException.getCause());
 		assertEquals(ArgParsingExceptionReason.UNDEFINED, argsParsingException.getReason());
 	}
 
 	public void testArgsParsingExceptionConstructor2() throws Exception {
-		ArgParsingException argsParsingException = new ArgParsingException(ArgParsingExceptionReason.UNDEFINED, testMessage);
+		ArgParsingException argsParsingException = new ArgParsingException(ArgParsingExceptionReason.UNDEFINED, -1, testMessage);
 		assertEquals(testMessage, argsParsingException.getMessage());
 		assertNull(argsParsingException.getCause());
 		assertEquals(ArgParsingExceptionReason.UNDEFINED, argsParsingException.getReason());
@@ -36,15 +36,15 @@ public class ArgsParsingExceptionTests extends TestCase {
 
 	public void testArgsParsingExceptionConstructor3() throws Exception {
 		IllegalArgumentException cause = new IllegalArgumentException();
-		ArgParsingException argsParsingException = new ArgParsingException(ArgParsingExceptionReason.UNDEFINED, testMessage, cause);
+		ArgParsingException argsParsingException = new ArgParsingException(ArgParsingExceptionReason.UNDEFINED, -1, testMessage, cause);
 		assertEquals(testMessage, argsParsingException.getMessage());
 		assertEquals(ArgParsingExceptionReason.UNDEFINED, argsParsingException.getReason());
 		assertEquals(cause, argsParsingException.getCause());
 	}
 
 	public void testArgsParsingExceptionConstructor4() throws Exception {
-		ArgName specifiedArgName = ArgName.parseFromSpacedArgToken(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + "foo", new ArgsParsingOptions());
-		ArgParsingException argsParsingException = new ArgParsingException(ArgParsingExceptionReason.UNDEFINED, testMessage, specifiedArgName);
+		ArgName specifiedArgName = ArgName.parseFromSpacedArgToken(-1, ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + "foo", new ArgsParsingOptions());
+		ArgParsingException argsParsingException = new ArgParsingException(ArgParsingExceptionReason.UNDEFINED, -1, testMessage, specifiedArgName);
 		assertEquals(testMessage, argsParsingException.getMessage());
 		assertEquals(ArgParsingExceptionReason.UNDEFINED, argsParsingException.getReason());
 		assertEquals(specifiedArgName, argsParsingException.getSpecifiedArgName());
@@ -52,8 +52,8 @@ public class ArgsParsingExceptionTests extends TestCase {
 
 	public void testArgsParsingExceptionConstructor5() throws Exception {
 		IllegalArgumentException cause = new IllegalArgumentException();
-		ArgName specifiedArgName = ArgName.parseFromSpacedArgToken(ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + "foo", new ArgsParsingOptions());
-		ArgParsingException argsParsingException = new ArgParsingException(ArgParsingExceptionReason.UNDEFINED, testMessage, cause, specifiedArgName);
+		ArgName specifiedArgName = ArgName.parseFromSpacedArgToken(-1, ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + "foo", new ArgsParsingOptions());
+		ArgParsingException argsParsingException = new ArgParsingException(ArgParsingExceptionReason.UNDEFINED, -1, testMessage, cause, specifiedArgName);
 		assertEquals(testMessage, argsParsingException.getMessage());
 		assertEquals(ArgParsingExceptionReason.UNDEFINED, argsParsingException.getReason());
 		assertEquals(specifiedArgName, argsParsingException.getSpecifiedArgName());

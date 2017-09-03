@@ -325,7 +325,7 @@ public class ArgumentDefinitionConstructionTests extends TestCase {
 		}
 
 		@Override
-		public Boolean convertRawValue(String rawValue, Argument<Boolean> argument, ArgName specifiedArgName) throws ArgParsingException {
+		public Boolean convertRawValue(int tokenPosition, String rawValue, Argument<Boolean> argument, ArgName specifiedArgName) throws ArgParsingException {
 			return null;
 		}
 

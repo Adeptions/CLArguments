@@ -117,23 +117,25 @@ public interface ArgumentDefinition<T> {
 
 	/**
 	 * Converts the raw incoming arg value (string) to the appropriate type
+	 * @param tokenPosition the position of the arg in srgs[]
 	 * @param rawValue the raw incoming arg value
 	 * @param argument the argument
 	 * @param specifiedArgName the specified arg name
 	 * @return the converted value
 	 * @throws ArgParsingException if the conversion fails (i.e. the raw value is not a valid representation of expected type)
 	 */
-	T convertRawValue(String rawValue, Argument<T> argument, ArgName specifiedArgName) throws ArgParsingException;
+	T convertRawValue(int tokenPosition, String rawValue, Argument<T> argument, ArgName specifiedArgName) throws ArgParsingException;
 
 	/**
 	 * Validates the converted arg value
+	 * @param tokenPosition the position of the arg in srgs[]
 	 * @param value the value to be checked
 	 * @param argument the argument
 	 * @param specifiedArgName the specified arg name
 	 * @return the validated value
 	 * @throws ArgParsingException if the validation fails (e.g. the value was out of range)
 	 */
-	T validateValue(T value, Argument<T> argument, ArgName specifiedArgName) throws ArgParsingException;
+	T validateValue(int tokenPosition, T value, Argument<T> argument, ArgName specifiedArgName) throws ArgParsingException;
 
 	/**
 	 * Chaining method for adding a value format

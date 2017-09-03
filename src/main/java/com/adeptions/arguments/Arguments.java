@@ -59,11 +59,11 @@ public final class Arguments {
 		}
 	}
 
-	void foundValuedArg(Argument argument, ArgName specifiedArgName, String rawValue) throws ArgParsingException {
+	void foundValuedArg(int tokenPosition, Argument argument, ArgName specifiedArgName, String rawValue) throws ArgParsingException {
 		ArgumentDefinition argumentDefinition = argument.getDefinition();
 		String argumentName = argumentDefinition.getName();
 		try {
-			argument.setRawValue(rawValue, specifiedArgName);
+			argument.setRawValue(tokenPosition, rawValue, specifiedArgName);
 		} catch (ArgParsingException argsParsingException) {
 			addParsingException(argsParsingException);
 		}
@@ -78,14 +78,14 @@ public final class Arguments {
 		}
 	}
 
-	void foundUnknownArg(ArgName specifiedArgName) throws ArgParsingException {
+	void foundUnknownArg(int tokenPosition, ArgName specifiedArgName) throws ArgParsingException {
 		unknownArgNames.put(specifiedArgName.getName(), specifiedArgName);
-		addParsingException(new ArgParsingException(UNKNOWN_ARGUMENT, "Unknown argument '" + specifiedArgName.getDisplayName() + "'", specifiedArgName));
+		addParsingException(new ArgParsingException(UNKNOWN_ARGUMENT, tokenPosition, "Unknown argument '" + specifiedArgName.getDisplayName() + "'", specifiedArgName));
 	}
 
-	void foundUnknownValue(String unknownValue, ArgParsingException cause) throws ArgParsingException {
+	void foundUnknownValue(int tokenPosition, String unknownValue, ArgParsingException cause) throws ArgParsingException {
 		unknownArgValues.add(unknownValue);
-		addParsingException(new ArgParsingException(UNKNOWN_ARGUMENT_VALUE, "Unknown argument value '" + unknownValue + "'", cause, new ArgName(unknownValue)));
+		addParsingException(new ArgParsingException(UNKNOWN_ARGUMENT_VALUE, tokenPosition, "Unknown argument value '" + unknownValue + "'", cause, new ArgName(unknownValue)));
 	}
 
 	/**

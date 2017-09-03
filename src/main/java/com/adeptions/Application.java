@@ -25,17 +25,20 @@ public class Application {
 	 */
 	public static void main(String[] args) {
 		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions(
-				new StringArgumentDefinition(new String[] {"say", "s"}, "What to say").makeMandatory().addValueValidator((value, argument, specifiedArgName) -> {
+				new StringArgumentDefinition(new String[] {"say", "s"}, "What to say").makeMandatory().addValueValidator((tokenPosition, value, argument, specifiedArgName) -> {
+					if (value == null) {
+						throw new ArgParsingException(ArgParsingExceptionReason.MISSING_VALUE, tokenPosition, "Argument '" + specifiedArgName.getDisplayName() + "' must have a value", argument);
+					}
 					if (((String)value).contains(" ")) {
 						argument.setSpecified();
-						throw new ArgParsingException(ArgParsingExceptionReason.INVALID_VALUE, "Cannot contain spaces?", argument);
+						throw new ArgParsingException(ArgParsingExceptionReason.INVALID_VALUE, tokenPosition, "Cannot contain spaces?", argument);
 					}
 					return value;
 				}),
 				new InformationalArgumentDefinition(new String[] {"version", "v"}, "Show version"),
 				new InformationalArgumentDefinition(new String[] {"help", "h"}, "Show this help")
 		);
-		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
+		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions(':', "-", null);
 		argsParsingOptions.setArgsParsingExceptionHandler(new ArgsParsingExceptionHandler() {
 			@Override
 			public ArgParsingException handle(ArgParsingException argsParsingException) throws ArgParsingException {
@@ -47,7 +50,7 @@ public class Application {
 			printVersionIfRequested(arguments);
 			if (arguments.hasParsingExceptions()) {
 				for (ArgParsingException argsParsingException: arguments.getParsingExceptions()) {
-					System.err.println(argsParsingException.getMessage());
+					System.err.println(argsParsingException.getMessage() + " (at position " + argsParsingException.getTokenPosition() + ")");
 				}
 			} else if (!arguments.anySpecified() || arguments.get("help").isSpecified()) {
 				System.out.println("Help:-");

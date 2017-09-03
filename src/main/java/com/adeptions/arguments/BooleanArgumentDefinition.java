@@ -42,12 +42,12 @@ public class BooleanArgumentDefinition extends AbstractArgumentDefinition<Boolea
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Boolean convertRawValue(String rawValue, Argument<Boolean> argument, ArgName specifiedArgName) throws ArgParsingException {
+	public Boolean convertRawValue(int tokenPosition, String rawValue, Argument<Boolean> argument, ArgName specifiedArgName) throws ArgParsingException {
 		if (valueConverter != null) {
-			return valueConverter.convert(rawValue, argument, specifiedArgName);
+			return valueConverter.convert(tokenPosition, rawValue, argument, specifiedArgName);
 		}
 		if (!"true".equals(rawValue) && !"false".equals(rawValue)) {
-			throw new ArgParsingException(INVALID_VALUE, "Value '" + rawValue + "' is not a valid boolean (for argument '" + specifiedArgName.getDisplayName() + "')", argument, specifiedArgName);
+			throw new ArgParsingException(INVALID_VALUE, tokenPosition, "Value '" + rawValue + "' is not a valid boolean (for argument '" + specifiedArgName.getDisplayName() + "')", argument, specifiedArgName);
 		}
 		return "true".equals(rawValue);
 	}
