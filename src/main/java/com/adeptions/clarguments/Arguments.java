@@ -15,6 +15,9 @@
  */
 package com.adeptions.clarguments;
 
+import com.adeptions.clarguments.arguments.*;
+import com.adeptions.clarguments.definitions.*;
+
 import java.util.*;
 
 import static com.adeptions.clarguments.ArgParsingExceptionReason.*;

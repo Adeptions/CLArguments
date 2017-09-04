@@ -13,50 +13,54 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.adeptions.clarguments;
+package com.adeptions.clarguments.definitions;
+
+import com.adeptions.clarguments.*;
+import com.adeptions.clarguments.arguments.*;
 
 import static com.adeptions.clarguments.ArgParsingExceptionReason.INVALID_VALUE;
 
-public class BooleanArgumentDefinition extends AbstractArgumentDefinition<Boolean> implements ArgumentDefinition<Boolean> {
+public class IntegerArgumentDefinition extends AbstractArgumentDefinition<Integer> implements ArgumentDefinition<Integer> {
 	/**
-	 * Constructs a BooleanArgumentDefinition with the specified name and description
+	 * Constructs an IntegerArgumentDefinition with the specified name and description
 	 * @param name the name of the argument
 	 * @param description the description of the argument
 	 */
-	public BooleanArgumentDefinition(String name, String description) {
+	public IntegerArgumentDefinition(String name, String description) {
 		super(ArgumentDefinitionType.VALUED, name, description);
-		addValueFormat("true|false");
+		addValueFormat("integer");
 	}
 
 	/**
-	 * Constructs a BooleanArgumentDefinition with the specified names and description
+	 * Constructs an IntegerArgumentDefinition with the specified names and description
 	 * @param names the names of the argument
 	 * @param description the description of the argument
 	 */
-	public BooleanArgumentDefinition(String[] names, String description) {
+	public IntegerArgumentDefinition(String[] names, String description) {
 		super(ArgumentDefinitionType.VALUED, names, description);
-		addValueFormat("true|false");
+		addValueFormat("integer");
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Boolean convertRawValue(int tokenPosition, String rawValue, Argument<Boolean> argument, ArgName specifiedArgName) throws ArgParsingException {
+	public Integer convertRawValue(int tokenPosition, String rawValue, Argument<Integer> argument, ArgName specifiedArgName) throws ArgParsingException {
 		if (valueConverter != null) {
 			return valueConverter.convert(tokenPosition, rawValue, argument, specifiedArgName);
 		}
-		if (!"true".equals(rawValue) && !"false".equals(rawValue)) {
-			throw new ArgParsingException(INVALID_VALUE, tokenPosition, "Value '" + rawValue + "' is not a valid boolean (for argument '" + specifiedArgName.getDisplayName() + "')", argument, specifiedArgName);
+		try {
+			return Integer.parseInt(rawValue, 10);
+		} catch (NumberFormatException numberFormatException) {
+			throw new ArgParsingException(INVALID_VALUE, tokenPosition, "Value '" + rawValue + "' is not a valid integer (for argument '" + specifiedArgName.getDisplayName() + "')", numberFormatException, argument, specifiedArgName);
 		}
-		return "true".equals(rawValue);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Argument<Boolean> createArgumentInstance(Arguments parentArguments) {
-		return new BooleanArgument(parentArguments, this);
+	public Argument<Integer> createArgumentInstance(Arguments parentArguments) {
+		return new IntegerArgument(parentArguments, this);
 	}
 }

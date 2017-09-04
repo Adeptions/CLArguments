@@ -13,15 +13,18 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.adeptions.clarguments;
+package com.adeptions.clarguments.arguments;
 
-public class FlagArgument extends AbstractArgument<Boolean> implements Argument<Boolean> {
+import com.adeptions.clarguments.*;
+import com.adeptions.clarguments.definitions.*;
+
+public class BooleanArgument extends AbstractArgument<Boolean> implements Argument<Boolean> {
 	/**
-	 * Constructs a FlagArgument with the specified parent arguments and argument definition
+	 * Constructs a BooleanArgument with the specified parent arguments and argument definition
 	 * @param parentArguments the arguments to which the argument belongs
 	 * @param definition the definition of the argument
 	 */
-	public FlagArgument(Arguments parentArguments, ArgumentDefinition<Boolean> definition) {
+	public BooleanArgument(Arguments parentArguments, ArgumentDefinition<Boolean> definition) {
 		super(parentArguments, definition);
 	}
 
@@ -29,17 +32,8 @@ public class FlagArgument extends AbstractArgument<Boolean> implements Argument<
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setSpecified() {
+	public void setRawValue(int tokenPosition, String rawValue, ArgName specifiedArgName) throws ArgParsingException {
+		values.add(definition.validateValue(tokenPosition, definition.convertRawValue(tokenPosition, rawValue, this, specifiedArgName), this, specifiedArgName));
 		specified = true;
-		values.add(Boolean.TRUE);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setRawValue(int tokenPosition, String rawValue, ArgName specifiedArgName) {
-		specified = true;
-		values.add(Boolean.TRUE);
 	}
 }

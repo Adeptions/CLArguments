@@ -15,6 +15,8 @@
  */
 package com.adeptions.clarguments;
 
+import com.adeptions.clarguments.arguments.*;
+
 /**
  * Interface for converting incoming raw string arg values to appropriate type
  */

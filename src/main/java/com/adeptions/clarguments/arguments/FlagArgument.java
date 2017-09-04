@@ -13,24 +13,36 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.adeptions.clarguments;
+package com.adeptions.clarguments.arguments;
 
-public class DoubleArgument extends AbstractArgument<Double> implements Argument<Double> {
+import com.adeptions.clarguments.*;
+import com.adeptions.clarguments.definitions.*;
+
+public class FlagArgument extends AbstractArgument<Boolean> implements Argument<Boolean> {
 	/**
-	 * Constructs a DoubleArgument with the specified parent arguments and argument definition
+	 * Constructs a FlagArgument with the specified parent arguments and argument definition
 	 * @param parentArguments the arguments to which the argument belongs
 	 * @param definition the definition of the argument
 	 */
-	public DoubleArgument(Arguments parentArguments, ArgumentDefinition<Double> definition) {
-		super(parentArguments,definition);
+	public FlagArgument(Arguments parentArguments, ArgumentDefinition<Boolean> definition) {
+		super(parentArguments, definition);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setRawValue(int tokenPosition, String rawValue, ArgName specifiedArgName) throws ArgParsingException {
-		values.add(definition.validateValue(tokenPosition, definition.convertRawValue(tokenPosition, rawValue, this, specifiedArgName),this, specifiedArgName));
+	public void setSpecified() {
 		specified = true;
+		values.add(Boolean.TRUE);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setRawValue(int tokenPosition, String rawValue, ArgName specifiedArgName) {
+		specified = true;
+		values.add(Boolean.TRUE);
 	}
 }

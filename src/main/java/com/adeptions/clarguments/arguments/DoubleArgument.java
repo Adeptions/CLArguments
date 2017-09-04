@@ -13,16 +13,19 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.adeptions.clarguments;
+package com.adeptions.clarguments.arguments;
 
-public class StringArgument extends AbstractArgument<String> implements Argument<String> {
+import com.adeptions.clarguments.*;
+import com.adeptions.clarguments.definitions.*;
+
+public class DoubleArgument extends AbstractArgument<Double> implements Argument<Double> {
 	/**
-	 * Constructs a StringArgument with the specified parent arguments and argument definition
+	 * Constructs a DoubleArgument with the specified parent arguments and argument definition
 	 * @param parentArguments the arguments to which the argument belongs
 	 * @param definition the definition of the argument
 	 */
-	public StringArgument(Arguments parentArguments, ArgumentDefinition<String> definition) {
-		super(parentArguments, definition);
+	public DoubleArgument(Arguments parentArguments, ArgumentDefinition<Double> definition) {
+		super(parentArguments,definition);
 	}
 
 	/**
@@ -30,7 +33,7 @@ public class StringArgument extends AbstractArgument<String> implements Argument
 	 */
 	@Override
 	public void setRawValue(int tokenPosition, String rawValue, ArgName specifiedArgName) throws ArgParsingException {
-		values.add(definition.validateValue(tokenPosition, definition.convertRawValue(tokenPosition, rawValue, this, specifiedArgName), this, specifiedArgName));
+		values.add(definition.validateValue(tokenPosition, definition.convertRawValue(tokenPosition, rawValue, this, specifiedArgName),this, specifiedArgName));
 		specified = true;
 	}
 }

@@ -13,55 +13,53 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.adeptions.clarguments;
+package com.adeptions.clarguments.definitions;
+
+import com.adeptions.clarguments.*;
+import com.adeptions.clarguments.arguments.*;
 
 import static com.adeptions.clarguments.ArgParsingExceptionReason.INVALID_VALUE;
 
-public class DoubleArgumentDefinition extends AbstractArgumentDefinition<Double> implements ArgumentDefinition<Double> {
+public class BooleanArgumentDefinition extends AbstractArgumentDefinition<Boolean> implements ArgumentDefinition<Boolean> {
 	/**
-	 * Constructs a DoubleArgumentDefinition with the specified name and description
+	 * Constructs a BooleanArgumentDefinition with the specified name and description
 	 * @param name the name of the argument
 	 * @param description the description of the argument
 	 */
-	public DoubleArgumentDefinition(String name, String description) {
+	public BooleanArgumentDefinition(String name, String description) {
 		super(ArgumentDefinitionType.VALUED, name, description);
-		addValueFormat("number");
+		addValueFormat("true|false");
 	}
 
 	/**
-	 * Constructs a DoubleArgumentDefinition with the specified names and description
+	 * Constructs a BooleanArgumentDefinition with the specified names and description
 	 * @param names the names of the argument
 	 * @param description the description of the argument
 	 */
-	public DoubleArgumentDefinition(String[] names, String description) {
+	public BooleanArgumentDefinition(String[] names, String description) {
 		super(ArgumentDefinitionType.VALUED, names, description);
-		addValueFormat("number");
+		addValueFormat("true|false");
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Double convertRawValue(int tokenPosition, String rawValue, Argument<Double> argument, ArgName specifiedArgName) throws ArgParsingException {
+	public Boolean convertRawValue(int tokenPosition, String rawValue, Argument<Boolean> argument, ArgName specifiedArgName) throws ArgParsingException {
 		if (valueConverter != null) {
 			return valueConverter.convert(tokenPosition, rawValue, argument, specifiedArgName);
 		}
-		try {
-			Double result = Double.parseDouble(rawValue);
-			if (result.isNaN()) {
-				throw new NumberFormatException("Raw value was 'NaN'");
-			}
-			return result;
-		} catch (NumberFormatException numberFormatException) {
-			throw new ArgParsingException(INVALID_VALUE, tokenPosition, "Value '" + rawValue + "' is not a valid number (for argument '" + specifiedArgName.getDisplayName() + "')", numberFormatException, argument, specifiedArgName);
+		if (!"true".equals(rawValue) && !"false".equals(rawValue)) {
+			throw new ArgParsingException(INVALID_VALUE, tokenPosition, "Value '" + rawValue + "' is not a valid boolean (for argument '" + specifiedArgName.getDisplayName() + "')", argument, specifiedArgName);
 		}
+		return "true".equals(rawValue);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Argument<Double> createArgumentInstance(Arguments parentArguments) {
-		return new DoubleArgument(parentArguments, this);
+	public Argument<Boolean> createArgumentInstance(Arguments parentArguments) {
+		return new BooleanArgument(parentArguments, this);
 	}
 }

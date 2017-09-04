@@ -13,43 +13,49 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.adeptions.clarguments;
+package com.adeptions.clarguments.definitions;
 
-public class FlagArgumentDefinition extends AbstractArgumentDefinition<Boolean> implements ArgumentDefinition<Boolean> {
+import com.adeptions.clarguments.*;
+import com.adeptions.clarguments.arguments.*;
+
+public class StringArgumentDefinition extends AbstractArgumentDefinition<String> implements ArgumentDefinition<String> {
 	/**
-	 * Constructs a FlagArgumentDefinition with the specified name and description
+	 * Instantiates a new instance of a StringArgumentDefinition
 	 * @param name the name of the argument
 	 * @param description the description of the argument
 	 */
-	public FlagArgumentDefinition(String name, String description) {
-		super(ArgumentDefinitionType.FLAG, name, description);
+	public StringArgumentDefinition(String name, String description) {
+		super(ArgumentDefinitionType.VALUED, name, description);
+		addValueFormat("string");
 	}
 
 	/**
-	 * Constructs a FlagArgumentDefinition with the specified names and description
+	 * Instantiates a new instance of a StringArgumentDefinition
 	 * @param names the names of the argument
 	 * @param description the description of the argument
 	 */
-	public FlagArgumentDefinition(String[] names, String description) {
-		super(ArgumentDefinitionType.FLAG, names, description);
+	public StringArgumentDefinition(String[] names, String description) {
+		super(ArgumentDefinitionType.VALUED, names, description);
+		addValueFormat("string");
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Boolean convertRawValue(int tokenPosition, String rawValue, Argument<Boolean> argument, ArgName specifiedArgName) throws ArgParsingException {
+	public String convertRawValue(int tokenPosition, String rawValue, Argument<String> argument, ArgName specifiedArgName) throws ArgParsingException {
 		if (valueConverter != null) {
 			return valueConverter.convert(tokenPosition, rawValue, argument, specifiedArgName);
 		}
-		return true;
+		// no conversion necessary...
+		return rawValue;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public FlagArgument createArgumentInstance(Arguments parentArguments) {
-		return new FlagArgument(parentArguments, this);
+	public Argument<String> createArgumentInstance(Arguments parentArguments) {
+		return new StringArgument(parentArguments, this);
 	}
 }

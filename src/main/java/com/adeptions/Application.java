@@ -16,6 +16,7 @@
 package com.adeptions;
 
 import com.adeptions.clarguments.*;
+import com.adeptions.clarguments.definitions.*;
 
 public class Application {
 	/**

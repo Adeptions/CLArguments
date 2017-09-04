@@ -15,6 +15,8 @@
  */
 package com.adeptions.clarguments;
 
+import com.adeptions.clarguments.arguments.*;
+import com.adeptions.clarguments.definitions.*;
 import junit.framework.TestCase;
 
 import static com.adeptions.clarguments.ArgParsingExceptionReason.*;

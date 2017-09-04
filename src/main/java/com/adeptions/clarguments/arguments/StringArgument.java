@@ -13,15 +13,18 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.adeptions.clarguments;
+package com.adeptions.clarguments.arguments;
 
-public class IntegerArgument extends AbstractArgument<Integer> implements Argument<Integer> {
+import com.adeptions.clarguments.*;
+import com.adeptions.clarguments.definitions.*;
+
+public class StringArgument extends AbstractArgument<String> implements Argument<String> {
 	/**
-	 * Constructs an IntegerArgument with the specified parent arguments and argument definition
+	 * Constructs a StringArgument with the specified parent arguments and argument definition
 	 * @param parentArguments the arguments to which the argument belongs
 	 * @param definition the definition of the argument
 	 */
-	public IntegerArgument(Arguments parentArguments, ArgumentDefinition<Integer> definition) {
+	public StringArgument(Arguments parentArguments, ArgumentDefinition<String> definition) {
 		super(parentArguments, definition);
 	}
 

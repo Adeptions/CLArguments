@@ -15,6 +15,8 @@
  */
 package com.adeptions.clarguments;
 
+import com.adeptions.clarguments.arguments.*;
+
 /**
  * Thrown to indicate that some problem was encountered during args parsing
  */

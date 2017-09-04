@@ -13,25 +13,28 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.adeptions.clarguments;
+package com.adeptions.clarguments.definitions;
 
-public class InformationalArgumentDefinition extends AbstractArgumentDefinition<Boolean> implements ArgumentDefinition<Boolean> {
+import com.adeptions.clarguments.*;
+import com.adeptions.clarguments.arguments.*;
+
+public class FlagArgumentDefinition extends AbstractArgumentDefinition<Boolean> implements ArgumentDefinition<Boolean> {
 	/**
-	 * Constructs an InformationalArgumentDefinition with the specified name and description
+	 * Constructs a FlagArgumentDefinition with the specified name and description
 	 * @param name the name of the argument
 	 * @param description the description of the argument
 	 */
-	public InformationalArgumentDefinition(String name, String description) {
-		super(ArgumentDefinitionType.INFORMATIONAL, name, description);
+	public FlagArgumentDefinition(String name, String description) {
+		super(ArgumentDefinitionType.FLAG, name, description);
 	}
 
 	/**
-	 * Constructs an InformationalArgumentDefinition with the specified names and description
+	 * Constructs a FlagArgumentDefinition with the specified names and description
 	 * @param names the names of the argument
 	 * @param description the description of the argument
 	 */
-	public InformationalArgumentDefinition(String[] names, String description) {
-		super(ArgumentDefinitionType.INFORMATIONAL, names, description);
+	public FlagArgumentDefinition(String[] names, String description) {
+		super(ArgumentDefinitionType.FLAG, names, description);
 	}
 
 	/**
@@ -49,7 +52,7 @@ public class InformationalArgumentDefinition extends AbstractArgumentDefinition<
 	 * {@inheritDoc}
 	 */
 	@Override
-	public InformationalArgument createArgumentInstance(Arguments parentArguments) {
-		return new InformationalArgument(parentArguments, this);
+	public FlagArgument createArgumentInstance(Arguments parentArguments) {
+		return new FlagArgument(parentArguments, this);
 	}
 }

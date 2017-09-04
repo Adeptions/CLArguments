@@ -13,43 +13,50 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.adeptions.clarguments;
+package com.adeptions.clarguments.definitions;
+
+import com.adeptions.clarguments.*;
+import com.adeptions.clarguments.arguments.*;
 
 import static com.adeptions.clarguments.ArgParsingExceptionReason.INVALID_VALUE;
 
-public class IntegerArgumentDefinition extends AbstractArgumentDefinition<Integer> implements ArgumentDefinition<Integer> {
+public class DoubleArgumentDefinition extends AbstractArgumentDefinition<Double> implements ArgumentDefinition<Double> {
 	/**
-	 * Constructs an IntegerArgumentDefinition with the specified name and description
+	 * Constructs a DoubleArgumentDefinition with the specified name and description
 	 * @param name the name of the argument
 	 * @param description the description of the argument
 	 */
-	public IntegerArgumentDefinition(String name, String description) {
+	public DoubleArgumentDefinition(String name, String description) {
 		super(ArgumentDefinitionType.VALUED, name, description);
-		addValueFormat("integer");
+		addValueFormat("number");
 	}
 
 	/**
-	 * Constructs an IntegerArgumentDefinition with the specified names and description
+	 * Constructs a DoubleArgumentDefinition with the specified names and description
 	 * @param names the names of the argument
 	 * @param description the description of the argument
 	 */
-	public IntegerArgumentDefinition(String[] names, String description) {
+	public DoubleArgumentDefinition(String[] names, String description) {
 		super(ArgumentDefinitionType.VALUED, names, description);
-		addValueFormat("integer");
+		addValueFormat("number");
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Integer convertRawValue(int tokenPosition, String rawValue, Argument<Integer> argument, ArgName specifiedArgName) throws ArgParsingException {
+	public Double convertRawValue(int tokenPosition, String rawValue, Argument<Double> argument, ArgName specifiedArgName) throws ArgParsingException {
 		if (valueConverter != null) {
 			return valueConverter.convert(tokenPosition, rawValue, argument, specifiedArgName);
 		}
 		try {
-			return Integer.parseInt(rawValue, 10);
+			Double result = Double.parseDouble(rawValue);
+			if (result.isNaN()) {
+				throw new NumberFormatException("Raw value was 'NaN'");
+			}
+			return result;
 		} catch (NumberFormatException numberFormatException) {
-			throw new ArgParsingException(INVALID_VALUE, tokenPosition, "Value '" + rawValue + "' is not a valid integer (for argument '" + specifiedArgName.getDisplayName() + "')", numberFormatException, argument, specifiedArgName);
+			throw new ArgParsingException(INVALID_VALUE, tokenPosition, "Value '" + rawValue + "' is not a valid number (for argument '" + specifiedArgName.getDisplayName() + "')", numberFormatException, argument, specifiedArgName);
 		}
 	}
 
@@ -57,7 +64,7 @@ public class IntegerArgumentDefinition extends AbstractArgumentDefinition<Intege
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Argument<Integer> createArgumentInstance(Arguments parentArguments) {
-		return new IntegerArgument(parentArguments, this);
+	public Argument<Double> createArgumentInstance(Arguments parentArguments) {
+		return new DoubleArgument(parentArguments, this);
 	}
 }

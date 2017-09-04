@@ -13,7 +13,10 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.adeptions.clarguments;
+package com.adeptions.clarguments.arguments;
+
+import com.adeptions.clarguments.*;
+import com.adeptions.clarguments.definitions.*;
 
 import java.util.*;
 

@@ -15,6 +15,7 @@
  */
 package com.adeptions.clarguments;
 
+import com.adeptions.clarguments.definitions.*;
 import junit.framework.TestCase;
 
 public class ArgsParsing_CharBetweenTests extends TestCase {
