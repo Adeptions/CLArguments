@@ -110,10 +110,10 @@ public interface ArgumentDefinition<T> {
 	ArgumentValueConverter<T> getValueConverter();
 
 	/**
-	 * Gets the value validator for the argument definition
-	 * @return the value validator for the argument definition
+	 * Gets the list of value validators for the argument definition
+	 * @return the list of value validators for the argument definition
 	 */
-	ArgumentValueValidator<T> getValueValidator();
+	List<ArgumentValueValidator<T>> getValueValidators();
 
 	/**
 	 * Converts the raw incoming arg value (string) to the appropriate type
@@ -152,11 +152,19 @@ public interface ArgumentDefinition<T> {
 	ArgumentDefinition<T> addValueConverter(ArgumentValueConverter<T> valueConverter);
 
 	/**
-	 * Chaining method for adding a value validator
-	 * @param valueValidator the argument value validator
+	 * Chaining method for adding the value validator
+	 * (overwrites any previously added validator - see addAdditionalValueValidator() to add multiple validators)
+	 * @param valueValidator the argument value validator to be added
 	 * @return a reference to this object
 	 */
 	ArgumentDefinition<T> addValueValidator(ArgumentValueValidator<T> valueValidator);
+
+	/**
+	 * Chaining method for adding additional value validator
+	 * @param valueValidator the additional argument value validator to be added
+	 * @return a reference to this object
+	 */
+	ArgumentDefinition<T> addAdditionalValueValidator(ArgumentValueValidator<T> valueValidator);
 
 	/**
 	 * Chaining method for making the argument mandatory

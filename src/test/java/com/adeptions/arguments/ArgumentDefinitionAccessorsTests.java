@@ -30,17 +30,32 @@ public class ArgumentDefinitionAccessorsTests extends TestCase {
 				stringArgumentDefinition.isMandatory());
 	}
 
-	public void testArgumentDefinitionSetValidator() throws Exception {
+	public void testArgumentDefinitionAddValidator() throws Exception {
 		StringArgumentDefinition stringArgumentDefinition = new StringArgumentDefinition(testName, testDescription);
-		assertNull("Default .getValueValidator() should be null",
-				stringArgumentDefinition.getValueValidator());
-		stringArgumentDefinition.addValueValidator(new ArgumentValueValidator() {
+		assertEquals(0, stringArgumentDefinition.getValueValidators().size());
+		stringArgumentDefinition.addValueValidator(new ArgumentValueValidator<String>() {
 			@Override
-			public Object validate(int tokenPosition, Object value, Argument argument, ArgName specifiedArgName) throws ArgParsingException {
+			public String validate(int tokenPosition, String value, Argument argument, ArgName specifiedArgName) throws ArgParsingException {
 				return null;
 			}
 		});
-		assertNotNull(".getValueValidator() should now be set",
-				stringArgumentDefinition.getValueValidator());
+		assertEquals(1, stringArgumentDefinition.getValueValidators().size());
+	}
+
+	public void testArgumentDefinitionAddValidators() throws Exception {
+		StringArgumentDefinition stringArgumentDefinition = new StringArgumentDefinition(testName, testDescription);
+		assertEquals(0, stringArgumentDefinition.getValueValidators().size());
+		ArgumentValueValidator<String> valueValidator = new ArgumentValueValidator<String>() {
+			@Override
+			public String validate(int tokenPosition, String value, Argument argument, ArgName specifiedArgName) throws ArgParsingException {
+				return null;
+			}
+		};
+		stringArgumentDefinition.addValueValidator(valueValidator);
+		assertEquals(1, stringArgumentDefinition.getValueValidators().size());
+		stringArgumentDefinition.addValueValidator(valueValidator);
+		assertEquals(1, stringArgumentDefinition.getValueValidators().size());
+		stringArgumentDefinition.addAdditionalValueValidator(valueValidator);
+		assertEquals(2, stringArgumentDefinition.getValueValidators().size());
 	}
 }

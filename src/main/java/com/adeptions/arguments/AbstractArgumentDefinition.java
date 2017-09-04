@@ -41,7 +41,7 @@ public abstract class AbstractArgumentDefinition<T> implements ArgumentDefinitio
 	protected String format;
 	protected boolean mandatory;
 	protected ArgumentValueConverter<T> valueConverter;
-	protected ArgumentValueValidator<T> valueValidator;
+	protected List<ArgumentValueValidator<T>> valueValidators = new ArrayList<ArgumentValueValidator<T>>();
 	private Set<String> alternativeNames = new HashSet<String>();
 	protected T defaultValue;
 
@@ -181,10 +181,11 @@ public abstract class AbstractArgumentDefinition<T> implements ArgumentDefinitio
 	 */
 	@Override
 	public T validateValue(int tokenPosition, T value, Argument<T> argument, ArgName specifiedArgName) throws ArgParsingException {
-		if (valueValidator != null) {
-			return (T)valueValidator.validate(tokenPosition, value, argument, specifiedArgName);
+		T result = value;
+		for (ArgumentValueValidator<T> valueValidator: valueValidators) {
+			result = valueValidator.validate(tokenPosition, result, argument, specifiedArgName);
 		}
-		return value;
+		return result;
 	}
 
 	/**
@@ -239,8 +240,8 @@ public abstract class AbstractArgumentDefinition<T> implements ArgumentDefinitio
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ArgumentValueValidator<T> getValueValidator() {
-		return valueValidator;
+	public List<ArgumentValueValidator<T>> getValueValidators() {
+		return valueValidators;
 	}
 
 	/**
@@ -266,7 +267,17 @@ public abstract class AbstractArgumentDefinition<T> implements ArgumentDefinitio
 	 */
 	@Override
 	public ArgumentDefinition<T> addValueValidator(ArgumentValueValidator<T> valueValidator) {
-		this.valueValidator = valueValidator;
+		this.valueValidators.clear();
+		this.valueValidators.add(valueValidator);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ArgumentDefinition<T> addAdditionalValueValidator(ArgumentValueValidator<T> valueValidator) {
+		this.valueValidators.add(valueValidator);
 		return this;
 	}
 
