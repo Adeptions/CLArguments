@@ -89,7 +89,7 @@ public class ArgumentDefinitionConstructionExtensibilityTests extends TestCase {
 				}
 			}
 			if (result == null) {
-				throw new ArgParsingException(INVALID_VALUE, tokenPosition, "Value '" + rawValue + "' is not permissible (for argument '" + specifiedArgName.getDisplayName() + "')", argument, specifiedArgName);
+				throw new ArgParsingException(INVALID_VALUE, tokenPosition, "Value '" + rawValue + "' is not permissible", argument, specifiedArgName);
 			}
 			return result;
 		}

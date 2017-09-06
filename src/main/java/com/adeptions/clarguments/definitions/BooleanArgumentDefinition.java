@@ -17,8 +17,7 @@ package com.adeptions.clarguments.definitions;
 
 import com.adeptions.clarguments.*;
 import com.adeptions.clarguments.arguments.*;
-
-import static com.adeptions.clarguments.ArgParsingExceptionReason.INVALID_VALUE;
+import com.adeptions.clarguments.converters.*;
 
 public class BooleanArgumentDefinition extends AbstractArgumentDefinition<Boolean> implements ArgumentDefinition<Boolean> {
 	/**
@@ -46,13 +45,10 @@ public class BooleanArgumentDefinition extends AbstractArgumentDefinition<Boolea
 	 */
 	@Override
 	public Boolean convertRawValue(int tokenPosition, String rawValue, Argument<Boolean> argument, ArgName specifiedArgName) throws ArgParsingException {
-		if (valueConverter != null) {
-			return valueConverter.convert(tokenPosition, rawValue, argument, specifiedArgName);
+		if (valueConverter == null) {
+			valueConverter = new TrueFalseBooleanConverter();
 		}
-		if (!"true".equals(rawValue) && !"false".equals(rawValue)) {
-			throw new ArgParsingException(INVALID_VALUE, tokenPosition, "Value '" + rawValue + "' is not a valid boolean (for argument '" + specifiedArgName.getDisplayName() + "')", argument, specifiedArgName);
-		}
-		return "true".equals(rawValue);
+		return valueConverter.convert(tokenPosition, rawValue, argument, specifiedArgName);
 	}
 
 	/**

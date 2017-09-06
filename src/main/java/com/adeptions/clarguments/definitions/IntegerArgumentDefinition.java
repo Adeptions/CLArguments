@@ -52,7 +52,7 @@ public class IntegerArgumentDefinition extends AbstractArgumentDefinition<Intege
 		try {
 			return Integer.parseInt(rawValue, 10);
 		} catch (NumberFormatException numberFormatException) {
-			throw new ArgParsingException(INVALID_VALUE, tokenPosition, "Value '" + rawValue + "' is not a valid integer (for argument '" + specifiedArgName.getDisplayName() + "')", numberFormatException, argument, specifiedArgName);
+			throw new ArgParsingException(INVALID_VALUE, tokenPosition, "Value '" + rawValue + "' is not a valid integer", numberFormatException, argument, specifiedArgName);
 		}
 	}
 

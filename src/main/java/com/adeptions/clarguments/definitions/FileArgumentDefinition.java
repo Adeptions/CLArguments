@@ -21,13 +21,15 @@ import com.adeptions.clarguments.arguments.*;
 import static com.adeptions.clarguments.ArgParsingExceptionReason.INVALID_VALUE;
 import static com.adeptions.clarguments.ArgParsingExceptionReason.MISSING_VALUE;
 
-public class DoubleArgumentDefinition extends AbstractArgumentDefinition<Double> implements ArgumentDefinition<Double> {
+import java.io.File;
+
+public class FileArgumentDefinition extends AbstractArgumentDefinition<File> implements ArgumentDefinition<File> {
 	/**
 	 * Constructs a DoubleArgumentDefinition with the specified name and description
 	 * @param name the name of the argument
 	 * @param description the description of the argument
 	 */
-	public DoubleArgumentDefinition(String name, String description) {
+	public FileArgumentDefinition(String name, String description) {
 		super(ArgumentDefinitionType.VALUED, name, description);
 		addValueFormat("number");
 	}
@@ -37,7 +39,7 @@ public class DoubleArgumentDefinition extends AbstractArgumentDefinition<Double>
 	 * @param names the names of the argument
 	 * @param description the description of the argument
 	 */
-	public DoubleArgumentDefinition(String[] names, String description) {
+	public FileArgumentDefinition(String[] names, String description) {
 		super(ArgumentDefinitionType.VALUED, names, description);
 		addValueFormat("number");
 	}
@@ -46,20 +48,14 @@ public class DoubleArgumentDefinition extends AbstractArgumentDefinition<Double>
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Double convertRawValue(int tokenPosition, String rawValue, Argument<Double> argument, ArgName specifiedArgName) throws ArgParsingException {
+	public File convertRawValue(int tokenPosition, String rawValue, Argument<File> argument, ArgName specifiedArgName) throws ArgParsingException {
 		if (valueConverter != null) {
 			return valueConverter.convert(tokenPosition, rawValue, argument, specifiedArgName);
 		}
 		try {
-			Double result = Double.parseDouble(rawValue);
-			if (result.isNaN()) {
-				throw new NumberFormatException("Raw value was 'NaN'");
-			}
-			return result;
-		} catch (NullPointerException nullPointerException) {
-			throw new ArgParsingException(MISSING_VALUE, tokenPosition, "Value missing", nullPointerException, argument, specifiedArgName);
-		} catch (NumberFormatException numberFormatException) {
-			throw new ArgParsingException(INVALID_VALUE, tokenPosition, "Value '" + rawValue + "' is not a valid number", numberFormatException, argument, specifiedArgName);
+			return new File(rawValue);
+		} catch (IllegalArgumentException | NullPointerException ex) {
+			throw new ArgParsingException(MISSING_VALUE, tokenPosition, "Value missing", ex, argument, specifiedArgName);
 		}
 	}
 
@@ -67,7 +63,7 @@ public class DoubleArgumentDefinition extends AbstractArgumentDefinition<Double>
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Argument<Double> createArgumentInstance(Arguments parentArguments) {
-		return new DoubleArgument(parentArguments, this);
+	public Argument<File> createArgumentInstance(Arguments parentArguments) {
+		return new FileArgument(parentArguments, this);
 	}
 }

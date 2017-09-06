@@ -16,7 +16,14 @@
 package com.adeptions;
 
 import com.adeptions.clarguments.*;
+import com.adeptions.clarguments.converters.MultiValueBooleanConverter;
+import com.adeptions.clarguments.converters.YesNoBooleanConverter;
 import com.adeptions.clarguments.definitions.*;
+import com.adeptions.clarguments.validators.DisallowMultiplesValueValidator;
+import com.adeptions.clarguments.validators.RangedDoubleValueValidator;
+import com.adeptions.clarguments.validators.RangedIntegerValueValidator;
+
+import java.io.File;
 
 public class Application {
 	/**
@@ -26,6 +33,13 @@ public class Application {
 	 */
 	public static void main(String[] args) {
 		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions(
+				new BooleanArgumentDefinition("b", "A yes/no boolean").addValueConverter(new MultiValueBooleanConverter(true, false,
+						"yes|no", "y|n", "1|0", "on|off", "true|false")),
+				new DoubleArgumentDefinition("n", "A number").addAdditionalValueValidator(new RangedDoubleValueValidator(1d, 10d)),
+				new IntegerArgumentDefinition("i", "An integer")
+						.addAdditionalValueValidator(new DisallowMultiplesValueValidator())
+						.addAdditionalValueValidator(new RangedIntegerValueValidator(1, 10)),
+				new FileArgumentDefinition("f", "A file"),
 				new StringArgumentDefinition(new String[] {"say", "s"}, "What to say").makeMandatory().addValueValidator((tokenPosition, value, argument, specifiedArgName) -> {
 					if (value == null) {
 						throw new ArgParsingException(ArgParsingExceptionReason.MISSING_VALUE, tokenPosition, "Argument '" + specifiedArgName.getDisplayName() + "' must have a value", argument);
