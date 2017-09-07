@@ -20,7 +20,7 @@ import com.adeptions.clarguments.arguments.*;
 
 import java.util.*;
 
-import static com.adeptions.clarguments.BadArgReason.*;
+import static com.adeptions.clarguments.PredefinedBadArgReasons.*;
 
 /**
  * Utility value converter for converting raw values to boolean

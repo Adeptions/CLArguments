@@ -20,7 +20,7 @@ import com.adeptions.clarguments.arguments.*;
 
 import java.io.File;
 
-import static com.adeptions.clarguments.BadArgReason.*;
+import static com.adeptions.clarguments.PredefinedBadArgReasons.*;
 
 /**
  * Utility value validator for checking the existence of a file for FileArgumentDefinition

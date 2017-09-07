@@ -21,41 +21,41 @@ public class BadArgExceptionTests extends TestCase {
 	private static final String testMessage = "This is a test exception message";
 
 	public void testBadArgExceptionConstructor() throws Exception {
-		BadArgException badArgException = new BadArgException(BadArgReason.UNDEFINED, -1);
+		BadArgException badArgException = new BadArgException(PredefinedBadArgReasons.UNDEFINED, -1);
 		assertNull(badArgException.getMessage());
 		assertNull(badArgException.getCause());
-		assertEquals(BadArgReason.UNDEFINED, badArgException.getReason());
+		assertEquals(PredefinedBadArgReasons.UNDEFINED, badArgException.getReason());
 	}
 
 	public void testBadArgExceptionConstructor2() throws Exception {
-		BadArgException badArgException = new BadArgException(BadArgReason.UNDEFINED, -1, testMessage);
+		BadArgException badArgException = new BadArgException(PredefinedBadArgReasons.UNDEFINED, -1, testMessage);
 		assertEquals(testMessage, badArgException.getMessage());
 		assertNull(badArgException.getCause());
-		assertEquals(BadArgReason.UNDEFINED, badArgException.getReason());
+		assertEquals(PredefinedBadArgReasons.UNDEFINED, badArgException.getReason());
 	}
 
 	public void testBadArgExceptionConstructor3() throws Exception {
 		IllegalArgumentException cause = new IllegalArgumentException();
-		BadArgException badArgException = new BadArgException(BadArgReason.UNDEFINED, -1, testMessage, cause);
+		BadArgException badArgException = new BadArgException(PredefinedBadArgReasons.UNDEFINED, -1, testMessage, cause);
 		assertEquals(testMessage, badArgException.getMessage());
-		assertEquals(BadArgReason.UNDEFINED, badArgException.getReason());
+		assertEquals(PredefinedBadArgReasons.UNDEFINED, badArgException.getReason());
 		assertEquals(cause, badArgException.getCause());
 	}
 
 	public void testBadArgExceptionConstructor4() throws Exception {
 		ArgName specifiedArgName = ArgName.parseFromSpacedArgToken(-1, ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + "foo", new ArgsParsingOptions());
-		BadArgException badArgException = new BadArgException(BadArgReason.UNDEFINED, -1, testMessage, specifiedArgName);
+		BadArgException badArgException = new BadArgException(PredefinedBadArgReasons.UNDEFINED, -1, testMessage, specifiedArgName);
 		assertEquals(testMessage, badArgException.getMessage());
-		assertEquals(BadArgReason.UNDEFINED, badArgException.getReason());
+		assertEquals(PredefinedBadArgReasons.UNDEFINED, badArgException.getReason());
 		assertEquals(specifiedArgName, badArgException.getSpecifiedArgName());
 	}
 
 	public void testBadArgExceptionConstructor5() throws Exception {
 		IllegalArgumentException cause = new IllegalArgumentException();
 		ArgName specifiedArgName = ArgName.parseFromSpacedArgToken(-1, ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + "foo", new ArgsParsingOptions());
-		BadArgException badArgException = new BadArgException(BadArgReason.UNDEFINED, -1, testMessage, cause, specifiedArgName);
+		BadArgException badArgException = new BadArgException(PredefinedBadArgReasons.UNDEFINED, -1, testMessage, cause, specifiedArgName);
 		assertEquals(testMessage, badArgException.getMessage());
-		assertEquals(BadArgReason.UNDEFINED, badArgException.getReason());
+		assertEquals(PredefinedBadArgReasons.UNDEFINED, badArgException.getReason());
 		assertEquals(specifiedArgName, badArgException.getSpecifiedArgName());
 		assertEquals(cause, badArgException.getCause());
 	}

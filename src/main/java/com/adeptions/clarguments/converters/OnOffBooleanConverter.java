@@ -18,7 +18,7 @@ package com.adeptions.clarguments.converters;
 import com.adeptions.clarguments.*;
 import com.adeptions.clarguments.arguments.*;
 
-import static com.adeptions.clarguments.BadArgReason.*;
+import static com.adeptions.clarguments.PredefinedBadArgReasons.*;
 
 /**
  * Utility value converter for converting raw "on"/"off" values to boolean

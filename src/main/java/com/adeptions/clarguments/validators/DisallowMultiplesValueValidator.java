@@ -18,7 +18,7 @@ package com.adeptions.clarguments.validators;
 import com.adeptions.clarguments.*;
 import com.adeptions.clarguments.arguments.*;
 
-import static com.adeptions.clarguments.BadArgReason.*;
+import static com.adeptions.clarguments.PredefinedBadArgReasons.*;
 
 public class DisallowMultiplesValueValidator implements ArgumentValueValidator {
 	/**

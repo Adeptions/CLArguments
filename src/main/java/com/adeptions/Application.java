@@ -20,7 +20,7 @@ import com.adeptions.clarguments.converters.*;
 import com.adeptions.clarguments.definitions.*;
 import com.adeptions.clarguments.validators.*;
 
-import static com.adeptions.clarguments.BadArgReason.*;
+import static com.adeptions.clarguments.PredefinedBadArgReasons.*;
 
 public class Application {
 	/**

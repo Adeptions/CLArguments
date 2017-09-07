@@ -15,7 +15,7 @@
  */
 package com.adeptions.clarguments;
 
-import static com.adeptions.clarguments.BadArgReason.*;
+import static com.adeptions.clarguments.PredefinedBadArgReasons.*;
 
 /**
  * Represents an arg name found during parsing

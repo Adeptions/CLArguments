@@ -20,7 +20,7 @@ import com.adeptions.clarguments.definitions.*;
 
 import java.util.*;
 
-import static com.adeptions.clarguments.BadArgReason.*;
+import static com.adeptions.clarguments.PredefinedBadArgReasons.*;
 
 /**
  * Represents a list of argument definitions and provides methods for parsing args

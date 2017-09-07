@@ -19,7 +19,7 @@ import com.adeptions.clarguments.arguments.*;
 import com.adeptions.clarguments.definitions.*;
 import junit.framework.TestCase;
 
-import static com.adeptions.clarguments.BadArgReason.*;
+import static com.adeptions.clarguments.PredefinedBadArgReasons.*;
 
 public class ArgumentDefinitionConstructionExtensibilityTests extends TestCase {
 	private static final String testName = "test";

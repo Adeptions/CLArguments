@@ -18,7 +18,7 @@ package com.adeptions.clarguments.definitions;
 import com.adeptions.clarguments.*;
 import com.adeptions.clarguments.arguments.*;
 
-import static com.adeptions.clarguments.BadArgReason.INVALID_VALUE;
+import static com.adeptions.clarguments.PredefinedBadArgReasons.*;
 
 public class IntegerArgumentDefinition extends AbstractArgumentDefinition<Integer> implements ArgumentDefinition<Integer> {
 	/**

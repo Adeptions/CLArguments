@@ -18,7 +18,7 @@ package com.adeptions.clarguments.validators;
 import com.adeptions.clarguments.*;
 import com.adeptions.clarguments.arguments.*;
 
-import static com.adeptions.clarguments.BadArgReason.*;
+import static com.adeptions.clarguments.PredefinedBadArgReasons.*;
 
 /**
  * Utility value validator for checking an integer value is within a specified range
