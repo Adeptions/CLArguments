@@ -170,17 +170,17 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 				argumentDefinition5
 		);
 		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
-		argsParsingOptions.setArgsParsingExceptionHandler(new ArgsParsingExceptionHandler() {
+		argsParsingOptions.setBadArgsExceptionHandler(new BadArgExceptionsHandler() {
 			@Override
-			public ArgParsingException handle(ArgParsingException argsParsingException) throws ArgParsingException {
-				throw argsParsingException;
+			public BadArgException handle(BadArgException badArgException) throws BadArgException {
+				throw badArgException;
 			}
 		});
 		Arguments arguments;
 		boolean failed = false;
 		try {
 			arguments = argumentDefinitions.parseArgs(new String[] {}, argsParsingOptions);
-		} catch (ArgParsingException argsParsingException) {
+		} catch (BadArgException badArgException) {
 			failed = true;
 		}
 		assertTrue("Should have failed",
@@ -284,10 +284,10 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 				argumentDefinition2
 		);
 		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
-		argsParsingOptions.setArgsParsingExceptionHandler(new ArgsParsingExceptionHandler() {
+		argsParsingOptions.setBadArgsExceptionHandler(new BadArgExceptionsHandler() {
 			@Override
-			public ArgParsingException handle(ArgParsingException argsParsingException) throws ArgParsingException {
-				throw argsParsingException;
+			public BadArgException handle(BadArgException badArgException) throws BadArgException {
+				throw badArgException;
 			}
 		});
 		boolean failed = false;
@@ -297,7 +297,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 					ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + testArgumentName2,
 					"xxx"
 			}, argsParsingOptions);
-		} catch (ArgParsingException argsParsingException) {
+		} catch (BadArgException badArgException) {
 			failed = true;
 		}
 		assertTrue("Should have failed", failed);
@@ -419,10 +419,10 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 
 	public void testArgsParsingUnknownArgValue3() throws Exception {
 		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
-		argsParsingOptions.setArgsParsingExceptionHandler(new ArgsParsingExceptionHandler() {
+		argsParsingOptions.setBadArgsExceptionHandler(new BadArgExceptionsHandler() {
 			@Override
-			public ArgParsingException handle(ArgParsingException argsParsingException) throws ArgParsingException {
-				throw argsParsingException;
+			public BadArgException handle(BadArgException badArgException) throws BadArgException {
+				throw badArgException;
 			}
 		});
 		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions(
@@ -437,7 +437,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 			arguments = argumentDefinitions.parseArgs(new String[] {
 					ArgsParsingOptions.DEFAULT_ARG_NAME_PREFIX + "badArgName"
 			}, argsParsingOptions);
-		} catch (ArgParsingException argsParsingException) {
+		} catch (BadArgException badArgException) {
 			failed = true;
 		}
 		assertTrue("Should have failed",
@@ -446,10 +446,10 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 
 	public void testArgsParsingUnknownArgValue4() throws Exception {
 		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
-		argsParsingOptions.setArgsParsingExceptionHandler(new ArgsParsingExceptionHandler() {
+		argsParsingOptions.setBadArgsExceptionHandler(new BadArgExceptionsHandler() {
 			@Override
-			public ArgParsingException handle(ArgParsingException argsParsingException) throws ArgParsingException {
-				throw argsParsingException;
+			public BadArgException handle(BadArgException badArgException) throws BadArgException {
+				throw badArgException;
 			}
 		});
 		ArgumentDefinitions argumentDefinitions = new ArgumentDefinitions(
@@ -464,7 +464,7 @@ public class ArgsParsing_SpaceBetweenTests extends TestCase {
 			arguments = argumentDefinitions.parseArgs(new String[] {
 					"badArgName"
 			}, argsParsingOptions);
-		} catch (ArgParsingException argsParsingException) {
+		} catch (BadArgException badArgException) {
 			failed = true;
 		}
 		assertTrue("Should have failed",

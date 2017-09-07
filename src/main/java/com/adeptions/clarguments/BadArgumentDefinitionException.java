@@ -22,36 +22,36 @@ package com.adeptions.clarguments;
  * Extends RuntimeException because an application cannot be reasonably expected to recover when the argument definitions
  * are erroneous.
  */
-public class ArgumentDefinitionException extends RuntimeException {
+public class BadArgumentDefinitionException extends RuntimeException {
 	/**
-	 * Constructs an ArgumentDefinitionException
+	 * Constructs an BadArgumentDefinitionException
 	 */
-	public ArgumentDefinitionException() {
+	public BadArgumentDefinitionException() {
 		super();
 	}
 
 	/**
-	 * Constructs an ArgumentDefinitionException with the specified message
+	 * Constructs an BadArgumentDefinitionException with the specified message
 	 * @param message the message description for the exception
 	 */
-	public ArgumentDefinitionException(String message) {
+	public BadArgumentDefinitionException(String message) {
 		super(message);
 	}
 
 	/**
-	 * Constructs an ArgumentDefinitionException with the specified message and cause
+	 * Constructs an BadArgumentDefinitionException with the specified message and cause
 	 * @param message the message description for the exception
 	 * @param cause the cause of the exception
 	 */
-	public ArgumentDefinitionException(String message, Throwable cause) {
+	public BadArgumentDefinitionException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
 	/**
-	 * Constructs an ArgumentDefinitionException with the specified cause
+	 * Constructs an BadArgumentDefinitionException with the specified cause
 	 * @param cause the cause of the exception
 	 */
-	public ArgumentDefinitionException(Throwable cause) {
+	public BadArgumentDefinitionException(Throwable cause) {
 		super(cause);
 	}
 }

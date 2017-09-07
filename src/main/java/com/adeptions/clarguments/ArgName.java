@@ -15,7 +15,7 @@
  */
 package com.adeptions.clarguments;
 
-import static com.adeptions.clarguments.ArgParsingExceptionReason.*;
+import static com.adeptions.clarguments.BadArgReason.*;
 
 /**
  * Represents an arg name found during parsing
@@ -83,9 +83,9 @@ public class ArgName {
 	 * @param rawToken the raw args token encountered
 	 * @param argsParsingOptions the parsing options
 	 * @return the created ArgName
-	 * @throws ArgParsingException if there was a problem with the token (e.g. the name was invalid)
+	 * @throws BadArgException if there was a problem with the token (e.g. the name was invalid)
 	 */
-	static ArgName parseFromSpacedArgToken(int tokenPosition, String rawToken, ArgsParsingOptions argsParsingOptions) throws ArgParsingException {
+	static ArgName parseFromSpacedArgToken(int tokenPosition, String rawToken, ArgsParsingOptions argsParsingOptions) throws BadArgException {
 		String argNamePrefix = argsParsingOptions.getArgNamePrefix();
 		String argNameSuffix = argsParsingOptions.getArgNameSuffix();
 		ArgName result = new ArgName(rawToken);
@@ -95,24 +95,24 @@ public class ArgName {
 				if (name.startsWith(argNamePrefix)) {
 					name = name.substring(argNamePrefix.length());
 				} else {
-					throw new ArgParsingException(INVALID_ARGUMENT_NAME_PREFIX, tokenPosition, "Argument names must begin with '" + argNamePrefix + "'", result);
+					throw new BadArgException(INVALID_ARGUMENT_NAME_PREFIX, tokenPosition, "Argument names must begin with '" + argNamePrefix + "'", result);
 				}
 			}
 			if (argNameSuffix != null) {
 				if (name.endsWith(argNameSuffix)) {
 					name = name.substring(0, name.length() - argNameSuffix.length());
 				} else {
-					throw new ArgParsingException(INVALID_ARGUMENT_NAME_SUFFIX, tokenPosition, "Argument names must end with '" + argNameSuffix + "'", result);
+					throw new BadArgException(INVALID_ARGUMENT_NAME_SUFFIX, tokenPosition, "Argument names must end with '" + argNameSuffix + "'", result);
 				}
 			}
 			result.name = name;
 			result.displayName = (argNamePrefix != null ? argNamePrefix : "") +
 					name +
 					(argNameSuffix != null ? argNameSuffix : "");
-		} catch (ArgParsingException argsParsingException) {
-			throw argsParsingException;
+		} catch (BadArgException badArgException) {
+			throw badArgException;
 		} catch (Exception ex) {
-			throw new ArgParsingException(UNEXPECTED_EXCEPTION, tokenPosition, "Unknown error parsing argument name", ex, result);
+			throw new BadArgException(UNEXPECTED_EXCEPTION, tokenPosition, "Unknown error parsing argument name", ex, result);
 		}
 		return result;
 	}
@@ -123,9 +123,9 @@ public class ArgName {
 	 * @param rawToken the raw args token encountered
 	 * @param argsParsingOptions the parsing options
 	 * @return the created ArgName
-	 * @throws ArgParsingException if there was a problem with the token (e.g. the name was invalid)
+	 * @throws BadArgException if there was a problem with the token (e.g. the name was invalid)
 	 */
-	static ArgName parseFromNonSpacedArgToken(int tokenPosition, String rawToken, ArgsParsingOptions argsParsingOptions) throws ArgParsingException {
+	static ArgName parseFromNonSpacedArgToken(int tokenPosition, String rawToken, ArgsParsingOptions argsParsingOptions) throws BadArgException {
 		String argNamePrefix = argsParsingOptions.getArgNamePrefix();
 		String argNameSuffix = argsParsingOptions.getArgNameSuffix();
 		Character argNameAndValueSeparator = argsParsingOptions.getCharacterBetweenArgNameAndValue();
@@ -137,7 +137,7 @@ public class ArgName {
 				if (name.startsWith(argNamePrefix)) {
 					name = name.substring(argNamePrefix.length());
 				} else {
-					throw new ArgParsingException(INVALID_ARGUMENT_NAME_PREFIX, tokenPosition, "Argument names must begin with '" + argNamePrefix + "'", result);
+					throw new BadArgException(INVALID_ARGUMENT_NAME_PREFIX, tokenPosition, "Argument names must begin with '" + argNamePrefix + "'", result);
 				}
 			}
 			if ((separatorAt = name.indexOf(argNameAndValueSeparator)) != -1) {
@@ -148,17 +148,17 @@ public class ArgName {
 				if (name.endsWith(argNameSuffix)) {
 					name = name.substring(0, name.length() - argNameSuffix.length());
 				} else {
-					throw new ArgParsingException(INVALID_ARGUMENT_NAME_SUFFIX, tokenPosition, "Argument names must end with '" + argNameSuffix + "'", result);
+					throw new BadArgException(INVALID_ARGUMENT_NAME_SUFFIX, tokenPosition, "Argument names must end with '" + argNameSuffix + "'", result);
 				}
 			}
 			result.name = name;
 			result.displayName = (argNamePrefix != null ? argNamePrefix : "") +
 					name +
 					(argNameSuffix != null ? argNameSuffix : "");
-		} catch (ArgParsingException argsParsingException) {
-			throw argsParsingException;
+		} catch (BadArgException badArgException) {
+			throw badArgException;
 		} catch (Exception ex) {
-			throw new ArgParsingException(UNEXPECTED_EXCEPTION, tokenPosition, "Unknown error parsing argument name", ex, result);
+			throw new BadArgException(UNEXPECTED_EXCEPTION, tokenPosition, "Unknown error parsing argument name", ex, result);
 		}
 		return result;
 	}

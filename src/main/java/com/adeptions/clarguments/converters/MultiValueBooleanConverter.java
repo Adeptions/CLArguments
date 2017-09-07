@@ -20,7 +20,7 @@ import com.adeptions.clarguments.arguments.*;
 
 import java.util.*;
 
-import static com.adeptions.clarguments.ArgParsingExceptionReason.*;
+import static com.adeptions.clarguments.BadArgReason.*;
 
 /**
  * Utility value converter for converting raw values to boolean
@@ -88,12 +88,12 @@ public class MultiValueBooleanConverter implements ArgumentValueConverter<Boolea
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Boolean convert(int tokenPosition, String rawValue, Argument argument, ArgName specifiedArgName) throws ArgParsingException {
+	public Boolean convert(int tokenPosition, String rawValue, Argument argument, ArgName specifiedArgName) throws BadArgException {
 		if (allowNulls && rawValue == null) {
 			return assumeNullValue;
 		}
 		if (!trueAndFalses.containsKey(rawValue)) {
-			throw new ArgParsingException(INVALID_VALUE, tokenPosition, "Value \"" + rawValue + "\" is invalid - must be " + advisoryString, argument, specifiedArgName);
+			throw new BadArgException(INVALID_VALUE, tokenPosition, "Value \"" + rawValue + "\" is invalid - must be " + advisoryString, argument, specifiedArgName);
 		}
 		return trueAndFalses.get(rawValue);
 	}

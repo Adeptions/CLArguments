@@ -19,7 +19,7 @@ import com.adeptions.clarguments.arguments.*;
 import com.adeptions.clarguments.definitions.*;
 import junit.framework.TestCase;
 
-import static com.adeptions.clarguments.ArgParsingExceptionReason.*;
+import static com.adeptions.clarguments.BadArgReason.*;
 
 public class ArgumentDefinitionConstructionExtensibilityTests extends TestCase {
 	private static final String testName = "test";
@@ -81,7 +81,7 @@ public class ArgumentDefinitionConstructionExtensibilityTests extends TestCase {
 		}
 
 		@Override
-		public FooEnum convertRawValue(int tokenPosition, String rawValue, Argument<FooEnum> argument, ArgName specifiedArgName) throws ArgParsingException {
+		public FooEnum convertRawValue(int tokenPosition, String rawValue, Argument<FooEnum> argument, ArgName specifiedArgName) throws BadArgException {
 			FooEnum result = null;
 			for (FooEnum value: FooEnum.values()) {
 				if (value.name().equals(rawValue)) {
@@ -89,7 +89,7 @@ public class ArgumentDefinitionConstructionExtensibilityTests extends TestCase {
 				}
 			}
 			if (result == null) {
-				throw new ArgParsingException(INVALID_VALUE, tokenPosition, "Value '" + rawValue + "' is not permissible", argument, specifiedArgName);
+				throw new BadArgException(INVALID_VALUE, tokenPosition, "Value '" + rawValue + "' is not permissible", argument, specifiedArgName);
 			}
 			return result;
 		}
@@ -106,7 +106,7 @@ public class ArgumentDefinitionConstructionExtensibilityTests extends TestCase {
 		}
 
 		@Override
-		public void setRawValue(int tokenPosition, String rawValue, ArgName specifiedArgName) throws ArgParsingException {
+		public void setRawValue(int tokenPosition, String rawValue, ArgName specifiedArgName) throws BadArgException {
 			values.add(definition.validateValue(tokenPosition, definition.convertRawValue(tokenPosition, rawValue, this, specifiedArgName), this, specifiedArgName));
 			specified = true;
 		}

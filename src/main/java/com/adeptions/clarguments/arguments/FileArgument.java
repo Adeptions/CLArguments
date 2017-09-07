@@ -35,7 +35,7 @@ public class FileArgument extends AbstractArgument<File> implements Argument<Fil
 	 * (NB. Does not check the existing of the file or validity of the the filenpath)
 	 */
 	@Override
-	public void setRawValue(int tokenPosition, String rawValue, ArgName specifiedArgName) throws ArgParsingException {
+	public void setRawValue(int tokenPosition, String rawValue, ArgName specifiedArgName) throws BadArgException {
 		values.add(definition.validateValue(tokenPosition, definition.convertRawValue(tokenPosition, rawValue, this, specifiedArgName),this, specifiedArgName));
 		specified = true;
 	}

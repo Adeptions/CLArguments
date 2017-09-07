@@ -18,16 +18,16 @@ package com.adeptions.clarguments.validators;
 import com.adeptions.clarguments.*;
 import com.adeptions.clarguments.arguments.*;
 
-import static com.adeptions.clarguments.ArgParsingExceptionReason.*;
+import static com.adeptions.clarguments.BadArgReason.*;
 
 public class DisallowMultiplesValueValidator implements ArgumentValueValidator {
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object validate(int tokenPosition, Object value, Argument argument, ArgName specifiedArgName) throws ArgParsingException {
+	public Object validate(int tokenPosition, Object value, Argument argument, ArgName specifiedArgName) throws BadArgException {
 		if (argument.isSpecified()) {
-			throw new ArgParsingException(MULTIPLE_ARGUMENT_NOT_ALLOWED, tokenPosition, "Argument '" + specifiedArgName.getDisplayName() + "' cannot be specified multiple times", argument, specifiedArgName);
+			throw new BadArgException(MULTIPLE_ARGUMENT_NOT_ALLOWED, tokenPosition, "Argument '" + specifiedArgName.getDisplayName() + "' cannot be specified multiple times", argument, specifiedArgName);
 		}
 		return value;
 	}

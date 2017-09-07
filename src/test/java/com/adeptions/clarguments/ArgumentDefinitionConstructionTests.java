@@ -267,7 +267,7 @@ public class ArgumentDefinitionConstructionTests extends TestCase {
 		StringArgumentDefinition stringArgumentDefinition;
 		try {
 			stringArgumentDefinition = new StringArgumentDefinition(new String[]{testName, testName}, testDescription);
-		} catch (ArgumentDefinitionException ade) {
+		} catch (BadArgumentDefinitionException badArgumentDefinitionException) {
 			failed = true;
 		}
 		assertTrue("Should have thrown exception", failed);
@@ -278,7 +278,7 @@ public class ArgumentDefinitionConstructionTests extends TestCase {
 		StringArgumentDefinition stringArgumentDefinition;
 		try {
 			stringArgumentDefinition = new StringArgumentDefinition(new String[]{testName, testShortName, testShortName}, testDescription);
-		} catch (ArgumentDefinitionException ade) {
+		} catch (BadArgumentDefinitionException badArgumentDefinitionException) {
 			failed = true;
 		}
 		assertTrue("Should have thrown exception", failed);
@@ -327,7 +327,7 @@ public class ArgumentDefinitionConstructionTests extends TestCase {
 		}
 
 		@Override
-		public Boolean convertRawValue(int tokenPosition, String rawValue, Argument<Boolean> argument, ArgName specifiedArgName) throws ArgParsingException {
+		public Boolean convertRawValue(int tokenPosition, String rawValue, Argument<Boolean> argument, ArgName specifiedArgName) throws BadArgException {
 			return null;
 		}
 

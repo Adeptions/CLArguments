@@ -18,8 +18,7 @@ package com.adeptions.clarguments.definitions;
 import com.adeptions.clarguments.*;
 import com.adeptions.clarguments.arguments.*;
 
-import static com.adeptions.clarguments.ArgParsingExceptionReason.INVALID_VALUE;
-import static com.adeptions.clarguments.ArgParsingExceptionReason.MISSING_VALUE;
+import static com.adeptions.clarguments.BadArgReason.MISSING_VALUE;
 
 import java.io.File;
 
@@ -48,14 +47,14 @@ public class FileArgumentDefinition extends AbstractArgumentDefinition<File> imp
 	 * {@inheritDoc}
 	 */
 	@Override
-	public File convertRawValue(int tokenPosition, String rawValue, Argument<File> argument, ArgName specifiedArgName) throws ArgParsingException {
+	public File convertRawValue(int tokenPosition, String rawValue, Argument<File> argument, ArgName specifiedArgName) throws BadArgException {
 		if (valueConverter != null) {
 			return valueConverter.convert(tokenPosition, rawValue, argument, specifiedArgName);
 		}
 		try {
 			return new File(rawValue);
 		} catch (IllegalArgumentException | NullPointerException ex) {
-			throw new ArgParsingException(MISSING_VALUE, tokenPosition, "Value missing", ex, argument, specifiedArgName);
+			throw new BadArgException(MISSING_VALUE, tokenPosition, "Value missing", ex, argument, specifiedArgName);
 		}
 	}
 

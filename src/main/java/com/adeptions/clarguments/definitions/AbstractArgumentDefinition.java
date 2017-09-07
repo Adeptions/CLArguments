@@ -70,7 +70,7 @@ public abstract class AbstractArgumentDefinition<T> implements ArgumentDefinitio
 	public AbstractArgumentDefinition(@NotNull ArgumentDefinitionType type, @NotNull String[] names, @NotNull String description) {
 		this.type = checkType(type);
 		if (names.length == 0) {
-			throw new ArgumentDefinitionException("Argument definition must have at least one name");
+			throw new BadArgumentDefinitionException("Argument definition must have at least one name");
 		}
 		this.name = checkName(names[0]);
 		for (int n = 1, nmax = names.length; n < nmax; n++) {
@@ -95,9 +95,9 @@ public abstract class AbstractArgumentDefinition<T> implements ArgumentDefinitio
 
 	private String checkAlternativeName(String alternativeName) {
 		if (alternativeName == null) {
-			throw new ArgumentDefinitionException("Argument definition alternative name cannot be null");
+			throw new BadArgumentDefinitionException("Argument definition alternative name cannot be null");
 		} else if (name.equals(alternativeName) || alternativeNames.contains(alternativeName)) {
-			throw new ArgumentDefinitionException("Argument definition alternative name already used");
+			throw new BadArgumentDefinitionException("Argument definition alternative name already used");
 		}
 		return alternativeName;
 	}
@@ -182,7 +182,7 @@ public abstract class AbstractArgumentDefinition<T> implements ArgumentDefinitio
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T validateValue(int tokenPosition, T value, Argument<T> argument, ArgName specifiedArgName) throws ArgParsingException {
+	public T validateValue(int tokenPosition, T value, Argument<T> argument, ArgName specifiedArgName) throws BadArgException {
 		T result = value;
 		for (ArgumentValueValidator<T> valueValidator: valueValidators) {
 			result = valueValidator.validate(tokenPosition, result, argument, specifiedArgName);

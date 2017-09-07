@@ -16,18 +16,18 @@
 package com.adeptions.clarguments;
 
 /**
- * Interface for handling ArgParsingException during parsing
+ * Interface for handling BadArgException during parsing
  */
 @FunctionalInterface
-public interface ArgsParsingExceptionHandler {
+public interface BadArgExceptionsHandler {
 	/**
 	 * Decides whether an encountered pasring exception should halt parsing immediately (by throwing the exception)
 	 * or should store the exception (by returning the exception) for reporting/handling after parsing completion
 	 *
-	 * @param argsParsingException the arg parsing exception to be handled
+	 * @param badArgException the arg parsing exception to be handled
 	 * @return the exception to be stored (for reporting/handling after parsing completion) or null if
 	 *         the exception is swallowed
-	 * @throws ArgParsingException (if the exception should halt parsing immediately)
+	 * @throws BadArgException (if the exception should halt parsing immediately)
 	 */
-	ArgParsingException handle(ArgParsingException argsParsingException) throws ArgParsingException;
+	BadArgException handle(BadArgException badArgException) throws BadArgException;
 }

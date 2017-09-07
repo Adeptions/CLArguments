@@ -18,7 +18,7 @@ package com.adeptions.clarguments.converters;
 import com.adeptions.clarguments.*;
 import com.adeptions.clarguments.arguments.*;
 
-import static com.adeptions.clarguments.ArgParsingExceptionReason.*;
+import static com.adeptions.clarguments.BadArgReason.*;
 
 /**
  * Utility value converter for converting raw "yes"/"no" values to boolean
@@ -56,12 +56,12 @@ public class YesNoBooleanConverter implements ArgumentValueConverter<Boolean> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Boolean convert(int tokenPosition, String rawValue, Argument argument, ArgName specifiedArgName) throws ArgParsingException {
+	public Boolean convert(int tokenPosition, String rawValue, Argument argument, ArgName specifiedArgName) throws BadArgException {
 		if (allowNulls && rawValue == null) {
 			return assumeNullValue;
 		}
 		if (!"yes".equals(rawValue) && !"no".equals(rawValue)) {
-			throw new ArgParsingException(INVALID_VALUE, tokenPosition, "Value \"" + rawValue + "\" is invalid - must be either \"yes\" or \"no\"", argument, specifiedArgName);
+			throw new BadArgException(INVALID_VALUE, tokenPosition, "Value \"" + rawValue + "\" is invalid - must be either \"yes\" or \"no\"", argument, specifiedArgName);
 		}
 		return "yes".equals(rawValue);
 	}

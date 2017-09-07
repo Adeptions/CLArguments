@@ -18,7 +18,7 @@ package com.adeptions.clarguments.converters;
 import com.adeptions.clarguments.*;
 import com.adeptions.clarguments.arguments.*;
 
-import static com.adeptions.clarguments.ArgParsingExceptionReason.*;
+import static com.adeptions.clarguments.BadArgReason.*;
 
 /**
  * Utility value converter for converting raw "on"/"off" values to boolean
@@ -56,12 +56,12 @@ public class OnOffBooleanConverter implements ArgumentValueConverter<Boolean> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Boolean convert(int tokenPosition, String rawValue, Argument argument, ArgName specifiedArgName) throws ArgParsingException {
+	public Boolean convert(int tokenPosition, String rawValue, Argument argument, ArgName specifiedArgName) throws BadArgException {
 		if (allowNulls && rawValue == null) {
 			return assumeNullValue;
 		}
 		if (!"on".equals(rawValue) && !"off".equals(rawValue)) {
-			throw new ArgParsingException(INVALID_VALUE, tokenPosition, "Value \"" + rawValue + "\" is invalid - must be either \"on\" or \"off\"", argument, specifiedArgName);
+			throw new BadArgException(INVALID_VALUE, tokenPosition, "Value \"" + rawValue + "\" is invalid - must be either \"on\" or \"off\"", argument, specifiedArgName);
 		}
 		return "on".equals(rawValue);
 	}

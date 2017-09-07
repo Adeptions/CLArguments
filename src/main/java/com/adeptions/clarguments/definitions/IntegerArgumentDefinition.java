@@ -18,7 +18,7 @@ package com.adeptions.clarguments.definitions;
 import com.adeptions.clarguments.*;
 import com.adeptions.clarguments.arguments.*;
 
-import static com.adeptions.clarguments.ArgParsingExceptionReason.INVALID_VALUE;
+import static com.adeptions.clarguments.BadArgReason.INVALID_VALUE;
 
 public class IntegerArgumentDefinition extends AbstractArgumentDefinition<Integer> implements ArgumentDefinition<Integer> {
 	/**
@@ -45,14 +45,14 @@ public class IntegerArgumentDefinition extends AbstractArgumentDefinition<Intege
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Integer convertRawValue(int tokenPosition, String rawValue, Argument<Integer> argument, ArgName specifiedArgName) throws ArgParsingException {
+	public Integer convertRawValue(int tokenPosition, String rawValue, Argument<Integer> argument, ArgName specifiedArgName) throws BadArgException {
 		if (valueConverter != null) {
 			return valueConverter.convert(tokenPosition, rawValue, argument, specifiedArgName);
 		}
 		try {
 			return Integer.parseInt(rawValue, 10);
 		} catch (NumberFormatException numberFormatException) {
-			throw new ArgParsingException(INVALID_VALUE, tokenPosition, "Value '" + rawValue + "' is not a valid integer", numberFormatException, argument, specifiedArgName);
+			throw new BadArgException(INVALID_VALUE, tokenPosition, "Value '" + rawValue + "' is not a valid integer", numberFormatException, argument, specifiedArgName);
 		}
 	}
 

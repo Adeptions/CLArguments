@@ -18,7 +18,7 @@ package com.adeptions.clarguments.converters;
 import com.adeptions.clarguments.*;
 import com.adeptions.clarguments.arguments.*;
 
-import static com.adeptions.clarguments.ArgParsingExceptionReason.*;
+import static com.adeptions.clarguments.BadArgReason.*;
 
 /**
  * Utility value converter for converting raw "true"/"false" values to boolean
@@ -56,12 +56,12 @@ public class TrueFalseBooleanConverter implements ArgumentValueConverter<Boolean
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Boolean convert(int tokenPosition, String rawValue, Argument argument, ArgName specifiedArgName) throws ArgParsingException {
+	public Boolean convert(int tokenPosition, String rawValue, Argument argument, ArgName specifiedArgName) throws BadArgException {
 		if (allowNulls && rawValue == null) {
 			return assumeNullValue;
 		}
 		if (!"true".equals(rawValue) && !"false".equals(rawValue)) {
-			throw new ArgParsingException(INVALID_VALUE, tokenPosition, "Value \"" + rawValue + "\" is invalid - must be either \"true\" or \"false\"", argument, specifiedArgName);
+			throw new BadArgException(INVALID_VALUE, tokenPosition, "Value \"" + rawValue + "\" is invalid - must be either \"true\" or \"false\"", argument, specifiedArgName);
 		}
 		return "true".equals(rawValue);
 	}

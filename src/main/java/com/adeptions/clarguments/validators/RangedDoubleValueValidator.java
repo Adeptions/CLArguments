@@ -18,7 +18,7 @@ package com.adeptions.clarguments.validators;
 import com.adeptions.clarguments.*;
 import com.adeptions.clarguments.arguments.*;
 
-import static com.adeptions.clarguments.ArgParsingExceptionReason.*;
+import static com.adeptions.clarguments.BadArgReason.*;
 
 /**
  * Utility value validator for checking an double value is within a specified range
@@ -41,13 +41,13 @@ public class RangedDoubleValueValidator implements ArgumentValueValidator<Double
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Double validate(int tokenPosition, Double value, Argument argument, ArgName specifiedArgName) throws ArgParsingException {
+	public Double validate(int tokenPosition, Double value, Argument argument, ArgName specifiedArgName) throws BadArgException {
 		if (value != null) {
 			if (minValue != null && minValue.compareTo(value) > 0) {
-				throw new ArgParsingException(INVALID_VALUE, tokenPosition, "Supplied value " + value + " must be greater than or equal to " + minValue, argument, specifiedArgName);
+				throw new BadArgException(INVALID_VALUE, tokenPosition, "Supplied value " + value + " must be greater than or equal to " + minValue, argument, specifiedArgName);
 			}
 			if (maxValue != null && maxValue.compareTo(value) < 0) {
-				throw new ArgParsingException(INVALID_VALUE, tokenPosition, "Supplied value " + value + " must be less than or equal to " + maxValue, argument, specifiedArgName);
+				throw new BadArgException(INVALID_VALUE, tokenPosition, "Supplied value " + value + " must be less than or equal to " + maxValue, argument, specifiedArgName);
 			}
 		}
 		return null;

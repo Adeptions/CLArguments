@@ -16,14 +16,11 @@
 package com.adeptions;
 
 import com.adeptions.clarguments.*;
-import com.adeptions.clarguments.converters.MultiValueBooleanConverter;
-import com.adeptions.clarguments.converters.YesNoBooleanConverter;
+import com.adeptions.clarguments.converters.*;
 import com.adeptions.clarguments.definitions.*;
-import com.adeptions.clarguments.validators.DisallowMultiplesValueValidator;
-import com.adeptions.clarguments.validators.RangedDoubleValueValidator;
-import com.adeptions.clarguments.validators.RangedIntegerValueValidator;
+import com.adeptions.clarguments.validators.*;
 
-import java.io.File;
+import static com.adeptions.clarguments.BadArgReason.*;
 
 public class Application {
 	/**
@@ -42,11 +39,11 @@ public class Application {
 				new FileArgumentDefinition("f", "A file"),
 				new StringArgumentDefinition(new String[] {"say", "s"}, "What to say").makeMandatory().addValueValidator((tokenPosition, value, argument, specifiedArgName) -> {
 					if (value == null) {
-						throw new ArgParsingException(ArgParsingExceptionReason.MISSING_VALUE, tokenPosition, "Argument '" + specifiedArgName.getDisplayName() + "' must have a value", argument);
+						throw new BadArgException(MISSING_VALUE, tokenPosition, "Argument '" + specifiedArgName.getDisplayName() + "' must have a value", argument);
 					}
 					if (((String)value).contains(" ")) {
 						argument.setSpecified();
-						throw new ArgParsingException(ArgParsingExceptionReason.INVALID_VALUE, tokenPosition, "Cannot contain spaces?", argument);
+						throw new BadArgException(INVALID_VALUE, tokenPosition, "Cannot contain spaces?", argument);
 					}
 					return value;
 				}),
@@ -54,18 +51,18 @@ public class Application {
 				new InformationalArgumentDefinition(new String[] {"help", "h"}, "Show this help")
 		);
 		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions(':', "-", null);
-		argsParsingOptions.setArgsParsingExceptionHandler(new ArgsParsingExceptionHandler() {
+		argsParsingOptions.setBadArgsExceptionHandler(new BadArgExceptionsHandler() {
 			@Override
-			public ArgParsingException handle(ArgParsingException argsParsingException) throws ArgParsingException {
-				return argsParsingException;
+			public BadArgException handle(BadArgException badArgException) throws BadArgException {
+				return badArgException;
 			}
 		});
 		try {
 			Arguments arguments = argumentDefinitions.parseArgs(args, argsParsingOptions);
 			printVersionIfRequested(arguments);
 			if (arguments.hasParsingExceptions()) {
-				for (ArgParsingException argsParsingException: arguments.getParsingExceptions()) {
-					System.err.println(argsParsingException.getMessage() + " (at position " + argsParsingException.getTokenPosition() + ")");
+				for (BadArgException badArgException: arguments.getParsingExceptions()) {
+					System.err.println(badArgException.getMessage() + " (at position " + badArgException.getTokenPosition() + ")");
 				}
 			} else if (!arguments.anySpecified() || arguments.get("help").isSpecified()) {
 				System.out.println("Help:-");
@@ -73,7 +70,7 @@ public class Application {
 			} else if (!arguments.hasSpecifiedInformationals()) {
 				System.out.println("Say... " + arguments.get("say").getValue());
 			}
-		} catch (ArgParsingException e) {
+		} catch (BadArgException e) {
 			e.printStackTrace();
 		}
 	}

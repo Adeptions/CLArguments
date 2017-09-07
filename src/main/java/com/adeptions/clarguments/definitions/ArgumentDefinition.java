@@ -125,9 +125,9 @@ public interface ArgumentDefinition<T> {
 	 * @param argument the argument
 	 * @param specifiedArgName the specified arg name
 	 * @return the converted value
-	 * @throws ArgParsingException if the conversion fails (i.e. the raw value is not a valid representation of expected type)
+	 * @throws BadArgException if the conversion fails (i.e. the raw value is not a valid representation of expected type)
 	 */
-	T convertRawValue(int tokenPosition, String rawValue, Argument<T> argument, ArgName specifiedArgName) throws ArgParsingException;
+	T convertRawValue(int tokenPosition, String rawValue, Argument<T> argument, ArgName specifiedArgName) throws BadArgException;
 
 	/**
 	 * Validates the converted arg value
@@ -136,9 +136,9 @@ public interface ArgumentDefinition<T> {
 	 * @param argument the argument
 	 * @param specifiedArgName the specified arg name
 	 * @return the validated value
-	 * @throws ArgParsingException if the validation fails (e.g. the value was out of range)
+	 * @throws BadArgException if the validation fails (e.g. the value was out of range)
 	 */
-	T validateValue(int tokenPosition, T value, Argument<T> argument, ArgName specifiedArgName) throws ArgParsingException;
+	T validateValue(int tokenPosition, T value, Argument<T> argument, ArgName specifiedArgName) throws BadArgException;
 
 	/**
 	 * Chaining method for adding a value format

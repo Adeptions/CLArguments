@@ -20,32 +20,32 @@ import com.adeptions.clarguments.definitions.*;
 
 import java.util.*;
 
-import static com.adeptions.clarguments.ArgParsingExceptionReason.*;
+import static com.adeptions.clarguments.BadArgReason.*;
 
 /**
  * Represents the arguments after parsing
  */
 public final class Arguments {
 	private ArgumentDefinitions argumentDefinitions;
-	private ArgsParsingExceptionHandler argsParsingExceptionHandler;
+	private BadArgExceptionsHandler badArgExceptionsHandler;
 	private List<Argument> arguments = new ArrayList<Argument>();
 	private Map<String,Argument> argumentsMap = new HashMap<String,Argument>();
 	private Map<String,Argument> specifiedInformationals = new HashMap<String,Argument>();
-	private List<ArgParsingException> exceptions = new ArrayList<ArgParsingException>();
+	private List<BadArgException> exceptions = new ArrayList<BadArgException>();
 	private Map<String,ArgName> unknownArgNames = new HashMap<String,ArgName>();
 	private List<String> unknownArgValues = new ArrayList<String>();
 
 	/**
 	 * Constructs an Arguments with the specified arguments definitions and ars parsing exception handler
 	 * @param argumentDefinitions the list of argument definitions
-	 * @param argsParsingExceptionHandler the args parsing exception handler to use
+	 * @param badArgExceptionsHandler the args parsing exception handler to use
 	 */
-	Arguments(ArgumentDefinitions argumentDefinitions, ArgsParsingExceptionHandler argsParsingExceptionHandler) {
+	Arguments(ArgumentDefinitions argumentDefinitions, BadArgExceptionsHandler badArgExceptionsHandler) {
 		this.argumentDefinitions = argumentDefinitions;
-		if (argsParsingExceptionHandler == null) {
-			this.argsParsingExceptionHandler = ArgsParsingOptions.DEFAULT_ARGS_PARSING_EXCEPTION_HANDLER;
+		if (badArgExceptionsHandler == null) {
+			this.badArgExceptionsHandler = ArgsParsingOptions.DEFAULT_ARGS_PARSING_EXCEPTION_HANDLER;
 		} else {
-			this.argsParsingExceptionHandler = argsParsingExceptionHandler;
+			this.badArgExceptionsHandler = badArgExceptionsHandler;
 		}
 		initialize();
 	}
@@ -62,13 +62,13 @@ public final class Arguments {
 		}
 	}
 
-	void foundValuedArg(int tokenPosition, Argument argument, ArgName specifiedArgName, String rawValue) throws ArgParsingException {
+	void foundValuedArg(int tokenPosition, Argument argument, ArgName specifiedArgName, String rawValue) throws BadArgException {
 		ArgumentDefinition argumentDefinition = argument.getDefinition();
 		String argumentName = argumentDefinition.getName();
 		try {
 			argument.setRawValue(tokenPosition, rawValue, specifiedArgName);
-		} catch (ArgParsingException argsParsingException) {
-			addParsingException(argsParsingException);
+		} catch (BadArgException badArgException) {
+			addParsingException(badArgException);
 		}
 	}
 
@@ -81,14 +81,14 @@ public final class Arguments {
 		}
 	}
 
-	void foundUnknownArg(int tokenPosition, ArgName specifiedArgName) throws ArgParsingException {
+	void foundUnknownArg(int tokenPosition, ArgName specifiedArgName) throws BadArgException {
 		unknownArgNames.put(specifiedArgName.getName(), specifiedArgName);
-		addParsingException(new ArgParsingException(UNKNOWN_ARGUMENT, tokenPosition, "Unknown argument '" + specifiedArgName.getDisplayName() + "'", specifiedArgName));
+		addParsingException(new BadArgException(UNKNOWN_ARGUMENT, tokenPosition, "Unknown argument '" + specifiedArgName.getDisplayName() + "'", specifiedArgName));
 	}
 
-	void foundUnknownValue(int tokenPosition, String unknownValue, ArgParsingException cause) throws ArgParsingException {
+	void foundUnknownValue(int tokenPosition, String unknownValue, BadArgException cause) throws BadArgException {
 		unknownArgValues.add(unknownValue);
-		addParsingException(new ArgParsingException(UNKNOWN_ARGUMENT_VALUE, tokenPosition, "Unknown argument value '" + unknownValue + "'", cause, new ArgName(unknownValue)));
+		addParsingException(new BadArgException(UNKNOWN_ARGUMENT_VALUE, tokenPosition, "Unknown argument value '" + unknownValue + "'", cause, new ArgName(unknownValue)));
 	}
 
 	/**
@@ -208,16 +208,16 @@ public final class Arguments {
 
 	/**
 	 * Adds an exception encountered during parsing
-	 * @param argsParsingException the exception to be added
-	 * @throws ArgParsingException if the handler decides to throw the found exception
+	 * @param badArgException the exception to be added
+	 * @throws BadArgException if the handler decides to throw the found exception
 	 */
-	public void addParsingException(ArgParsingException argsParsingException) throws ArgParsingException {
-		ArgParsingException storeException = null;
+	public void addParsingException(BadArgException badArgException) throws BadArgException {
+		BadArgException storeException = null;
 		try {
-			storeException = argsParsingExceptionHandler.handle(argsParsingException);
-		} catch (ArgParsingException argsParsingException2) {
-			storeException = argsParsingException2;
-			throw argsParsingException2;
+			storeException = badArgExceptionsHandler.handle(badArgException);
+		} catch (BadArgException badArgException2) {
+			storeException = badArgException2;
+			throw badArgException2;
 		} finally {
 			if (storeException != null) {
 				exceptions.add(storeException);
@@ -237,7 +237,7 @@ public final class Arguments {
 	 * Gets the list of parsing exceptions found
 	 * @return the list of parsing exceptions found
 	 */
-	public List<ArgParsingException> getParsingExceptions() {
+	public List<BadArgException> getParsingExceptions() {
 		return exceptions;
 	}
 }

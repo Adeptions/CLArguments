@@ -37,7 +37,7 @@ public class ArgumentDefinitionAccessorsTests extends TestCase {
 		assertEquals(0, stringArgumentDefinition.getValueValidators().size());
 		stringArgumentDefinition.addValueValidator(new ArgumentValueValidator<String>() {
 			@Override
-			public String validate(int tokenPosition, String value, Argument argument, ArgName specifiedArgName) throws ArgParsingException {
+			public String validate(int tokenPosition, String value, Argument argument, ArgName specifiedArgName) throws BadArgException {
 				return null;
 			}
 		});
@@ -49,7 +49,7 @@ public class ArgumentDefinitionAccessorsTests extends TestCase {
 		assertEquals(0, stringArgumentDefinition.getValueValidators().size());
 		ArgumentValueValidator<String> valueValidator = new ArgumentValueValidator<String>() {
 			@Override
-			public String validate(int tokenPosition, String value, Argument argument, ArgName specifiedArgName) throws ArgParsingException {
+			public String validate(int tokenPosition, String value, Argument argument, ArgName specifiedArgName) throws BadArgException {
 				return null;
 			}
 		};

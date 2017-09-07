@@ -40,7 +40,7 @@ public class ArgNameTests extends TestCase {
 		boolean failed = false;
 		try {
 			argName = ArgName.parseFromSpacedArgToken(-1, "foo", argsParsingOptions);
-		} catch (ArgParsingException argsParsingException) {
+		} catch (BadArgException badArgException) {
 			failed = true;
 		}
 		assertTrue("Should have thrown exception",
@@ -53,7 +53,7 @@ public class ArgNameTests extends TestCase {
 		boolean failed = false;
 		try {
 			argName = ArgName.parseFromSpacedArgToken(-1, "foo", argsParsingOptions);
-		} catch (ArgParsingException argsParsingException) {
+		} catch (BadArgException badArgException) {
 			failed = true;
 		}
 		assertTrue("Should have thrown exception",
@@ -66,7 +66,7 @@ public class ArgNameTests extends TestCase {
 		boolean failed = false;
 		try {
 			argName = ArgName.parseFromSpacedArgToken(-1, "-foo", argsParsingOptions);
-		} catch (ArgParsingException argsParsingException) {
+		} catch (BadArgException badArgException) {
 			failed = true;
 		}
 		assertTrue("Should have thrown exception",
@@ -79,7 +79,7 @@ public class ArgNameTests extends TestCase {
 		ArgName argName;
 		try {
 			argName = ArgName.parseFromSpacedArgToken(-1, "foo", argsParsingOptions);
-		} catch (ArgParsingException argsParsingException) {
+		} catch (BadArgException badArgException) {
 			failed = true;
 		}
 		assertTrue("Should have thrown exception",
@@ -88,17 +88,17 @@ public class ArgNameTests extends TestCase {
 
 	public void testArgNameSpaced7() throws Exception {
 		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
-		argsParsingOptions.setArgsParsingExceptionHandler(new ArgsParsingExceptionHandler() {
+		argsParsingOptions.setBadArgsExceptionHandler(new BadArgExceptionsHandler() {
 			@Override
-			public ArgParsingException handle(ArgParsingException argsParsingException) throws ArgParsingException {
-				throw argsParsingException;
+			public BadArgException handle(BadArgException badArgException) throws BadArgException {
+				throw badArgException;
 			}
 		});
 		boolean failed = false;
 		ArgName argName;
 		try {
 			argName = ArgName.parseFromSpacedArgToken(-1, null, argsParsingOptions);
-		} catch (ArgParsingException argsParsingException) {
+		} catch (BadArgException badArgException) {
 			failed = true;
 		}
 		assertTrue("Should have thrown exception", failed);
@@ -110,7 +110,7 @@ public class ArgNameTests extends TestCase {
 		boolean failed = false;
 		try {
 			argName = ArgName.parseFromSpacedArgToken(-1, null, argsParsingOptions);
-		} catch (ArgParsingException argsParsingException) {
+		} catch (BadArgException badArgException) {
 			failed = true;
 		}
 		assertTrue("Should have thrown exception", failed);

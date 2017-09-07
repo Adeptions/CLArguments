@@ -22,10 +22,10 @@ public class ArgsParsingOptions {
 	public static final String DEFAULT_ARG_NAME_PREFIX = "-";
 	public static final Character DEFAULT_CHAR_BETWEEN_ARG_NAME_AND_VALUE = ':';
 	private static final Character SPACE = ' ';
-	static final ArgsParsingExceptionHandler DEFAULT_ARGS_PARSING_EXCEPTION_HANDLER = new ArgsParsingExceptionHandler() {
+	static final BadArgExceptionsHandler DEFAULT_ARGS_PARSING_EXCEPTION_HANDLER = new BadArgExceptionsHandler() {
 		@Override
-		public ArgParsingException handle(ArgParsingException argsParsingException) throws ArgParsingException {
-			return argsParsingException;
+		public BadArgException handle(BadArgException badArgException) throws BadArgException {
+			return badArgException;
 		}
 	};
 
@@ -33,7 +33,7 @@ public class ArgsParsingOptions {
 	protected Character characterBetweenArgNameAndValue;
 	protected String argNamePrefix;
 	protected String argNameSuffix;
-	protected ArgsParsingExceptionHandler argsParsingExceptionHandler = DEFAULT_ARGS_PARSING_EXCEPTION_HANDLER;
+	protected BadArgExceptionsHandler badArgExceptionsHandler = DEFAULT_ARGS_PARSING_EXCEPTION_HANDLER;
 
 	/**
 	 * Constructs an ArgsParsingOptions with default options
@@ -139,20 +139,20 @@ public class ArgsParsingOptions {
 	 * Gets the args parsing exception handler
 	 * @return the args parsing exception handler
 	 */
-	public ArgsParsingExceptionHandler getArgsParsingExceptionHandler() {
-		return argsParsingExceptionHandler;
+	public BadArgExceptionsHandler getBadArgExceptionsHandler() {
+		return badArgExceptionsHandler;
 	}
 
 	/**
-	 * Sets the args parsing exception handler
-	 * @param argsParsingExceptionHandler the args parsing exception handler (if null is specified the default
+	 * Sets the bad arg exception handler
+	 * @param badArgExceptionsHandler the args parsing exception handler (if null is specified the default
 	 *                                    handler is used - which returns exceptions rather than throwing)
 	 */
-	public void setArgsParsingExceptionHandler(ArgsParsingExceptionHandler argsParsingExceptionHandler) {
-		if (argsParsingExceptionHandler == null) {
-			this.argsParsingExceptionHandler = DEFAULT_ARGS_PARSING_EXCEPTION_HANDLER;
+	public void setBadArgsExceptionHandler(BadArgExceptionsHandler badArgExceptionsHandler) {
+		if (badArgExceptionsHandler == null) {
+			this.badArgExceptionsHandler = DEFAULT_ARGS_PARSING_EXCEPTION_HANDLER;
 		} else {
-			this.argsParsingExceptionHandler = argsParsingExceptionHandler;
+			this.badArgExceptionsHandler = badArgExceptionsHandler;
 		}
 	}
 }

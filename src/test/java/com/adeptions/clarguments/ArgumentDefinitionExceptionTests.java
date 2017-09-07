@@ -20,32 +20,32 @@ import junit.framework.TestCase;
 public class ArgumentDefinitionExceptionTests extends TestCase {
 	private static final String testMessage = "This is a test exception message";
 
-	public void testArgumentDefinitionExceptionIsRuntimeException() throws Exception {
-		ArgumentDefinitionException ade = new ArgumentDefinitionException();
+	public void testBadArgumentDefinitionExceptionIsRuntimeException() throws Exception {
+		BadArgumentDefinitionException badArgumentDefinitionException = new BadArgumentDefinitionException();
 		boolean caught = false;
 		try {
-			throw ade;
+			throw badArgumentDefinitionException;
 		} catch (RuntimeException rte) {
 			caught = true;
 		}
 		assertTrue("Exception should have been caught", caught);
 	}
 
-	public void testArgumentDefinitionExceptionConstructor2() throws Exception {
-		ArgumentDefinitionException ade = new ArgumentDefinitionException(testMessage);
-		assertEquals(testMessage, ade.getMessage());
+	public void testBadArgumentDefinitionExceptionConstructor2() throws Exception {
+		BadArgumentDefinitionException badArgumentDefinitionException = new BadArgumentDefinitionException(testMessage);
+		assertEquals(testMessage, badArgumentDefinitionException.getMessage());
 	}
 
-	public void testArgumentDefinitionExceptionConstructor3() throws Exception {
+	public void testBadArgumentDefinitionExceptionConstructor3() throws Exception {
 		IllegalArgumentException cause = new IllegalArgumentException();
-		ArgumentDefinitionException ade = new ArgumentDefinitionException(testMessage, cause);
-		assertEquals(testMessage, ade.getMessage());
-		assertEquals(cause, ade.getCause());
+		BadArgumentDefinitionException badArgumentDefinitionException = new BadArgumentDefinitionException(testMessage, cause);
+		assertEquals(testMessage, badArgumentDefinitionException.getMessage());
+		assertEquals(cause, badArgumentDefinitionException.getCause());
 	}
 
-	public void testArgumentDefinitionExceptionConstructor4() throws Exception {
+	public void testBadArgumentDefinitionExceptionConstructor4() throws Exception {
 		IllegalArgumentException cause = new IllegalArgumentException();
-		ArgumentDefinitionException ade = new ArgumentDefinitionException(cause);
-		assertEquals(cause, ade.getCause());
+		BadArgumentDefinitionException badArgumentDefinitionException = new BadArgumentDefinitionException(cause);
+		assertEquals(cause, badArgumentDefinitionException.getCause());
 	}
 }

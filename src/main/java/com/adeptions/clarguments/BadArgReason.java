@@ -16,9 +16,9 @@
 package com.adeptions.clarguments;
 
 /**
- * Enumerator to define the categorized reasons for args parsing exceptions (ArgParsingException)
+ * Enumerator to define the categorized reasons for args parsing exceptions (BadArgException)
  */
-public enum ArgParsingExceptionReason {
+public enum BadArgReason {
 	MISSING_MANDATORY,
 	INVALID_VALUE,
 	MISSING_VALUE,

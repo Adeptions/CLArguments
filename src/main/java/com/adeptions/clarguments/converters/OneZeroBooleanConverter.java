@@ -18,7 +18,7 @@ package com.adeptions.clarguments.converters;
 import com.adeptions.clarguments.*;
 import com.adeptions.clarguments.arguments.*;
 
-import static com.adeptions.clarguments.ArgParsingExceptionReason.*;
+import static com.adeptions.clarguments.BadArgReason.*;
 
 /**
  * Utility value converter for converting raw "1"/"0" values to boolean
@@ -56,12 +56,12 @@ public class OneZeroBooleanConverter implements ArgumentValueConverter<Boolean> 
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Boolean convert(int tokenPosition, String rawValue, Argument argument, ArgName specifiedArgName) throws ArgParsingException {
+	public Boolean convert(int tokenPosition, String rawValue, Argument argument, ArgName specifiedArgName) throws BadArgException {
 		if (allowNulls && rawValue == null) {
 			return assumeNullValue;
 		}
 		if (!"1".equals(rawValue) && !"0".equals(rawValue)) {
-			throw new ArgParsingException(INVALID_VALUE, tokenPosition, "Value \"" + rawValue + "\" is invalid - must be either \"1\" or \"0\"", argument, specifiedArgName);
+			throw new BadArgException(INVALID_VALUE, tokenPosition, "Value \"" + rawValue + "\" is invalid - must be either \"1\" or \"0\"", argument, specifiedArgName);
 		}
 		return "1".equals(rawValue);
 	}

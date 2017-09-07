@@ -29,7 +29,7 @@ public interface ArgumentValueValidator<T> {
 	 * @param argument the argument for which the value was found
 	 * @param specifiedArgName the name by which the argument was specified
 	 * @return the validated value (normally the same as was passed in)
-	 * @throws ArgParsingException if the validation fails
+	 * @throws BadArgException if the validation fails
 	 */
-	T validate(int tokenPosition, T value, Argument argument, ArgName specifiedArgName) throws ArgParsingException;
+	T validate(int tokenPosition, T value, Argument argument, ArgName specifiedArgName) throws BadArgException;
 }

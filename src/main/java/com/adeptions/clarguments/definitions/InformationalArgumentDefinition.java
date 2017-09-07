@@ -41,7 +41,7 @@ public class InformationalArgumentDefinition extends AbstractArgumentDefinition<
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Boolean convertRawValue(int tokenPosition, String rawValue, Argument<Boolean> argument, ArgName specifiedArgName) throws ArgParsingException {
+	public Boolean convertRawValue(int tokenPosition, String rawValue, Argument<Boolean> argument, ArgName specifiedArgName) throws BadArgException {
 		if (valueConverter != null) {
 			return valueConverter.convert(tokenPosition, rawValue, argument, specifiedArgName);
 		}

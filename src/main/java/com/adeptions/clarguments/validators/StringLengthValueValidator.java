@@ -18,7 +18,7 @@ package com.adeptions.clarguments.validators;
 import com.adeptions.clarguments.*;
 import com.adeptions.clarguments.arguments.*;
 
-import static com.adeptions.clarguments.ArgParsingExceptionReason.*;
+import static com.adeptions.clarguments.BadArgReason.*;
 
 /**
  * Utility value validator for checking a string value is within length constraints (minimum and/or maximum)
@@ -41,16 +41,16 @@ public class StringLengthValueValidator implements ArgumentValueValidator<String
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String validate(int tokenPosition, String value, Argument argument, ArgName specifiedArgName) throws ArgParsingException {
+	public String validate(int tokenPosition, String value, Argument argument, ArgName specifiedArgName) throws BadArgException {
 		if (value != null) {
 			if (minLength != null && value.length() < minLength) {
-				throw new ArgParsingException(INVALID_VALUE, tokenPosition, "Supplied value length must be greater than or equal to " + minLength, argument, specifiedArgName);
+				throw new BadArgException(INVALID_VALUE, tokenPosition, "Supplied value length must be greater than or equal to " + minLength, argument, specifiedArgName);
 			}
 			if (maxLength != null && value.length() > maxLength) {
-				throw new ArgParsingException(INVALID_VALUE, tokenPosition, "Supplied value length must be less than or equal to " + maxLength, argument, specifiedArgName);
+				throw new BadArgException(INVALID_VALUE, tokenPosition, "Supplied value length must be less than or equal to " + maxLength, argument, specifiedArgName);
 			}
 		} else if (minLength != null) {
-			throw new ArgParsingException(INVALID_VALUE, tokenPosition, "Supplied value length must be greater than or equal to " + minLength, argument, specifiedArgName);
+			throw new BadArgException(INVALID_VALUE, tokenPosition, "Supplied value length must be greater than or equal to " + minLength, argument, specifiedArgName);
 		}
 		return value;
 	}

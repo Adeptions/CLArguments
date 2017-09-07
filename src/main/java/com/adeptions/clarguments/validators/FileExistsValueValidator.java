@@ -20,7 +20,7 @@ import com.adeptions.clarguments.arguments.*;
 
 import java.io.File;
 
-import static com.adeptions.clarguments.ArgParsingExceptionReason.*;
+import static com.adeptions.clarguments.BadArgReason.*;
 
 /**
  * Utility value validator for checking the existence of a file for FileArgumentDefinition
@@ -30,13 +30,13 @@ public class FileExistsValueValidator implements ArgumentValueValidator<File> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public File validate(int tokenPosition, File value, Argument argument, ArgName specifiedArgName) throws ArgParsingException {
+	public File validate(int tokenPosition, File value, Argument argument, ArgName specifiedArgName) throws BadArgException {
 		try {
 			if (!value.exists()) {
-				throw new ArgParsingException(INVALID_VALUE, tokenPosition, "File '" + value.getPath() + "' does not exist", argument, specifiedArgName);
+				throw new BadArgException(INVALID_VALUE, tokenPosition, "File '" + value.getPath() + "' does not exist", argument, specifiedArgName);
 			}
 		} catch (SecurityException securityException) {
-			throw new ArgParsingException(INVALID_VALUE, tokenPosition, "Access to file '" + value.getPath() + "' denied", securityException, argument, specifiedArgName);
+			throw new BadArgException(INVALID_VALUE, tokenPosition, "Access to file '" + value.getPath() + "' denied", securityException, argument, specifiedArgName);
 		}
 		return value;
 	}

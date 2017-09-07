@@ -29,7 +29,7 @@ public interface ArgumentValueConverter<T> {
 	 * @param argument the argument for which the value was found
 	 * @param specifiedArgName the name by which the argument was specified
 	 * @return the converted value
-	 * @throws ArgParsingException if the conversion fails
+	 * @throws BadArgException if the conversion fails
 	 */
-	T convert(int tokenPosition, String rawValue, Argument argument, ArgName specifiedArgName) throws ArgParsingException;
+	T convert(int tokenPosition, String rawValue, Argument argument, ArgName specifiedArgName) throws BadArgException;
 }
