@@ -6,7 +6,7 @@
 
 	<groupId>com.adeptions.clarguments</groupId>
 	<artifactId>CLArguments</artifactId>
-	<version>1.3-SNAPSHOT</version>
+	<version>1.4-SNAPSHOT</version>
 
 	<dependencies>
 		<dependency>
