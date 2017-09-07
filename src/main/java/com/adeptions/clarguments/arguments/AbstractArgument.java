@@ -37,6 +37,7 @@ public abstract class AbstractArgument<T> implements Argument<T> {
 	protected Arguments parentArguments;
 	protected ArgumentDefinition<T> definition;
 	protected boolean specified;
+	protected boolean seen;
 	protected List<T> values = new ArrayList<T>();
 	protected List<String> invalidValues = new ArrayList<String>();
 
@@ -77,6 +78,22 @@ public abstract class AbstractArgument<T> implements Argument<T> {
 	@Override
 	public void setSpecified() {
 		specified = true;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean wasSeen() {
+		return seen;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setSeen() {
+		seen = true;
 	}
 
 	/**

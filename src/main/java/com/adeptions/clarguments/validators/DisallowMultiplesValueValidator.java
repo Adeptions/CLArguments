@@ -26,8 +26,8 @@ public class DisallowMultiplesValueValidator implements ArgumentValueValidator {
 	 */
 	@Override
 	public Object validate(int tokenPosition, Object value, Argument argument, ArgName specifiedArgName) throws BadArgException {
-		if (argument.isSpecified()) {
-			throw new BadArgException(MULTIPLE_ARGUMENT_NOT_ALLOWED, tokenPosition, "Argument '" + specifiedArgName.getDisplayName() + "' cannot be specified multiple times", argument, specifiedArgName);
+		if (argument.wasSeen()) {
+			throw new BadArgException(MULTIPLE_ARGUMENT_NOT_ALLOWED, tokenPosition, "Argument '" + specifiedArgName.getDisplayName() + "' cannot be specified more than once", argument, specifiedArgName);
 		}
 		return value;
 	}

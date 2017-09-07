@@ -45,6 +45,19 @@ public interface Argument<T> {
 	void setSpecified();
 
 	/**
+	 * Whether the argument was seen (even if it was invalid) during parsing
+	 * (This flag is maintained so that multiple argument checkers can check if the argument was encountered
+	 *  at all - even if the value was invalid)
+	 * @return whether the argument was seen
+	 */
+	boolean wasSeen();
+
+	/**
+	 * Denotes that the argument was seen (encountered) during parsing)
+	 */
+	void setSeen();
+
+	/**
 	 * Gets the value found for the argument
 	 * If the argument was not specified, this method should return the argument definition default value (if specified) or
 	 * simply return null.
