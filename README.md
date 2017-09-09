@@ -51,5 +51,3 @@ public class MyApplication {
     }
 }
 ```
-
-_(More documentation to come!)_
