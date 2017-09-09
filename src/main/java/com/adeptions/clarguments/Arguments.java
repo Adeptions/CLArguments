@@ -30,10 +30,10 @@ public final class Arguments {
 	private BadArgExceptionsHandler badArgExceptionsHandler;
 	private List<Argument> arguments = new ArrayList<Argument>();
 	private Map<String,Argument> argumentsMap = new HashMap<String,Argument>();
-	private Map<String,Argument> specifiedInformationals = new HashMap<String,Argument>();
 	private List<BadArgException> exceptions = new ArrayList<BadArgException>();
 	private Map<String,ArgName> unknownArgNames = new HashMap<String,ArgName>();
 	private List<String> unknownArgValues = new ArrayList<String>();
+	private boolean anythingSeen = false;
 
 	/**
 	 * Constructs an Arguments with the specified arguments definitions and ars parsing exception handler
@@ -43,7 +43,7 @@ public final class Arguments {
 	Arguments(ArgumentDefinitions argumentDefinitions, BadArgExceptionsHandler badArgExceptionsHandler) {
 		this.argumentDefinitions = argumentDefinitions;
 		if (badArgExceptionsHandler == null) {
-			this.badArgExceptionsHandler = ArgsParsingOptions.DEFAULT_ARGS_PARSING_EXCEPTION_HANDLER;
+			this.badArgExceptionsHandler = ArgsParsingOptions.DEFAULT_BAD_ARG_EXCEPTION_HANDLER;
 		} else {
 			this.badArgExceptionsHandler = badArgExceptionsHandler;
 		}
@@ -63,30 +63,30 @@ public final class Arguments {
 	}
 
 	void foundValuedArg(int tokenPosition, Argument argument, ArgName specifiedArgName, String rawValue) throws BadArgException {
-		ArgumentDefinition argumentDefinition = argument.getDefinition();
-		String argumentName = argumentDefinition.getName();
+		anythingSeen = true;
+		argument.setSeen();
 		try {
 			argument.setRawValue(tokenPosition, rawValue, specifiedArgName);
 		} catch (BadArgException badArgException) {
+			argument.addInvalidValue(rawValue);
 			addParsingException(badArgException);
 		}
 	}
 
 	void foundFlagOrInformationalArg(Argument argument, ArgName specifiedArgName) {
-		ArgumentDefinition argumentDefinition = argument.getDefinition();
-		String argumentName = argumentDefinition.getName();
+		anythingSeen = true;
+		argument.setSeen();
 		argument.setSpecified();
-		if (argumentDefinition.isInformational()) {
-			specifiedInformationals.put(argumentName, argument);
-		}
 	}
 
 	void foundUnknownArg(int tokenPosition, ArgName specifiedArgName) throws BadArgException {
+		anythingSeen = true;
 		unknownArgNames.put(specifiedArgName.getName(), specifiedArgName);
 		addParsingException(new BadArgException(UNKNOWN_ARGUMENT, tokenPosition, "Unknown argument '" + specifiedArgName.getDisplayName() + "'", specifiedArgName));
 	}
 
 	void foundUnknownValue(int tokenPosition, String unknownValue, BadArgException cause) throws BadArgException {
+		anythingSeen = true;
 		unknownArgValues.add(unknownValue);
 		addParsingException(new BadArgException(UNKNOWN_ARGUMENT_VALUE, tokenPosition, "Unknown argument value '" + unknownValue + "'", cause, new ArgName(unknownValue)));
 	}
@@ -101,23 +101,32 @@ public final class Arguments {
 	}
 
 	/**
-	 * Gets whether there were any information arguments specified
+	 * Whether there were any information arguments specified
 	 * @return whether there were any information arguments specified
 	 */
 	public boolean hasSpecifiedInformationals() {
-		return specifiedInformationals.size() != 0;
+		boolean result = false;
+		for (Argument argument: arguments) {
+			if (argument.isSpecified() && argument.getDefinition().isInformational()) {
+				result = true;
+				break;
+			}
+		}
+		return result;
 	}
 
 	/**
 	 * Gets the list of information arguments that were actually specified
 	 * @return the list of information arguments that were actually specified
 	 */
-	public Collection<Argument> getSpecifiedInformationals() {
-		return specifiedInformationals.values();
+	public List<Argument> getSpecifiedInformationals() {
+		List<Argument> result = new ArrayList<Argument>(arguments);
+		result.removeIf(argument -> !argument.isSpecified() || !argument.getDefinition().isInformational());
+		return result;
 	}
 
 	/**
-	 * Gets whether there were any mandatory arguments that were not specified
+	 * Whether there were any mandatory arguments that were not specified
 	 * @return whether there were any mandatory arguments that were not specified
 	 */
 	public boolean hasMissingMandatories() {
@@ -142,7 +151,7 @@ public final class Arguments {
 	}
 
 	/**
-	 * Gets whether there were any unknown arg names found during parsing
+	 * Whether there were any unknown arg names found during parsing
 	 * @return whether there were any unknown arg names found during parsing
 	 */
 	public boolean hasUnknownArgNames() {
@@ -158,7 +167,7 @@ public final class Arguments {
 	}
 
 	/**
-	 * Gets whether there were any unknown arg values found during parsing
+	 * Whether there were any unknown arg values found during parsing
 	 * @return whether there were any unknown arg values found during parsing
 	 */
 	public boolean hasUnknownArgValues() {
@@ -182,7 +191,7 @@ public final class Arguments {
 	}
 
 	/**
-	 * Gets whether there were any args specified at parsing
+	 * Whether there were any args specified at parsing
 	 * @return whether there were any args specified at parsing
 	 */
 	public boolean anySpecified() {
@@ -207,6 +216,48 @@ public final class Arguments {
 	}
 
 	/**
+	 * Whether there were any known args seen at parsing (even if they were invalid values)
+	 * @return whether there were any args specified at parsing
+	 */
+	public boolean anySeenArguments() {
+		boolean result = false;
+		for (Argument argument: arguments) {
+			if (argument.wasSeen()) {
+				result = true;
+				break;
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * Gets the list of seen known args
+	 * @return the list of seen args
+	 */
+	public List<Argument> getSeenArguments() {
+		List<Argument> result = new ArrayList<Argument>(arguments);
+		result.removeIf((argument -> !argument.wasSeen()));
+		return result;
+	}
+
+	/**
+	 * Whether there was anything seen during parsing (even if it was unknown or bad)
+	 * @return whether there was anything seen during parsing
+	 */
+	public boolean anythingSeen() {
+		return anythingSeen;
+	}
+
+	/**
+	 * Called by ArgumentDefinitions at start of parsing to denote whether anything was seen
+	 * (even if what was seen is unknown or invalid)
+	 * @param anythingSeen
+	 */
+	void seenSomething(boolean anythingSeen) {
+		this.anythingSeen = anythingSeen;
+	}
+
+	/**
 	 * Adds an exception encountered during parsing
 	 * @param badArgException the exception to be added
 	 * @throws BadArgException if the handler decides to throw the found exception
@@ -226,7 +277,7 @@ public final class Arguments {
 	}
 
 	/**
-	 * Gets whether any parsing exceptions were found
+	 * Whether any parsing exceptions were found
 	 * @return whether any parsing exceptions were found
 	 */
 	public boolean hasParsingExceptions() {

@@ -21,19 +21,20 @@ package com.adeptions.clarguments;
 public class ArgsParsingOptions {
 	public static final String DEFAULT_ARG_NAME_PREFIX = "-";
 	public static final Character DEFAULT_CHAR_BETWEEN_ARG_NAME_AND_VALUE = ':';
-	private static final Character SPACE = ' ';
-	static final BadArgExceptionsHandler DEFAULT_ARGS_PARSING_EXCEPTION_HANDLER = new BadArgExceptionsHandler() {
+	public static final BadArgExceptionsHandler DEFAULT_BAD_ARG_EXCEPTION_HANDLER = new BadArgExceptionsHandler() {
 		@Override
 		public BadArgException handle(BadArgException badArgException) throws BadArgException {
 			return badArgException;
 		}
 	};
 
+	private static final Character SPACE = ' ';
+
 	protected boolean spaceBetweenArgNameAndValue;
 	protected Character characterBetweenArgNameAndValue;
 	protected String argNamePrefix;
 	protected String argNameSuffix;
-	protected BadArgExceptionsHandler badArgExceptionsHandler = DEFAULT_ARGS_PARSING_EXCEPTION_HANDLER;
+	protected BadArgExceptionsHandler badArgExceptionsHandler = DEFAULT_BAD_ARG_EXCEPTION_HANDLER;
 
 	/**
 	 * Constructs an ArgsParsingOptions with default options
@@ -150,7 +151,7 @@ public class ArgsParsingOptions {
 	 */
 	public void setBadArgsExceptionHandler(BadArgExceptionsHandler badArgExceptionsHandler) {
 		if (badArgExceptionsHandler == null) {
-			this.badArgExceptionsHandler = DEFAULT_ARGS_PARSING_EXCEPTION_HANDLER;
+			this.badArgExceptionsHandler = DEFAULT_BAD_ARG_EXCEPTION_HANDLER;
 		} else {
 			this.badArgExceptionsHandler = badArgExceptionsHandler;
 		}

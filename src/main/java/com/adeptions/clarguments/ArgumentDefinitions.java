@@ -87,6 +87,14 @@ public class ArgumentDefinitions implements Iterable<ArgumentDefinition> {
 	}
 
 	/**
+	 * Gets a constructed help string for the argument definitions (using the default args parsing options)
+	 * @return the help string
+	 */
+	public String getHelp() {
+		return getHelp(new ArgsParsingOptions());
+	}
+
+	/**
 	 * Main method for parsing args (using default ArgsParsingOptions)
 	 * @param args the args to be parsed
 	 * @return the Arguments (from which values can be read)
@@ -103,9 +111,10 @@ public class ArgumentDefinitions implements Iterable<ArgumentDefinition> {
 	 * @return the Arguments (from which values can be read)
 	 * @throws BadArgException if there were any parsing exception found (and thrown)
 	 */
-	public Arguments parseArgs(String[] args, ArgsParsingOptions argsParsingOptions) throws BadArgException {
+	public final Arguments parseArgs(String[] args, ArgsParsingOptions argsParsingOptions) throws BadArgException {
 		ArgsParsingOptions useArgsParsingOptions = (argsParsingOptions == null ? new ArgsParsingOptions() : argsParsingOptions);
 		Arguments result = new Arguments(this, useArgsParsingOptions.getBadArgExceptionsHandler());
+		result.seenSomething(args.length > 0);
 		if (useArgsParsingOptions.isSpaceBetweenArgNameAndValue()) {
 			parseSpaceBetweenArgNameAndValue(args, result, useArgsParsingOptions);
 		} else {
