@@ -10,7 +10,8 @@ Features:-
 * Support for flag and informational (e.g. ```-help```) arguments
 * Alternative argument name support (e.g. ```-help```, ```-h```)
 * Supports multi-valued arguments (i.e. same argument specified multiple times with different values)
-* User friendly _(show immediate exceptions or list out exceptions at end of parsing)_ 
+* Default values (when an argument isn't specified)
+* User friendly _(show immediate exceptions during parsing or list out all exceptions found at end of parsing)_ 
 * In-built help display
 * Argument definitions clearly coded - not encoded into special strings!
 
