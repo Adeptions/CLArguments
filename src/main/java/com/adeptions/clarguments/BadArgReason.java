@@ -15,5 +15,8 @@
  */
 package com.adeptions.clarguments;
 
+/**
+ * Interface for extending reason enum passed to {@link com.adeptions.clarguments.BadArgException}
+ */
 public interface BadArgReason {
 }

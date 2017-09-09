@@ -251,7 +251,7 @@ public final class Arguments {
 	/**
 	 * Called by ArgumentDefinitions at start of parsing to denote whether anything was seen
 	 * (even if what was seen is unknown or invalid)
-	 * @param anythingSeen
+	 * @param anythingSeen whether anything was seen in the args[]
 	 */
 	void seenSomething(boolean anythingSeen) {
 		this.anythingSeen = anythingSeen;
