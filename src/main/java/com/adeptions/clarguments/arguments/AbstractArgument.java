@@ -43,6 +43,7 @@ public abstract class AbstractArgument<T> implements Argument<T> {
 
 	/**
 	 * Basic abstract constructor
+	 * @param parentArguments the arguments list to which this Argument belongs
 	 * @param definition the definition of the argument
 	 */
 	public AbstractArgument(@NotNull Arguments parentArguments, @NotNull ArgumentDefinition<T> definition) {

@@ -248,7 +248,7 @@ public class ArgumentDefinitions implements Iterable<ArgumentDefinition> {
 	/**
 	 * Adds the specified argument definition to the list
 	 * @param argumentDefinition the argument definition to be added
-	 * @return
+	 * @return true if this list contained the specified element
 	 */
 	public boolean add(ArgumentDefinition argumentDefinition) {
 		addNames(argumentDefinition);
@@ -258,7 +258,7 @@ public class ArgumentDefinitions implements Iterable<ArgumentDefinition> {
 	/**
 	 * Adds the specified argument definitions to the list
 	 * @param argumentDefinitions the argument definitions to be added
-	 * @return
+	 * @return true if this list changed as a result of the call
 	 */
 	public boolean addAll(Collection<? extends ArgumentDefinition> argumentDefinitions) {
 		for (ArgumentDefinition argumentDefinition: argumentDefinitions) {

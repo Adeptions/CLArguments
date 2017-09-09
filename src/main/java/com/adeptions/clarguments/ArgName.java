@@ -36,7 +36,7 @@ public class ArgName {
 
 	/**
 	 * Gets the raw token found
-	 * @return
+	 * @return the raw token found
 	 */
 	public String getRawToken() {
 		return rawToken;
