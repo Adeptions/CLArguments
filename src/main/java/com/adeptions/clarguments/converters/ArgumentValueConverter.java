@@ -13,23 +13,25 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.adeptions.clarguments;
+package com.adeptions.clarguments.converters;
 
+import com.adeptions.clarguments.ArgName;
+import com.adeptions.clarguments.BadArgException;
 import com.adeptions.clarguments.arguments.*;
 
 /**
- * Interface for validating values
+ * Interface for converting incoming raw string arg values to appropriate type
  */
 @FunctionalInterface
-public interface ArgumentValueValidator<T> {
+public interface ArgumentValueConverter<T> {
 	/**
-	 * Validates the value
+	 * Convert the raw incoming arg value string to the appropriate type
 	 * @param tokenPosition the position of the token (in original args[])
-	 * @param value the value to be validated
+	 * @param rawValue the raw string arg value
 	 * @param argument the argument for which the value was found
 	 * @param specifiedArgName the name by which the argument was specified
-	 * @return the validated value (normally the same as was passed in)
-	 * @throws BadArgException if the validation fails
+	 * @return the converted value
+	 * @throws BadArgException if the conversion fails
 	 */
-	T validate(int tokenPosition, T value, Argument argument, ArgName specifiedArgName) throws BadArgException;
+	T convert(int tokenPosition, String rawValue, Argument argument, ArgName specifiedArgName) throws BadArgException;
 }

@@ -17,6 +17,7 @@ package com.adeptions.clarguments;
 
 import com.adeptions.clarguments.arguments.*;
 import com.adeptions.clarguments.definitions.*;
+import com.adeptions.clarguments.validators.*;
 import junit.framework.TestCase;
 
 public class ArgumentDefinitionAccessorsTests extends TestCase {
