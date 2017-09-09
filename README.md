@@ -9,8 +9,10 @@ Features:-
 * Custom argument value converters and validators
 * Support for flag and informational (e.g. ```-help```) arguments
 * Alternative argument name support (e.g. ```-help```, ```-h```)
+* Supports multi-valued arguments (i.e. same argument specified multiple times with different values)
 * User friendly _(show immediate exceptions or list out exceptions at end of parsing)_ 
 * In-built help display
+* Argument definitions clearly coded - not encoded into special strings!
 
 ## Quick Start
 
