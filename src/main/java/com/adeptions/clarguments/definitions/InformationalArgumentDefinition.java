@@ -18,6 +18,9 @@ package com.adeptions.clarguments.definitions;
 import com.adeptions.clarguments.*;
 import com.adeptions.clarguments.arguments.*;
 
+/**
+ * Represents the definition for an informational argument
+ */
 public class InformationalArgumentDefinition extends AbstractArgumentDefinition<Boolean> implements ArgumentDefinition<Boolean> {
 	/**
 	 * Constructs an InformationalArgumentDefinition with the specified name and description

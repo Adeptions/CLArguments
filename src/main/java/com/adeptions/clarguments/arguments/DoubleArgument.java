@@ -18,6 +18,9 @@ package com.adeptions.clarguments.arguments;
 import com.adeptions.clarguments.*;
 import com.adeptions.clarguments.definitions.*;
 
+/**
+ * Represents a Double valued argument
+ */
 public class DoubleArgument extends AbstractArgument<Double> implements Argument<Double> {
 	/**
 	 * Constructs a DoubleArgument with the specified parent arguments and argument definition

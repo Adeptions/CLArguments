@@ -18,6 +18,10 @@ package com.adeptions.clarguments.arguments;
 import com.adeptions.clarguments.*;
 import com.adeptions.clarguments.definitions.*;
 
+/**
+ * Represents an informational argument
+ * An informational argument is not expected to have a value (similar to flag argument)
+ */
 public class InformationalArgument extends AbstractArgument<Boolean> implements Argument<Boolean> {
 	/**
 	 * Constructs an InformationalArgument with the specified parent arguments and argument definition

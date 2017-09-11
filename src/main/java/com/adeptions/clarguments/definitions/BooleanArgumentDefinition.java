@@ -19,6 +19,9 @@ import com.adeptions.clarguments.*;
 import com.adeptions.clarguments.arguments.*;
 import com.adeptions.clarguments.converters.*;
 
+/**
+ * Represents the definition for a Boolean valued argument
+ */
 public class BooleanArgumentDefinition extends AbstractArgumentDefinition<Boolean> implements ArgumentDefinition<Boolean> {
 	/**
 	 * Constructs a BooleanArgumentDefinition with the specified name and description

@@ -18,6 +18,9 @@ package com.adeptions.clarguments.arguments;
 import com.adeptions.clarguments.*;
 import com.adeptions.clarguments.definitions.*;
 
+/**
+ * Represents a Boolean valued argument
+ */
 public class BooleanArgument extends AbstractArgument<Boolean> implements Argument<Boolean> {
 	/**
 	 * Constructs a BooleanArgument with the specified parent arguments and argument definition

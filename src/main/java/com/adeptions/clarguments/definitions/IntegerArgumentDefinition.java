@@ -20,6 +20,9 @@ import com.adeptions.clarguments.arguments.*;
 
 import static com.adeptions.clarguments.PredefinedBadArgReasons.*;
 
+/**
+ * Represents the definition for an Integer valued argument
+ */
 public class IntegerArgumentDefinition extends AbstractArgumentDefinition<Integer> implements ArgumentDefinition<Integer> {
 	/**
 	 * Constructs an IntegerArgumentDefinition with the specified name and description

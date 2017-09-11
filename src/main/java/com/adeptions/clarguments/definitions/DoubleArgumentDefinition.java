@@ -20,6 +20,9 @@ import com.adeptions.clarguments.arguments.*;
 
 import static com.adeptions.clarguments.PredefinedBadArgReasons.*;
 
+/**
+ * Represents the definition for a Double valued argument
+ */
 public class DoubleArgumentDefinition extends AbstractArgumentDefinition<Double> implements ArgumentDefinition<Double> {
 	/**
 	 * Constructs a DoubleArgumentDefinition with the specified name and description

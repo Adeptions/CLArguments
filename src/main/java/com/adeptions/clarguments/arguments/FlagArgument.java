@@ -18,6 +18,10 @@ package com.adeptions.clarguments.arguments;
 import com.adeptions.clarguments.*;
 import com.adeptions.clarguments.definitions.*;
 
+/**
+ * Represents a flag argument
+ * A flag argument is not expected to have a value but acquires a value of Boolean.TRUE when specified
+ */
 public class FlagArgument extends AbstractArgument<Boolean> implements Argument<Boolean> {
 	/**
 	 * Constructs a FlagArgument with the specified parent arguments and argument definition

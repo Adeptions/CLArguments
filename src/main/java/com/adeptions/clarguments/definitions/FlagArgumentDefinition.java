@@ -18,6 +18,9 @@ package com.adeptions.clarguments.definitions;
 import com.adeptions.clarguments.*;
 import com.adeptions.clarguments.arguments.*;
 
+/**
+ * Represents the definition for a flag argument
+ */
 public class FlagArgumentDefinition extends AbstractArgumentDefinition<Boolean> implements ArgumentDefinition<Boolean> {
 	/**
 	 * Constructs a FlagArgumentDefinition with the specified name and description

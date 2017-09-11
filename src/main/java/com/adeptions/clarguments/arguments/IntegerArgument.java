@@ -18,6 +18,9 @@ package com.adeptions.clarguments.arguments;
 import com.adeptions.clarguments.*;
 import com.adeptions.clarguments.definitions.*;
 
+/**
+ * Represents an Integer valued argument
+ */
 public class IntegerArgument extends AbstractArgument<Integer> implements Argument<Integer> {
 	/**
 	 * Constructs an IntegerArgument with the specified parent arguments and argument definition

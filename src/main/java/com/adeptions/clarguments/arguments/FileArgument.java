@@ -20,6 +20,9 @@ import com.adeptions.clarguments.definitions.*;
 
 import java.io.File;
 
+/**
+ * Represents a File valued argument
+ */
 public class FileArgument extends AbstractArgument<File> implements Argument<File> {
 	/**
 	 * Constructs a FileArgument with the specified parent arguments and argument definition

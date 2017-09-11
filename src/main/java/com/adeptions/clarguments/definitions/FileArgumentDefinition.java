@@ -22,6 +22,9 @@ import static com.adeptions.clarguments.PredefinedBadArgReasons.*;
 
 import java.io.File;
 
+/**
+ * Represents the definition for a File valued argument
+ */
 public class FileArgumentDefinition extends AbstractArgumentDefinition<File> implements ArgumentDefinition<File> {
 	/**
 	 * Constructs a DoubleArgumentDefinition with the specified name and description

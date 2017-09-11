@@ -18,6 +18,9 @@ package com.adeptions.clarguments.definitions;
 import com.adeptions.clarguments.*;
 import com.adeptions.clarguments.arguments.*;
 
+/**
+ * Represents the definition for a String valued argument
+ */
 public class StringArgumentDefinition extends AbstractArgumentDefinition<String> implements ArgumentDefinition<String> {
 	/**
 	 * Instantiates a new instance of a StringArgumentDefinition
