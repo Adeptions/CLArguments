@@ -17,7 +17,7 @@ package com.adeptions.clarguments.definitions;
 
 import com.adeptions.clarguments.*;
 import com.adeptions.clarguments.arguments.*;
-import com.adeptions.clarguments.converters.ArgumentValueConverter;
+import com.adeptions.clarguments.converters.*;
 
 /**
  * Represents the definition for a generic typed valued argument
@@ -27,6 +27,7 @@ public class GenericArgumentDefinition<T> extends AbstractArgumentDefinition<T> 
 	 * Constructs a GenericArgumentDefinition with the specified name, description and converter
 	 * @param name the name of the argument
 	 * @param description the description of the argument
+	 * @param valueConverter the converter to be used to convert raw arg string values to the appropriate type
 	 */
 	public GenericArgumentDefinition(String name, String description, ArgumentValueConverter<T> valueConverter) {
 		super(ArgumentDefinitionType.VALUED, name, description);
@@ -40,6 +41,7 @@ public class GenericArgumentDefinition<T> extends AbstractArgumentDefinition<T> 
 	 * Constructs a GenericArgumentDefinition with the specified names, description and converter
 	 * @param names the names of the argument
 	 * @param description the description of the argument
+	 * @param valueConverter the converter to be used to convert raw arg string values to the appropriate type
 	 */
 	public GenericArgumentDefinition(String[] names, String description, ArgumentValueConverter<T> valueConverter) {
 		super(ArgumentDefinitionType.VALUED, names, description);
