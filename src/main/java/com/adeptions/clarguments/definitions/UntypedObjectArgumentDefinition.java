@@ -29,7 +29,6 @@ public class UntypedObjectArgumentDefinition extends AbstractArgumentDefinition<
 	 */
 	public UntypedObjectArgumentDefinition(String name, String description) {
 		super(ArgumentDefinitionType.VALUED, name, description);
-		addValueFormat("true|false");
 	}
 
 	/**
@@ -39,7 +38,6 @@ public class UntypedObjectArgumentDefinition extends AbstractArgumentDefinition<
 	 */
 	public UntypedObjectArgumentDefinition(String[] names, String description) {
 		super(ArgumentDefinitionType.VALUED, names, description);
-		addValueFormat("true|false");
 	}
 
 	/**
