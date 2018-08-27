@@ -4,7 +4,7 @@ package com.adeptions.clarguments;
  * Interface for handling BadArgumentException during parsing
  */
 @FunctionalInterface
-public interface BadArgExceptionsHandler {
+public interface BadArgumentExceptionsHandler {
     /**
      * Decides whether an encountered pasring exception should halt parsing immediately (by throwing the exception)
      * or should store the exception (by returning the exception) for reporting/handling after parsing completion

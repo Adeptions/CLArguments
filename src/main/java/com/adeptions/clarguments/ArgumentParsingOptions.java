@@ -6,7 +6,7 @@ package com.adeptions.clarguments;
 public class ArgumentParsingOptions {
     public static final String DEFAULT_ARG_NAME_PREFIX = "-";
     public static final Character DEFAULT_CHAR_BETWEEN_ARG_NAME_AND_VALUE = ':';
-    public static final BadArgExceptionsHandler DEFAULT_BAD_ARG_EXCEPTION_HANDLER = badArgumentException -> badArgumentException;
+    public static final BadArgumentExceptionsHandler DEFAULT_BAD_ARG_EXCEPTION_HANDLER = badArgumentException -> badArgumentException;
 
     private static final Character SPACE = ' ';
 
@@ -14,7 +14,7 @@ public class ArgumentParsingOptions {
     protected Character characterBetweenArgumentNameAndValue;
     protected String argumentNamePrefix;
     protected String argNameSuffix;
-    protected BadArgExceptionsHandler badArgExceptionsHandler = DEFAULT_BAD_ARG_EXCEPTION_HANDLER;
+    protected BadArgumentExceptionsHandler badArgumentExceptionsHandler = DEFAULT_BAD_ARG_EXCEPTION_HANDLER;
 
     /**
      * Constructs an ArgumentParsingOptions with default options
@@ -121,20 +121,20 @@ public class ArgumentParsingOptions {
      * Gets the args parsing exception handler
      * @return the args parsing exception handler
      */
-    public BadArgExceptionsHandler getBadArgExceptionsHandler() {
-        return badArgExceptionsHandler;
+    public BadArgumentExceptionsHandler getBadArgumentExceptionsHandler() {
+        return badArgumentExceptionsHandler;
     }
 
     /**
      * Sets the bad arg exception handler
-     * @param badArgExceptionsHandler the args parsing exception handler (if null is specified the default
+     * @param badArgumentExceptionsHandler the args parsing exception handler (if null is specified the default
      *                                    handler is used - which returns exceptions rather than throwing)
      */
-    public void setBadArgsExceptionHandler(BadArgExceptionsHandler badArgExceptionsHandler) {
-        if (badArgExceptionsHandler == null) {
-            this.badArgExceptionsHandler = DEFAULT_BAD_ARG_EXCEPTION_HANDLER;
+    public void setBadArgsExceptionHandler(BadArgumentExceptionsHandler badArgumentExceptionsHandler) {
+        if (badArgumentExceptionsHandler == null) {
+            this.badArgumentExceptionsHandler = DEFAULT_BAD_ARG_EXCEPTION_HANDLER;
         } else {
-            this.badArgExceptionsHandler = badArgExceptionsHandler;
+            this.badArgumentExceptionsHandler = badArgumentExceptionsHandler;
         }
     }
 }

@@ -18,7 +18,7 @@ import static com.adeptions.clarguments.PredefinedBadArgumentReasons.UNKNOWN_ARG
  */
 public final class Arguments {
     private ArgumentDefinitions argumentDefinitions;
-    private BadArgExceptionsHandler badArgExceptionsHandler;
+    private BadArgumentExceptionsHandler badArgumentExceptionsHandler;
     private List<Argument> arguments = new ArrayList<>();
     private Map<String,Argument> argumentsMap = new HashMap<>();
     private List<BadArgumentException> exceptions = new ArrayList<>();
@@ -29,14 +29,14 @@ public final class Arguments {
     /**
      * Constructs an Arguments with the specified arguments definitions and ars parsing exception handler
      * @param argumentDefinitions the list of argument definitions
-     * @param badArgExceptionsHandler the args parsing exception handler to use
+     * @param badArgumentExceptionsHandler the args parsing exception handler to use
      */
-    Arguments(ArgumentDefinitions argumentDefinitions, BadArgExceptionsHandler badArgExceptionsHandler) {
+    Arguments(ArgumentDefinitions argumentDefinitions, BadArgumentExceptionsHandler badArgumentExceptionsHandler) {
         this.argumentDefinitions = argumentDefinitions;
-        if (badArgExceptionsHandler == null) {
-            this.badArgExceptionsHandler = ArgumentParsingOptions.DEFAULT_BAD_ARG_EXCEPTION_HANDLER;
+        if (badArgumentExceptionsHandler == null) {
+            this.badArgumentExceptionsHandler = ArgumentParsingOptions.DEFAULT_BAD_ARG_EXCEPTION_HANDLER;
         } else {
-            this.badArgExceptionsHandler = badArgExceptionsHandler;
+            this.badArgumentExceptionsHandler = badArgumentExceptionsHandler;
         }
         initialize();
     }
@@ -258,7 +258,7 @@ public final class Arguments {
     public void addParsingException(BadArgumentException badArgumentException) throws BadArgumentException {
         BadArgumentException storeException = null;
         try {
-            storeException = badArgExceptionsHandler.handle(badArgumentException);
+            storeException = badArgumentExceptionsHandler.handle(badArgumentException);
         } catch (BadArgumentException badArgumentException2) {
             storeException = badArgumentException2;
             throw badArgumentException2;

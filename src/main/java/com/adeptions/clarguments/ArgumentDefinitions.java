@@ -108,7 +108,7 @@ public class ArgumentDefinitions implements Iterable<ArgumentDefinition> {
      */
     public final Arguments parseArgs(String[] args, ArgumentParsingOptions argumentParsingOptions) throws BadArgumentException {
         ArgumentParsingOptions useArgumentParsingOptions = (argumentParsingOptions == null ? new ArgumentParsingOptions() : argumentParsingOptions);
-        Arguments result = new Arguments(this, useArgumentParsingOptions.getBadArgExceptionsHandler());
+        Arguments result = new Arguments(this, useArgumentParsingOptions.getBadArgumentExceptionsHandler());
         result.seenSomething(args.length > 0);
         if (useArgumentParsingOptions.isSpaceBetweenArgumentNameAndValue()) {
             parseSpaceBetweenArgNameAndValue(args, result, useArgumentParsingOptions);
