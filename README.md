@@ -39,14 +39,14 @@ public class MyApplication {
                 System.out.println(argumentDefinitions.getHelp());
             } else if (arguments.hasParsingExceptions()) {
                 // there were some problems with the args...
-                for (BadArgException badArgumentException: arguments.getParsingExceptions()) {
+                for (BadArgumentException badArgumentException: arguments.getParsingExceptions()) {
                     System.err.println(badArgumentException.getMessage());
                 }
             } else {
                 // run the actual application...
                 System.out.println("You asked me to say... '" + arguments.get("say").getValue() + "'");
             }
-        } catch (BadArgException e) {
+        } catch (BadArgumentException e) {
             e.printStackTrace();
         }
     }
