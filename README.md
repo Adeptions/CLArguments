@@ -39,8 +39,8 @@ public class MyApplication {
                 System.out.println(argumentDefinitions.getHelp());
             } else if (arguments.hasParsingExceptions()) {
                 // there were some problems with the args...
-                for (BadArgException badArgException: arguments.getParsingExceptions()) {
-                    System.err.println(badArgException.getMessage());
+                for (BadArgException badArgumentException: arguments.getParsingExceptions()) {
+                    System.err.println(badArgumentException.getMessage());
                 }
             } else {
                 // run the actual application...
