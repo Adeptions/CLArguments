@@ -46,9 +46,8 @@ public final class Arguments {
             Argument argument = argumentDefinition.createArgumentInstance(this);
             arguments.add(argument);
             argumentsMap.put(argumentDefinition.getName(), argument);
-            Iterator<String> alternativeNames = argumentDefinition.getAlternativeNames().iterator();
-            while (alternativeNames.hasNext()) {
-                argumentsMap.put(alternativeNames.next(), argument);
+            for (String alternativeName: (Iterable<String>) argumentDefinition.getAlternativeNames()) {
+                argumentsMap.put(alternativeName, argument);
             }
         }
     }
