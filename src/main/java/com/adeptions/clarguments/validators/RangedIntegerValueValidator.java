@@ -24,32 +24,32 @@ import static com.adeptions.clarguments.PredefinedBadArgReasons.*;
  * Utility value validator for checking an integer value is within a specified range
  */
 public class RangedIntegerValueValidator implements ArgumentValueValidator<Integer> {
-	private Integer minValue;
-	private Integer maxValue;
+    private Integer minValue;
+    private Integer maxValue;
 
-	/**
-	 * Constructs a RangedInteger with the specified minimum and maximum values
-	 * @param minValue the minimum value (null for no minimum enforced)
-	 * @param maxValue the maximum value (null for no maximum enforced)
-	 */
-	public RangedIntegerValueValidator(Integer minValue, Integer maxValue) {
-		this.minValue = minValue;
-		this.maxValue = maxValue;
-	}
+    /**
+     * Constructs a RangedInteger with the specified minimum and maximum values
+     * @param minValue the minimum value (null for no minimum enforced)
+     * @param maxValue the maximum value (null for no maximum enforced)
+     */
+    public RangedIntegerValueValidator(Integer minValue, Integer maxValue) {
+        this.minValue = minValue;
+        this.maxValue = maxValue;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Integer validate(int tokenPosition, Integer value, Argument argument, ArgName specifiedArgName) throws BadArgException {
-		if (value != null) {
-			if (minValue != null && minValue.compareTo(value) > 0) {
-				throw new BadArgException(INVALID_VALUE, tokenPosition, "Supplied value " + value + " must be greater than or equal to " + minValue, argument, specifiedArgName);
-			}
-			if (maxValue != null && maxValue.compareTo(value) < 0) {
-				throw new BadArgException(INVALID_VALUE, tokenPosition, "Supplied value " + value + " must be less than or equal to " + maxValue, argument, specifiedArgName);
-			}
-		}
-		return null;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Integer validate(int tokenPosition, Integer value, Argument argument, ArgName specifiedArgName) throws BadArgException {
+        if (value != null) {
+            if (minValue != null && minValue.compareTo(value) > 0) {
+                throw new BadArgException(INVALID_VALUE, tokenPosition, "Supplied value " + value + " must be greater than or equal to " + minValue, argument, specifiedArgName);
+            }
+            if (maxValue != null && maxValue.compareTo(value) < 0) {
+                throw new BadArgException(INVALID_VALUE, tokenPosition, "Supplied value " + value + " must be less than or equal to " + maxValue, argument, specifiedArgName);
+            }
+        }
+        return null;
+    }
 }

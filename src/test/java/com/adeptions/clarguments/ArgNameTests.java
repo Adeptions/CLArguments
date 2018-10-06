@@ -18,101 +18,101 @@ package com.adeptions.clarguments;
 import junit.framework.TestCase;
 
 public class ArgNameTests extends TestCase {
-	public void testArgNameSpaced() throws Exception {
-		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
-		ArgName argName = ArgName.parseFromSpacedArgToken(-1, "-foo", argsParsingOptions);
-		assertEquals("foo", argName.getName());
-		assertEquals("-foo", argName.getDisplayName());
-		assertEquals("-foo", argName.getRawToken());
-	}
+    public void testArgNameSpaced() throws Exception {
+        ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
+        ArgName argName = ArgName.parseFromSpacedArgToken(-1, "-foo", argsParsingOptions);
+        assertEquals("foo", argName.getName());
+        assertEquals("-foo", argName.getDisplayName());
+        assertEquals("-foo", argName.getRawToken());
+    }
 
-	public void testArgNameSpaced2() throws Exception {
-		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions(null, "-", "+");
-		ArgName argName = ArgName.parseFromSpacedArgToken(-1, "-foo+", argsParsingOptions);
-		assertEquals("foo", argName.getName());
-		assertEquals("-foo+", argName.getDisplayName());
-		assertEquals("-foo+", argName.getRawToken());
-	}
+    public void testArgNameSpaced2() throws Exception {
+        ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions(null, "-", "+");
+        ArgName argName = ArgName.parseFromSpacedArgToken(-1, "-foo+", argsParsingOptions);
+        assertEquals("foo", argName.getName());
+        assertEquals("-foo+", argName.getDisplayName());
+        assertEquals("-foo+", argName.getRawToken());
+    }
 
-	public void testArgNameSpaced3() throws Exception {
-		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
-		ArgName argName;
-		boolean failed = false;
-		try {
-			argName = ArgName.parseFromSpacedArgToken(-1, "foo", argsParsingOptions);
-		} catch (BadArgException badArgException) {
-			failed = true;
-		}
-		assertTrue("Should have thrown exception",
-				failed);
-	}
+    public void testArgNameSpaced3() throws Exception {
+        ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
+        ArgName argName;
+        boolean failed = false;
+        try {
+            argName = ArgName.parseFromSpacedArgToken(-1, "foo", argsParsingOptions);
+        } catch (BadArgException badArgException) {
+            failed = true;
+        }
+        assertTrue("Should have thrown exception",
+                failed);
+    }
 
-	public void testArgNameSpaced4() throws Exception {
-		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions(null, "-", "+");
-		ArgName argName;
-		boolean failed = false;
-		try {
-			argName = ArgName.parseFromSpacedArgToken(-1, "foo", argsParsingOptions);
-		} catch (BadArgException badArgException) {
-			failed = true;
-		}
-		assertTrue("Should have thrown exception",
-				failed);
-	}
+    public void testArgNameSpaced4() throws Exception {
+        ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions(null, "-", "+");
+        ArgName argName;
+        boolean failed = false;
+        try {
+            argName = ArgName.parseFromSpacedArgToken(-1, "foo", argsParsingOptions);
+        } catch (BadArgException badArgException) {
+            failed = true;
+        }
+        assertTrue("Should have thrown exception",
+                failed);
+    }
 
-	public void testArgNameSpaced5() throws Exception {
-		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions(null, "-", "+");
-		ArgName argName;
-		boolean failed = false;
-		try {
-			argName = ArgName.parseFromSpacedArgToken(-1, "-foo", argsParsingOptions);
-		} catch (BadArgException badArgException) {
-			failed = true;
-		}
-		assertTrue("Should have thrown exception",
-				failed);
-	}
+    public void testArgNameSpaced5() throws Exception {
+        ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions(null, "-", "+");
+        ArgName argName;
+        boolean failed = false;
+        try {
+            argName = ArgName.parseFromSpacedArgToken(-1, "-foo", argsParsingOptions);
+        } catch (BadArgException badArgException) {
+            failed = true;
+        }
+        assertTrue("Should have thrown exception",
+                failed);
+    }
 
-	public void testArgNameSpaced6() throws Exception {
-		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
-		boolean failed = false;
-		ArgName argName;
-		try {
-			argName = ArgName.parseFromSpacedArgToken(-1, "foo", argsParsingOptions);
-		} catch (BadArgException badArgException) {
-			failed = true;
-		}
-		assertTrue("Should have thrown exception",
-				failed);
-	}
+    public void testArgNameSpaced6() throws Exception {
+        ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
+        boolean failed = false;
+        ArgName argName;
+        try {
+            argName = ArgName.parseFromSpacedArgToken(-1, "foo", argsParsingOptions);
+        } catch (BadArgException badArgException) {
+            failed = true;
+        }
+        assertTrue("Should have thrown exception",
+                failed);
+    }
 
-	public void testArgNameSpaced7() throws Exception {
-		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
-		argsParsingOptions.setBadArgsExceptionHandler(new BadArgExceptionsHandler() {
-			@Override
-			public BadArgException handle(BadArgException badArgException) throws BadArgException {
-				throw badArgException;
-			}
-		});
-		boolean failed = false;
-		ArgName argName;
-		try {
-			argName = ArgName.parseFromSpacedArgToken(-1, null, argsParsingOptions);
-		} catch (BadArgException badArgException) {
-			failed = true;
-		}
-		assertTrue("Should have thrown exception", failed);
-	}
+    public void testArgNameSpaced7() throws Exception {
+        ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
+        argsParsingOptions.setBadArgsExceptionHandler(new BadArgExceptionsHandler() {
+            @Override
+            public BadArgException handle(BadArgException badArgException) throws BadArgException {
+                throw badArgException;
+            }
+        });
+        boolean failed = false;
+        ArgName argName;
+        try {
+            argName = ArgName.parseFromSpacedArgToken(-1, null, argsParsingOptions);
+        } catch (BadArgException badArgException) {
+            failed = true;
+        }
+        assertTrue("Should have thrown exception", failed);
+    }
 
-	public void testArgNameSpaced8() throws Exception {
-		ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
-		ArgName argName;
-		boolean failed = false;
-		try {
-			argName = ArgName.parseFromSpacedArgToken(-1, null, argsParsingOptions);
-		} catch (BadArgException badArgException) {
-			failed = true;
-		}
-		assertTrue("Should have thrown exception", failed);
-	}
+    public void testArgNameSpaced8() throws Exception {
+        ArgsParsingOptions argsParsingOptions = new ArgsParsingOptions();
+        ArgName argName;
+        boolean failed = false;
+        try {
+            argName = ArgName.parseFromSpacedArgToken(-1, null, argsParsingOptions);
+        } catch (BadArgException badArgException) {
+            failed = true;
+        }
+        assertTrue("Should have thrown exception", failed);
+    }
 }

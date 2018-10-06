@@ -25,21 +25,21 @@ package com.adeptions.clarguments;
  *                   the argument is encountered - e.g. -version or -help)
  */
 public enum ArgumentDefinitionType {
-	VALUED("Valued"),
-	FLAG("Flag"),
-	INFORMATIONAL("Informational");
+    VALUED("Valued"),
+    FLAG("Flag"),
+    INFORMATIONAL("Informational");
 
-	private String description;
+    private String description;
 
-	ArgumentDefinitionType(String description) {
-		this.description = description;
-	}
+    ArgumentDefinitionType(String description) {
+        this.description = description;
+    }
 
-	/**
-	 * Gets the printable description of the type
-	 * @return the printable description of the type
-	 */
-	public String getDescription() {
-		return description;
-	}
+    /**
+     * Gets the printable description of the type
+     * @return the printable description of the type
+     */
+    public String getDescription() {
+        return description;
+    }
 }

@@ -24,14 +24,14 @@ import com.adeptions.clarguments.arguments.*;
  */
 @FunctionalInterface
 public interface ArgumentValueValidator<T> {
-	/**
-	 * Validates the value
-	 * @param tokenPosition the position of the token (in original args[])
-	 * @param value the value to be validated
-	 * @param argument the argument for which the value was found
-	 * @param specifiedArgName the name by which the argument was specified
-	 * @return the validated value (normally the same as was passed in)
-	 * @throws BadArgException if the validation fails
-	 */
-	T validate(int tokenPosition, T value, Argument argument, ArgName specifiedArgName) throws BadArgException;
+    /**
+     * Validates the value
+     * @param tokenPosition the position of the token (in original args[])
+     * @param value the value to be validated
+     * @param argument the argument for which the value was found
+     * @param specifiedArgName the name by which the argument was specified
+     * @return the validated value (normally the same as was passed in)
+     * @throws BadArgException if the validation fails
+     */
+    T validate(int tokenPosition, T value, Argument argument, ArgName specifiedArgName) throws BadArgException;
 }

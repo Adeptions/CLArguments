@@ -26,280 +26,280 @@ import static com.adeptions.clarguments.PredefinedBadArgReasons.*;
  * Represents a list of argument definitions and provides methods for parsing args
  */
 public class ArgumentDefinitions implements Iterable<ArgumentDefinition> {
-	protected List<ArgumentDefinition> definitions = new ArrayList<ArgumentDefinition>();
-	protected Map<String,ArgumentDefinition> definitionsNameMap = new HashMap<String, ArgumentDefinition>();
+    protected List<ArgumentDefinition> definitions = new ArrayList<>();
+    protected Map<String,ArgumentDefinition> definitionsNameMap = new HashMap<>();
 
-	/**
-	 * Constructs an empty ArgumentDefinitions
-	 */
-	public ArgumentDefinitions() {
-	}
+    /**
+     * Constructs an empty ArgumentDefinitions
+     */
+    public ArgumentDefinitions() {
+    }
 
-	/**
-	 * Constructs an ArgumentDefinitions with the specified argument definitions
-	 * @param argumentDefinitions the argument definitions
-	 * @throws BadArgumentDefinitionException if there was a problem with the argument definitions (e.g. a non-unique argument name)
-	 */
-	public ArgumentDefinitions(ArgumentDefinition... argumentDefinitions) throws BadArgumentDefinitionException {
-		addAll(Arrays.asList(argumentDefinitions));
-	}
+    /**
+     * Constructs an ArgumentDefinitions with the specified argument definitions
+     * @param argumentDefinitions the argument definitions
+     * @throws BadArgumentDefinitionException if there was a problem with the argument definitions (e.g. a non-unique argument name)
+     */
+    public ArgumentDefinitions(ArgumentDefinition... argumentDefinitions) throws BadArgumentDefinitionException {
+        addAll(Arrays.asList(argumentDefinitions));
+    }
 
-	/**
-	 * Constructs an ArgumentDefinitions with the specified argument definitions
-	 * @param argumentDefinitions the argument definitions
-	 * @throws BadArgumentDefinitionException if there was a problem with the argument definitions (e.g. a non-unique argument name)
-	 */
-	public ArgumentDefinitions(List<ArgumentDefinition> argumentDefinitions) throws BadArgumentDefinitionException {
-		addAll(argumentDefinitions);
-	}
+    /**
+     * Constructs an ArgumentDefinitions with the specified argument definitions
+     * @param argumentDefinitions the argument definitions
+     * @throws BadArgumentDefinitionException if there was a problem with the argument definitions (e.g. a non-unique argument name)
+     */
+    public ArgumentDefinitions(List<ArgumentDefinition> argumentDefinitions) throws BadArgumentDefinitionException {
+        addAll(argumentDefinitions);
+    }
 
-	/**
-	 * Gets whether the arguments contains an argument with the specified name
-	 * @param argumentName the argument name to be checked
-	 * @return whether the arguments contains an argument with the specified name
-	 */
-	public boolean hasArgumentName(String argumentName) {
-		return definitionsNameMap.containsKey(argumentName);
-	}
+    /**
+     * Gets whether the arguments contains an argument with the specified name
+     * @param argumentName the argument name to be checked
+     * @return whether the arguments contains an argument with the specified name
+     */
+    public boolean hasArgumentName(String argumentName) {
+        return definitionsNameMap.containsKey(argumentName);
+    }
 
-	/**
-	 * Gets the argument definition for a specified argument name
-	 * @param argumentName the argument name
-	 * @return the argument definition (or null if no definition found for the specified argument name)
-	 */
-	public ArgumentDefinition getArgumentDefinitionByName(String argumentName) {
-		return definitionsNameMap.get(argumentName);
-	}
+    /**
+     * Gets the argument definition for a specified argument name
+     * @param argumentName the argument name
+     * @return the argument definition (or null if no definition found for the specified argument name)
+     */
+    public ArgumentDefinition getArgumentDefinitionByName(String argumentName) {
+        return definitionsNameMap.get(argumentName);
+    }
 
-	/**
-	 * Gets a constructed help string for the argument definitions using the specified args parsing options
-	 * @param argsParsingOptions the args parsing options
-	 * @return the help string
-	 */
-	public String getHelp(ArgsParsingOptions argsParsingOptions) {
-		StringBuilder builder = new StringBuilder();
-		Iterator<ArgumentDefinition> iterator = definitions.iterator();
-		while (iterator.hasNext()) {
-			builder.append(iterator.next().getHelp(argsParsingOptions))
-					.append(iterator.hasNext() ? "\n" : "");
-		}
-		return builder.toString();
-	}
+    /**
+     * Gets a constructed help string for the argument definitions using the specified args parsing options
+     * @param argsParsingOptions the args parsing options
+     * @return the help string
+     */
+    public String getHelp(ArgsParsingOptions argsParsingOptions) {
+        StringBuilder builder = new StringBuilder();
+        Iterator<ArgumentDefinition> iterator = definitions.iterator();
+        while (iterator.hasNext()) {
+            builder.append(iterator.next().getHelp(argsParsingOptions))
+                    .append(iterator.hasNext() ? "\n" : "");
+        }
+        return builder.toString();
+    }
 
-	/**
-	 * Gets a constructed help string for the argument definitions (using the default args parsing options)
-	 * @return the help string
-	 */
-	public String getHelp() {
-		return getHelp(new ArgsParsingOptions());
-	}
+    /**
+     * Gets a constructed help string for the argument definitions (using the default args parsing options)
+     * @return the help string
+     */
+    public String getHelp() {
+        return getHelp(new ArgsParsingOptions());
+    }
 
-	/**
-	 * Main method for parsing args (using default ArgsParsingOptions)
-	 * @param args the args to be parsed
-	 * @return the Arguments (from which values can be read)
-	 * @throws BadArgException if there were any parsing exception found (and thrown)
-	 */
-	public Arguments parseArgs(String[] args) throws BadArgException {
-		return parseArgs(args, null);
-	}
+    /**
+     * Main method for parsing args (using default ArgsParsingOptions)
+     * @param args the args to be parsed
+     * @return the Arguments (from which values can be read)
+     * @throws BadArgException if there were any parsing exception found (and thrown)
+     */
+    public Arguments parseArgs(String[] args) throws BadArgException {
+        return parseArgs(args, null);
+    }
 
-	/**
-	 * Main method for parsing args using the specified ArgsParsingOptions
-	 * @param args the args to be parsed
-	 * @param argsParsingOptions the options for parsing the args
-	 * @return the Arguments (from which values can be read)
-	 * @throws BadArgException if there were any parsing exception found (and thrown)
-	 */
-	public final Arguments parseArgs(String[] args, ArgsParsingOptions argsParsingOptions) throws BadArgException {
-		ArgsParsingOptions useArgsParsingOptions = (argsParsingOptions == null ? new ArgsParsingOptions() : argsParsingOptions);
-		Arguments result = new Arguments(this, useArgsParsingOptions.getBadArgExceptionsHandler());
-		result.seenSomething(args.length > 0);
-		if (useArgsParsingOptions.isSpaceBetweenArgNameAndValue()) {
-			parseSpaceBetweenArgNameAndValue(args, result, useArgsParsingOptions);
-		} else {
-			parseCharBetweenArgNameAndValue(args, result, useArgsParsingOptions);
-		}
-		checkForMissingMandatoriesAfterParsing(result, useArgsParsingOptions);
-		return result;
-	}
+    /**
+     * Main method for parsing args using the specified ArgsParsingOptions
+     * @param args the args to be parsed
+     * @param argsParsingOptions the options for parsing the args
+     * @return the Arguments (from which values can be read)
+     * @throws BadArgException if there were any parsing exception found (and thrown)
+     */
+    public final Arguments parseArgs(String[] args, ArgsParsingOptions argsParsingOptions) throws BadArgException {
+        ArgsParsingOptions useArgsParsingOptions = (argsParsingOptions == null ? new ArgsParsingOptions() : argsParsingOptions);
+        Arguments result = new Arguments(this, useArgsParsingOptions.getBadArgExceptionsHandler());
+        result.seenSomething(args.length > 0);
+        if (useArgsParsingOptions.isSpaceBetweenArgNameAndValue()) {
+            parseSpaceBetweenArgNameAndValue(args, result, useArgsParsingOptions);
+        } else {
+            parseCharBetweenArgNameAndValue(args, result, useArgsParsingOptions);
+        }
+        checkForMissingMandatoriesAfterParsing(result, useArgsParsingOptions);
+        return result;
+    }
 
-	protected void checkForMissingMandatoriesAfterParsing(Arguments arguments, ArgsParsingOptions argsParsingOptions) throws BadArgException {
-		if (!arguments.hasSpecifiedInformationals() && arguments.hasMissingMandatories()) {
-			Collection<Argument> missingMandatories = arguments.getMissingMandatories();
-			for (Argument argument: missingMandatories) {
-				arguments.addParsingException(new BadArgException(MISSING_MANDATORY, -1, "Missing mandatory argument: " + argument.getDefinition().getDisplayName(argsParsingOptions), argument));
-			}
-		}
-	}
+    protected void checkForMissingMandatoriesAfterParsing(Arguments arguments, ArgsParsingOptions argsParsingOptions) throws BadArgException {
+        if (!arguments.hasSpecifiedInformationals() && arguments.hasMissingMandatories()) {
+            Collection<Argument> missingMandatories = arguments.getMissingMandatories();
+            for (Argument argument: missingMandatories) {
+                arguments.addParsingException(new BadArgException(MISSING_MANDATORY, -1, "Missing mandatory argument: " + argument.getDefinition().getDisplayName(argsParsingOptions), argument));
+            }
+        }
+    }
 
-	private static void parseSpaceBetweenArgNameAndValue(String[] args, Arguments arguments, ArgsParsingOptions argsParsingOptions) throws BadArgException {
-		ListIterator<String> iterator = Arrays.asList(args).listIterator();
-		while (iterator.hasNext()) {
-			int tokenPosition = iterator.previousIndex() + 1;
-			String arg = iterator.next();
-			ArgName argName = parseSpacedArgName(tokenPosition, arg, arguments, argsParsingOptions);
-			if (argName != null) {
-				Argument argument = arguments.get(argName.getName());
-				if (argument != null) {
-					if (argument.getDefinition().isValued()) {
-						if (!iterator.hasNext()) {
-							generateBadArgException(MISSING_VALUE, tokenPosition, "Missing value for argument '" + argName.getDisplayName() + "'", arguments, argsParsingOptions, argument, argName);
-						} else {
-							String value = iterator.next();
-							if (checkValueIsNotArgName(value, arguments, argsParsingOptions)) {
-								arguments.foundValuedArg(tokenPosition, argument, argName, value);
-							} else {
-								// the value turned out to be an arg name
-								// step backwards so that loop gets the next arg...
-								iterator.previous();
-								generateBadArgException(MISSING_VALUE, tokenPosition, "Missing value for argument '" + argName.getDisplayName() + "'", arguments, argsParsingOptions, argument, argName);
-							}
-						}
-					} else {
-						arguments.foundFlagOrInformationalArg(argument, argName);
-					}
-				} else {
-					arguments.foundUnknownArg(tokenPosition, argName);
-				}
-			}
-		}
-	}
+    private static void parseSpaceBetweenArgNameAndValue(String[] args, Arguments arguments, ArgsParsingOptions argsParsingOptions) throws BadArgException {
+        ListIterator<String> iterator = Arrays.asList(args).listIterator();
+        while (iterator.hasNext()) {
+            int tokenPosition = iterator.previousIndex() + 1;
+            String arg = iterator.next();
+            ArgName argName = parseSpacedArgName(tokenPosition, arg, arguments, argsParsingOptions);
+            if (argName != null) {
+                Argument argument = arguments.get(argName.getName());
+                if (argument != null) {
+                    if (argument.getDefinition().isValued()) {
+                        if (!iterator.hasNext()) {
+                            generateBadArgException(MISSING_VALUE, tokenPosition, "Missing value for argument '" + argName.getDisplayName() + "'", arguments, argsParsingOptions, argument, argName);
+                        } else {
+                            String value = iterator.next();
+                            if (checkValueIsNotArgName(value, arguments, argsParsingOptions)) {
+                                arguments.foundValuedArg(tokenPosition, argument, argName, value);
+                            } else {
+                                // the value turned out to be an arg name
+                                // step backwards so that loop gets the next arg...
+                                iterator.previous();
+                                generateBadArgException(MISSING_VALUE, tokenPosition, "Missing value for argument '" + argName.getDisplayName() + "'", arguments, argsParsingOptions, argument, argName);
+                            }
+                        }
+                    } else {
+                        arguments.foundFlagOrInformationalArg(argument, argName);
+                    }
+                } else {
+                    arguments.foundUnknownArg(tokenPosition, argName);
+                }
+            }
+        }
+    }
 
-	private static ArgName parseSpacedArgName(int tokenPosition, String arg, Arguments arguments, ArgsParsingOptions argsParsingOptions) throws BadArgException {
-		ArgName result = null;
-		try {
-			result = ArgName.parseFromSpacedArgToken(tokenPosition, arg, argsParsingOptions);
-		} catch (BadArgException badArgException) {
-			arguments.foundUnknownValue(tokenPosition, arg, badArgException);
-		}
-		return result;
-	}
+    private static ArgName parseSpacedArgName(int tokenPosition, String arg, Arguments arguments, ArgsParsingOptions argsParsingOptions) throws BadArgException {
+        ArgName result = null;
+        try {
+            result = ArgName.parseFromSpacedArgToken(tokenPosition, arg, argsParsingOptions);
+        } catch (BadArgException badArgException) {
+            arguments.foundUnknownValue(tokenPosition, arg, badArgException);
+        }
+        return result;
+    }
 
-	private static boolean checkValueIsNotArgName(String value, Arguments arguments, ArgsParsingOptions argsParsingOptions) {
-		boolean result = true;
-		// trap any exceptions that ArgName may throw...
-		try {
-			ArgName argName = ArgName.parseFromSpacedArgToken(-1, value, argsParsingOptions);
-			result = arguments.get(argName.getName()) == null;
-		} catch (BadArgException badArgException) {
-			// an exception means it's definitely not an arg name...
-			result = true;
-		}
-		return result;
-	}
+    private static boolean checkValueIsNotArgName(String value, Arguments arguments, ArgsParsingOptions argsParsingOptions) {
+        boolean result;
+        // trap any exceptions that ArgName may throw...
+        try {
+            ArgName argName = ArgName.parseFromSpacedArgToken(-1, value, argsParsingOptions);
+            result = arguments.get(argName.getName()) == null;
+        } catch (BadArgException badArgException) {
+            // an exception means it's definitely not an arg name...
+            result = true;
+        }
+        return result;
+    }
 
-	private static void parseCharBetweenArgNameAndValue(String[] args, Arguments arguments, ArgsParsingOptions argsParsingOptions) throws BadArgException {
-		for (int tokenPosition = 0; tokenPosition < args.length; tokenPosition++) {
-			String arg = args[tokenPosition];
-			ArgName argName = parseNonSpacedArg(tokenPosition, arg, arguments, argsParsingOptions);
-			if (argName != null) {
-				Argument argument = arguments.get(argName.getName());
-				if (argument != null) {
-					ArgumentDefinition definition = argument.getDefinition();
-					if (definition.isValued()) {
-						// even though the argument definition says it should have a value we allow for it not having a value
-						arguments.foundValuedArg(tokenPosition, argument, argName, argName.getValue());
-					} else if (argName.hasValue()) {
-						// non-valued (flag or informational) cannot have a value...
-						generateBadArgException((definition.isFlag() ? FLAG_WITH_VALUE : INFORMATIONAL_WITH_VALUE), tokenPosition,
-								definition.getType().getDescription() + " argument '" + argName.getDisplayName() + "' has unexpected value", arguments, argsParsingOptions, argument, argName);
-					} else {
-						arguments.foundFlagOrInformationalArg(argument, argName);
-					}
-				} else {
-					arguments.foundUnknownArg(tokenPosition, argName);
-				}
-			}
-		}
-	}
+    private static void parseCharBetweenArgNameAndValue(String[] args, Arguments arguments, ArgsParsingOptions argsParsingOptions) throws BadArgException {
+        for (int tokenPosition = 0; tokenPosition < args.length; tokenPosition++) {
+            String arg = args[tokenPosition];
+            ArgName argName = parseNonSpacedArg(tokenPosition, arg, arguments, argsParsingOptions);
+            if (argName != null) {
+                Argument argument = arguments.get(argName.getName());
+                if (argument != null) {
+                    ArgumentDefinition definition = argument.getDefinition();
+                    if (definition.isValued()) {
+                        // even though the argument definition says it should have a value we allow for it not having a value
+                        arguments.foundValuedArg(tokenPosition, argument, argName, argName.getValue());
+                    } else if (argName.hasValue()) {
+                        // non-valued (flag or informational) cannot have a value...
+                        generateBadArgException((definition.isFlag() ? FLAG_WITH_VALUE : INFORMATIONAL_WITH_VALUE), tokenPosition,
+                                definition.getType().getDescription() + " argument '" + argName.getDisplayName() + "' has unexpected value", arguments, argsParsingOptions, argument, argName);
+                    } else {
+                        arguments.foundFlagOrInformationalArg(argument, argName);
+                    }
+                } else {
+                    arguments.foundUnknownArg(tokenPosition, argName);
+                }
+            }
+        }
+    }
 
-	private static ArgName parseNonSpacedArg(int tokenPosition, String arg, Arguments arguments, ArgsParsingOptions argsParsingOptions) throws BadArgException {
-		ArgName result = null;
-		try {
-			result = ArgName.parseFromNonSpacedArgToken(tokenPosition, arg, argsParsingOptions);
-		} catch (BadArgException badArgException) {
-			arguments.foundUnknownValue(tokenPosition, arg, badArgException);
-		}
-		return result;
-	}
+    private static ArgName parseNonSpacedArg(int tokenPosition, String arg, Arguments arguments, ArgsParsingOptions argsParsingOptions) throws BadArgException {
+        ArgName result = null;
+        try {
+            result = ArgName.parseFromNonSpacedArgToken(tokenPosition, arg, argsParsingOptions);
+        } catch (BadArgException badArgException) {
+            arguments.foundUnknownValue(tokenPosition, arg, badArgException);
+        }
+        return result;
+    }
 
-	private static void generateBadArgException(BadArgReason reason, int tokenPosition, String message, Arguments arguments, ArgsParsingOptions argsParsingOptions, Argument argument, ArgName specifiedArgName) throws BadArgException {
-		BadArgException badArgException = new BadArgException(reason, tokenPosition, message, argument, specifiedArgName);
-		arguments.addParsingException(badArgException);
-	}
+    private static void generateBadArgException(BadArgReason reason, int tokenPosition, String message, Arguments arguments, ArgsParsingOptions argsParsingOptions, Argument argument, ArgName specifiedArgName) throws BadArgException {
+        BadArgException badArgException = new BadArgException(reason, tokenPosition, message, argument, specifiedArgName);
+        arguments.addParsingException(badArgException);
+    }
 
-	/**
-	 * Gets the size of the argument definitions in the list
-	 * @return the size of the argument definitions in the list
-	 */
-	public int size() {
-		return definitions.size();
-	}
+    /**
+     * Gets the size of the argument definitions in the list
+     * @return the size of the argument definitions in the list
+     */
+    public int size() {
+        return definitions.size();
+    }
 
-	/**
-	 * Gets whether the list of argument definitions is empty
-	 * @return whether the list of argument definitions is empty
-	 */
-	public boolean isEmpty() {
-		return definitions.isEmpty();
-	}
+    /**
+     * Gets whether the list of argument definitions is empty
+     * @return whether the list of argument definitions is empty
+     */
+    public boolean isEmpty() {
+        return definitions.isEmpty();
+    }
 
-	/**
-	 * Adds the specified argument definition to the list
-	 * @param argumentDefinition the argument definition to be added
-	 * @return true if this list contained the specified element
-	 */
-	public boolean add(ArgumentDefinition argumentDefinition) {
-		addNames(argumentDefinition);
-		return definitions.add(argumentDefinition);
-	}
+    /**
+     * Adds the specified argument definition to the list
+     * @param argumentDefinition the argument definition to be added
+     * @return true if this list contained the specified element
+     */
+    public boolean add(ArgumentDefinition argumentDefinition) {
+        addNames(argumentDefinition);
+        return definitions.add(argumentDefinition);
+    }
 
-	/**
-	 * Adds the specified argument definitions to the list
-	 * @param argumentDefinitions the argument definitions to be added
-	 * @return true if this list changed as a result of the call
-	 */
-	public boolean addAll(Collection<? extends ArgumentDefinition> argumentDefinitions) {
-		for (ArgumentDefinition argumentDefinition: argumentDefinitions) {
-			addNames(argumentDefinition);
-		}
-		return definitions.addAll(argumentDefinitions);
-	}
+    /**
+     * Adds the specified argument definitions to the list
+     * @param argumentDefinitions the argument definitions to be added
+     * @return true if this list changed as a result of the call
+     */
+    public boolean addAll(Collection<? extends ArgumentDefinition> argumentDefinitions) {
+        for (ArgumentDefinition argumentDefinition: argumentDefinitions) {
+            addNames(argumentDefinition);
+        }
+        return definitions.addAll(argumentDefinitions);
+    }
 
-	/**
-	 * Gets the indexed argument definition from the list
-	 * @param index the index of the argument definition
-	 * @return the argument definition
-	 */
-	public ArgumentDefinition get(int index) {
-		return definitions.get(index);
-	}
+    /**
+     * Gets the indexed argument definition from the list
+     * @param index the index of the argument definition
+     * @return the argument definition
+     */
+    public ArgumentDefinition get(int index) {
+        return definitions.get(index);
+    }
 
-	private void addNames(ArgumentDefinition argumentDefinition) {
-		if (definitionsNameMap.containsKey(argumentDefinition.getName())) {
-			throw new BadArgumentDefinitionException("Argument definitions already contains argument name '" + argumentDefinition.getName() + "'");
-		}
-		for (Object name: argumentDefinition.getAlternativeNames()) {
-			if (definitionsNameMap.containsKey(name)) {
-				throw new BadArgumentDefinitionException("Argument definitions already contains argument name '" + name + "'");
-			}
-		}
-		addName(argumentDefinition.getName(), argumentDefinition);
-		for (Object name: argumentDefinition.getAlternativeNames()) {
-			addName((String)name, argumentDefinition);
-		}
-	}
+    private void addNames(ArgumentDefinition argumentDefinition) {
+        if (definitionsNameMap.containsKey(argumentDefinition.getName())) {
+            throw new BadArgumentDefinitionException("Argument definitions already contains argument name '" + argumentDefinition.getName() + "'");
+        }
+        for (Object name: argumentDefinition.getAlternativeNames()) {
+            if (definitionsNameMap.containsKey(name)) {
+                throw new BadArgumentDefinitionException("Argument definitions already contains argument name '" + name + "'");
+            }
+        }
+        addName(argumentDefinition.getName(), argumentDefinition);
+        for (Object name: argumentDefinition.getAlternativeNames()) {
+            addName((String)name, argumentDefinition);
+        }
+    }
 
-	private void addName(String name, ArgumentDefinition argumentDefinition) {
-		definitionsNameMap.put(name, argumentDefinition);
-	}
+    private void addName(String name, ArgumentDefinition argumentDefinition) {
+        definitionsNameMap.put(name, argumentDefinition);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Iterator<ArgumentDefinition> iterator() {
-		return definitions.iterator();
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Iterator<ArgumentDefinition> iterator() {
+        return definitions.iterator();
+    }
 }

@@ -22,40 +22,40 @@ import com.adeptions.clarguments.arguments.*;
  * Represents the definition for an informational argument
  */
 public class InformationalArgumentDefinition extends AbstractArgumentDefinition<Boolean> implements ArgumentDefinition<Boolean> {
-	/**
-	 * Constructs an InformationalArgumentDefinition with the specified name and description
-	 * @param name the name of the argument
-	 * @param description the description of the argument
-	 */
-	public InformationalArgumentDefinition(String name, String description) {
-		super(ArgumentDefinitionType.INFORMATIONAL, name, description);
-	}
+    /**
+     * Constructs an InformationalArgumentDefinition with the specified name and description
+     * @param name the name of the argument
+     * @param description the description of the argument
+     */
+    public InformationalArgumentDefinition(String name, String description) {
+        super(ArgumentDefinitionType.INFORMATIONAL, name, description);
+    }
 
-	/**
-	 * Constructs an InformationalArgumentDefinition with the specified names and description
-	 * @param names the names of the argument
-	 * @param description the description of the argument
-	 */
-	public InformationalArgumentDefinition(String[] names, String description) {
-		super(ArgumentDefinitionType.INFORMATIONAL, names, description);
-	}
+    /**
+     * Constructs an InformationalArgumentDefinition with the specified names and description
+     * @param names the names of the argument
+     * @param description the description of the argument
+     */
+    public InformationalArgumentDefinition(String[] names, String description) {
+        super(ArgumentDefinitionType.INFORMATIONAL, names, description);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Boolean convertRawValue(int tokenPosition, String rawValue, Argument<Boolean> argument, ArgName specifiedArgName) throws BadArgException {
-		if (valueConverter != null) {
-			return valueConverter.convert(tokenPosition, rawValue, argument, specifiedArgName);
-		}
-		return true;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Boolean convertRawValue(int tokenPosition, String rawValue, Argument<Boolean> argument, ArgName specifiedArgName) throws BadArgException {
+        if (valueConverter != null) {
+            return valueConverter.convert(tokenPosition, rawValue, argument, specifiedArgName);
+        }
+        return true;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public InformationalArgument createArgumentInstance(Arguments parentArguments) {
-		return new InformationalArgument(parentArguments, this);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public InformationalArgument createArgumentInstance(Arguments parentArguments) {
+        return new InformationalArgument(parentArguments, this);
+    }
 }

@@ -22,21 +22,21 @@ import com.adeptions.clarguments.definitions.*;
  * Represents an Integer valued argument
  */
 public class IntegerArgument extends AbstractArgument<Integer> implements Argument<Integer> {
-	/**
-	 * Constructs an IntegerArgument with the specified parent arguments and argument definition
-	 * @param parentArguments the arguments to which the argument belongs
-	 * @param definition the definition of the argument
-	 */
-	public IntegerArgument(Arguments parentArguments, ArgumentDefinition<Integer> definition) {
-		super(parentArguments, definition);
-	}
+    /**
+     * Constructs an IntegerArgument with the specified parent arguments and argument definition
+     * @param parentArguments the arguments to which the argument belongs
+     * @param definition the definition of the argument
+     */
+    public IntegerArgument(Arguments parentArguments, ArgumentDefinition<Integer> definition) {
+        super(parentArguments, definition);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setRawValue(int tokenPosition, String rawValue, ArgName specifiedArgName) throws BadArgException {
-		values.add(definition.validateValue(tokenPosition, definition.convertRawValue(tokenPosition, rawValue, this, specifiedArgName), this, specifiedArgName));
-		specified = true;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setRawValue(int tokenPosition, String rawValue, ArgName specifiedArgName) throws BadArgException {
+        values.add(definition.validateValue(tokenPosition, definition.convertRawValue(tokenPosition, rawValue, this, specifiedArgName), this, specifiedArgName));
+        specified = true;
+    }
 }

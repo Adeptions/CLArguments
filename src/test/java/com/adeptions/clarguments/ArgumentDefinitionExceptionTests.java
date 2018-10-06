@@ -18,34 +18,34 @@ package com.adeptions.clarguments;
 import junit.framework.TestCase;
 
 public class ArgumentDefinitionExceptionTests extends TestCase {
-	private static final String testMessage = "This is a test exception message";
+    private static final String testMessage = "This is a test exception message";
 
-	public void testBadArgumentDefinitionExceptionIsRuntimeException() throws Exception {
-		BadArgumentDefinitionException badArgumentDefinitionException = new BadArgumentDefinitionException();
-		boolean caught = false;
-		try {
-			throw badArgumentDefinitionException;
-		} catch (RuntimeException rte) {
-			caught = true;
-		}
-		assertTrue("Exception should have been caught", caught);
-	}
+    public void testBadArgumentDefinitionExceptionIsRuntimeException() throws Exception {
+        BadArgumentDefinitionException badArgumentDefinitionException = new BadArgumentDefinitionException();
+        boolean caught = false;
+        try {
+            throw badArgumentDefinitionException;
+        } catch (RuntimeException rte) {
+            caught = true;
+        }
+        assertTrue("Exception should have been caught", caught);
+    }
 
-	public void testBadArgumentDefinitionExceptionConstructor2() throws Exception {
-		BadArgumentDefinitionException badArgumentDefinitionException = new BadArgumentDefinitionException(testMessage);
-		assertEquals(testMessage, badArgumentDefinitionException.getMessage());
-	}
+    public void testBadArgumentDefinitionExceptionConstructor2() throws Exception {
+        BadArgumentDefinitionException badArgumentDefinitionException = new BadArgumentDefinitionException(testMessage);
+        assertEquals(testMessage, badArgumentDefinitionException.getMessage());
+    }
 
-	public void testBadArgumentDefinitionExceptionConstructor3() throws Exception {
-		IllegalArgumentException cause = new IllegalArgumentException();
-		BadArgumentDefinitionException badArgumentDefinitionException = new BadArgumentDefinitionException(testMessage, cause);
-		assertEquals(testMessage, badArgumentDefinitionException.getMessage());
-		assertEquals(cause, badArgumentDefinitionException.getCause());
-	}
+    public void testBadArgumentDefinitionExceptionConstructor3() throws Exception {
+        IllegalArgumentException cause = new IllegalArgumentException();
+        BadArgumentDefinitionException badArgumentDefinitionException = new BadArgumentDefinitionException(testMessage, cause);
+        assertEquals(testMessage, badArgumentDefinitionException.getMessage());
+        assertEquals(cause, badArgumentDefinitionException.getCause());
+    }
 
-	public void testBadArgumentDefinitionExceptionConstructor4() throws Exception {
-		IllegalArgumentException cause = new IllegalArgumentException();
-		BadArgumentDefinitionException badArgumentDefinitionException = new BadArgumentDefinitionException(cause);
-		assertEquals(cause, badArgumentDefinitionException.getCause());
-	}
+    public void testBadArgumentDefinitionExceptionConstructor4() throws Exception {
+        IllegalArgumentException cause = new IllegalArgumentException();
+        BadArgumentDefinitionException badArgumentDefinitionException = new BadArgumentDefinitionException(cause);
+        assertEquals(cause, badArgumentDefinitionException.getCause());
+    }
 }

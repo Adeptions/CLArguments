@@ -26,18 +26,18 @@ import static com.adeptions.clarguments.PredefinedBadArgReasons.*;
  * Utility value validator for checking the existence of a file for FileArgumentDefinition
  */
 public class FileExistsValueValidator implements ArgumentValueValidator<File> {
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public File validate(int tokenPosition, File value, Argument argument, ArgName specifiedArgName) throws BadArgException {
-		try {
-			if (!value.exists()) {
-				throw new BadArgException(INVALID_VALUE, tokenPosition, "File '" + value.getPath() + "' does not exist", argument, specifiedArgName);
-			}
-		} catch (SecurityException securityException) {
-			throw new BadArgException(INVALID_VALUE, tokenPosition, "Access to file '" + value.getPath() + "' denied", securityException, argument, specifiedArgName);
-		}
-		return value;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public File validate(int tokenPosition, File value, Argument argument, ArgName specifiedArgName) throws BadArgException {
+        try {
+            if (!value.exists()) {
+                throw new BadArgException(INVALID_VALUE, tokenPosition, "File '" + value.getPath() + "' does not exist", argument, specifiedArgName);
+            }
+        } catch (SecurityException securityException) {
+            throw new BadArgException(INVALID_VALUE, tokenPosition, "Access to file '" + value.getPath() + "' denied", securityException, argument, specifiedArgName);
+        }
+        return value;
+    }
 }

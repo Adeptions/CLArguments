@@ -21,14 +21,14 @@ import com.adeptions.clarguments.arguments.*;
 import static com.adeptions.clarguments.PredefinedBadArgReasons.*;
 
 public class DisallowMultiplesValueValidator implements ArgumentValueValidator {
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Object validate(int tokenPosition, Object value, Argument argument, ArgName specifiedArgName) throws BadArgException {
-		if (argument.wasSeen()) {
-			throw new BadArgException(MULTIPLE_ARGUMENT_NOT_ALLOWED, tokenPosition, "Argument '" + specifiedArgName.getDisplayName() + "' cannot be specified more than once", argument, specifiedArgName);
-		}
-		return value;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Object validate(int tokenPosition, Object value, Argument argument, ArgName specifiedArgName) throws BadArgException {
+        if (argument.wasSeen()) {
+            throw new BadArgException(MULTIPLE_ARGUMENT_NOT_ALLOWED, tokenPosition, "Argument '" + specifiedArgName.getDisplayName() + "' cannot be specified more than once", argument, specifiedArgName);
+        }
+        return value;
+    }
 }

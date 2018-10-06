@@ -22,43 +22,43 @@ import com.adeptions.clarguments.arguments.*;
  * Represents the definition for a String valued argument
  */
 public class StringArgumentDefinition extends AbstractArgumentDefinition<String> implements ArgumentDefinition<String> {
-	/**
-	 * Instantiates a new instance of a StringArgumentDefinition
-	 * @param name the name of the argument
-	 * @param description the description of the argument
-	 */
-	public StringArgumentDefinition(String name, String description) {
-		super(ArgumentDefinitionType.VALUED, name, description);
-		addValueFormat("string");
-	}
+    /**
+     * Instantiates a new instance of a StringArgumentDefinition
+     * @param name the name of the argument
+     * @param description the description of the argument
+     */
+    public StringArgumentDefinition(String name, String description) {
+        super(ArgumentDefinitionType.VALUED, name, description);
+        addValueFormat("string");
+    }
 
-	/**
-	 * Instantiates a new instance of a StringArgumentDefinition
-	 * @param names the names of the argument
-	 * @param description the description of the argument
-	 */
-	public StringArgumentDefinition(String[] names, String description) {
-		super(ArgumentDefinitionType.VALUED, names, description);
-		addValueFormat("string");
-	}
+    /**
+     * Instantiates a new instance of a StringArgumentDefinition
+     * @param names the names of the argument
+     * @param description the description of the argument
+     */
+    public StringArgumentDefinition(String[] names, String description) {
+        super(ArgumentDefinitionType.VALUED, names, description);
+        addValueFormat("string");
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String convertRawValue(int tokenPosition, String rawValue, Argument<String> argument, ArgName specifiedArgName) throws BadArgException {
-		if (valueConverter != null) {
-			return valueConverter.convert(tokenPosition, rawValue, argument, specifiedArgName);
-		}
-		// no conversion necessary...
-		return rawValue;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String convertRawValue(int tokenPosition, String rawValue, Argument<String> argument, ArgName specifiedArgName) throws BadArgException {
+        if (valueConverter != null) {
+            return valueConverter.convert(tokenPosition, rawValue, argument, specifiedArgName);
+        }
+        // no conversion necessary...
+        return rawValue;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Argument<String> createArgumentInstance(Arguments parentArguments) {
-		return new StringArgument(parentArguments, this);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Argument<String> createArgumentInstance(Arguments parentArguments) {
+        return new StringArgument(parentArguments, this);
+    }
 }
