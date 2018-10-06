@@ -11,7 +11,7 @@
 
     <groupId>com.adeptions</groupId>
     <artifactId>clarguments</artifactId>
-    <version>2.0.2-SNAPSHOT</version>
+    <version>2.0.3-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
