@@ -2,7 +2,6 @@ package com.adeptions.clarguments.arguments;
 
 import com.adeptions.clarguments.Arguments;
 import com.adeptions.clarguments.definitions.ArgumentDefinition;
-import com.sun.istack.internal.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +31,7 @@ public abstract class AbstractArgument<T> implements Argument<T> {
      * @param parentArguments the arguments list to which this Argument belongs
      * @param definition the definition of the argument
      */
-    public AbstractArgument(@NotNull Arguments parentArguments, @NotNull ArgumentDefinition<T> definition) {
+    public AbstractArgument(Arguments parentArguments, ArgumentDefinition<T> definition) {
         if (parentArguments == null) {
             throw new IllegalArgumentException("Argument 'parentArguments' cannot be null for AbstractArgument constructor");
         }

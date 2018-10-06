@@ -8,7 +8,6 @@ import com.adeptions.clarguments.BadArgumentException;
 import com.adeptions.clarguments.arguments.Argument;
 import com.adeptions.clarguments.converters.ArgumentValueConverter;
 import com.adeptions.clarguments.validators.ArgumentValueValidator;
-import com.sun.istack.internal.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -50,7 +49,7 @@ public abstract class AbstractArgumentDefinition<T> implements ArgumentDefinitio
      * @param name the name of the defined argument
      * @param description the description of the argument (used in help etc.)
      */
-    public AbstractArgumentDefinition(@NotNull ArgumentDefinitionType type, @NotNull String name, @NotNull String description) {
+    public AbstractArgumentDefinition(ArgumentDefinitionType type, String name, String description) {
         this.type = checkType(type);
         this.name = checkName(name);
         this.description = checkDescription(description);
@@ -63,7 +62,7 @@ public abstract class AbstractArgumentDefinition<T> implements ArgumentDefinitio
      * @param names the names of the defined argument (the first in the array defines the primary name)
      * @param description the description of the argument (used in help etc.)
      */
-    public AbstractArgumentDefinition(@NotNull ArgumentDefinitionType type, @NotNull String[] names, @NotNull String description) {
+    public AbstractArgumentDefinition(ArgumentDefinitionType type, String[] names, String description) {
         this.type = checkType(type);
         if (names.length == 0) {
             throw new BadArgumentDefinitionException("Argument definition must have at least one name");
